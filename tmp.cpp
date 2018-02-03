@@ -30,3 +30,17 @@ int main()
     Dog d("Black");
     cout <<getType(d) << endl;
 }
+
+// Question 6
+/*
+STL Containers: <vector>, <list>, <map>, <set>, <stack>, <queue>, 
+<unordered_map>, <unordered_set>, <deque>, <array>, <forward_list>, <bitset>
+
+Sequence Containers: <vector>, <deque>, <list>
+
+Associative Containers: <set>(including multiset), <map>(including multimap)
+
+Container Adapters: <stack>, <queue>(including priority_queue)
+
+reference: https://stackoverflow.com/questions/3873802/what-are-containers-adapters-c
+*/
