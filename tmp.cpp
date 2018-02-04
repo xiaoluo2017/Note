@@ -94,3 +94,36 @@ int main()
  
 	return 0;
 }
+
+// Question 9
+class ExBase {  
+    private:  
+    static int stat;
+    
+    public:  
+    static int GetStat(){ 
+        return stat; 
+    } 
+};      
+
+int ExBase::stat = 25; 
+
+class ExDer1 : public ExBase {  
+    private:
+    static int tmp;
+    
+    public:  
+    friend int Der1Fn(){ 
+        return ExBase::stat; 
+    }
+};
+
+class ExDer2 : public ExBase{};     
+
+class ExDer : public ExDer1, public ExDer2{};
+
+
+int main() {
+
+}
+
