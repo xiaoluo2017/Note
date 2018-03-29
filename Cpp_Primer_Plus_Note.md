@@ -38,3 +38,17 @@ extern：引用外部变量<br>
 volatile：不进行缓存到寄存器的优化，eg.将指针指向某个硬件位置时使用<br>
 mutable：声明为const，其成员也可被修改<br>
 const：const修饰全局变量，链接性转为内部<br>
+
+### 11.1
+copy constructor:
+* 新对象显式地初始化为现有对象
+```
+// calls String(const String &)
+String ditto(motto);
+String metoo = motoo;
+String also = (String)motoo;
+String* pstring = new String(motoo);
+```
+* 函数按值传递对象
+* 函数返回对象
+
