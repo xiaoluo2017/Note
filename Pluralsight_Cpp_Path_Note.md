@@ -11,11 +11,11 @@ never change value of member variables
 // only in header
 Person() = default;
 ```
-ref: 5.6 2:08
+> ref: 5.6 2:08
 
 ### 2. namespace
 never use namespace in header file  
-ref: 5.11 1:21
+> ref: 5.11 1:21
 
 ### 3. enum class
 variable can repeat
@@ -32,11 +32,11 @@ enum class NetworkError
 	ok
 };
 ```
-ref: 5.14 1:59
+> ref: 5.14 1:59
 
 ### pragma once
 ```
 // include in header
 #pragma once
 ```
-ref: 5.17 1:17
+> ref: 5.17 1:17
