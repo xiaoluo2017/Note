@@ -1,6 +1,6 @@
 ### 1. Learn How to Program with C++
-* const of member function
-never change value of member variables
+* const of member function<br>
+never change value of member variables<br>
 ref: 7.6 2:15
 
 ### 2. C++ Fundamentals including C++ 17 
@@ -12,7 +12,7 @@ Person() = default;
 ref: 5.6 2:08
 
 * namespace
-never use namespace in header file
+never use namespace in header file<br>
 ref: 5.11 1:21
 
 * enum class
