@@ -1,9 +1,9 @@
-### Learn How to Program with C++
+### 1. Learn How to Program with C++
 * const of member function
 never change value of member variables
 ref: 7.6 2:15
 
-### C++ Fundamentals including C++ 17 
+### 2. C++ Fundamentals including C++ 17 
 * default constructor
 ```
 // only in header
