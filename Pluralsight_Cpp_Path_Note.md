@@ -1,23 +1,25 @@
 1. Learn How to Program with C++
 ------
+
 ### const of member function  
 never change value of member variables  
 ref: 7.6 2:15
 
 2. C++ Fundamentals including C++ 17 
 ------
-* default constructor
+
+### default constructor
 ```
 // only in header
 Person() = default;
 ```
 ref: 5.6 2:08
 
-* namespace
+### namespace
 never use namespace in header file  
 ref: 5.11 1:21
 
-* enum class
+### enum class
 variable can repeat
 ```
 enum class FileError
@@ -34,7 +36,7 @@ enum class NetworkError
 ```
 ref: 5.14 1:59
 
-* pragma once
+### pragma once
 ```
 // include in header
 #pragma once
