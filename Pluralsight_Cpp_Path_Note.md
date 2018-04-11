@@ -77,3 +77,27 @@ Person const Kate("Kate", "Gregory", 234);
 int KateNumber = cKate.GetNumber(); // not feasible
 ```
 > ref: 10.6 0:00
+
+```
+// const reference: can't use the const to change the value
+int const & ri = 7;
+ri = 5; // not feasible
+```
+
+```
+// const pointer: can't change it to point somewhere else
+int * const cpi = &i;
+cpi = &something; // not feasible
+```
+
+```
+// pointer to a const: can't change the value of target
+int const * cpi = &i;
+*cpi = 2; // not feasible
+```
+
+```
+// can't change it to point somewhere else or use it to change the value of target
+int const * const crazy;
+```
+> ref: 10.7 0:09
