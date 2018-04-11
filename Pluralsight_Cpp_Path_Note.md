@@ -40,3 +40,8 @@ enum class NetworkError
 #pragma once
 ```
 > ref: 5.17 1:17
+
+### 5. warning level
+right-click on the project -> Properties -> C/C++ -> General -> Warning Level  
+> ref: 8.5 2:29
+
