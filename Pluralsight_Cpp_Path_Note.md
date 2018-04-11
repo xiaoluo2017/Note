@@ -45,3 +45,31 @@ enum class NetworkError
 right-click on the project -> Properties -> C/C++ -> General -> Warning Level  
 > ref: 8.5 2:29
 
+### 6. null pointer
+nullptr
+> ref: 10.2 4:33
+
+### 7. const
+```
+// can not change i through cri, but i is changeable
+int i = 3;
+int const & cri = i;
+cri = 6; // not feasible
+i = 6; // feasible
+
+// can not assign a reference to a const variable
+int const ci = 3;
+int & ncri = ci; // not feasible
+
+// can not past a const to a non-const reference function
+int DoubleInt(int& x) { // int& x need to be const
+  return x * 2;
+}
+int DoubleTen = DoubleInt(10); // not feasible 
+
+// const object can not call a non-const member function
+int GetNumber() {return arbitrarynumber;} // in header, function need to be const
+Person const Kate("Kate", "Gregory", 234);
+int KateNumber = cKate.GetNumber(); // not feasible
+```
+> ref: 10.6 0:00
