@@ -101,3 +101,103 @@ int const * cpi = &i;
 int const * const crazy;
 ```
 > ref: 10.7 0:09
+
+### 8. memory management
+```
+// Person.h 
+class Person
+{
+private:
+  std::string firstname;
+  std::string lastname;
+  int id;
+  Item* item;
+
+public:
+  Person(std::string first, std::string last, int number);
+  ~Person();
+  Person(Person const & p);
+  Person& operator=(Person const & p);
+  std::string GetName() const;
+  void SetName(std::string first, std::string last) { firstname = first; lastname = last;}
+  void distributeItem();
+};
+```
+```
+// Person.cpp
+Person::Person(string first,string last, int number) : firstname(first),lastname(last), id(number), item(nullptr){}
+
+Person::~Person() {
+  delete item;
+}
+
+Person::Person(Person const & p) {
+  firstname = p.firstname;
+  lastname = p.lastname;
+  id = p.id;
+  item = new Item(p.GetName());
+}
+
+Person& Person::operator=(Person const & p) {
+  if (&p == this) {
+    return *this;
+  }
+  delete item;
+  firstname = p.firstname;
+  lastname = p.lastname;
+  id = p.id;
+  item = new Item(p.GetName());
+  return *this;
+}
+
+string Person::GetName() const {
+  return firstname + " " + lastname;
+}
+
+void Person::distributeItem() {
+  delete item;
+  item = new Item(GetName());
+}
+```
+```
+// item.h item.cpp
+class Item
+{
+private:
+  std::string ofWhom;
+public:
+  Item(std::string name);
+  ~Item();
+  std::string GetName() const {return ofWhom;}
+};
+
+Item::Item(string name) : ofWhom(name) {
+  cout << "Constructor of " << ofWhom << "'s item."<< endl;
+}
+
+Item::~Item() {
+  cout << "Destructor of " << ofWhom << "'s item." << endl;
+}
+```
+```
+// main.cpp
+int main() {
+  Person P1("X", "L", 27385522);
+  P1.distributeItem(); // delete nullptr -> constructor(xl)
+  P1.SetName("X", "W");
+  P1.distributeItem(); // destructor(xl) -> constructor(xw)
+  Person P2 = P1; // constructor(xw)
+  return 0; // P2: destructor(xw) -> P1: destructor(xw)
+}
+```
+```
+// result
+/*
+Constructor of X L's item.
+Destructor of X L's item.
+Constructor of X W's item.
+Constructor of X W's item.
+Destructor of X W's item.
+Destructor of X W's item.
+*/
+```
