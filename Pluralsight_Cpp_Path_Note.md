@@ -202,3 +202,66 @@ Destructor of X W's item.
 */
 ```
 > ref: 11.5 0:00
+
+### 9. shared_ptr
+```
+// Person.h 
+#include <memory> // add
+
+class Person
+{
+private:
+  std::string firstname;
+  std::string lastname;
+  int id;
+  // Item* item;
+  std::shared_ptr<Item> item; // add
+
+public:
+  Person(std::string first, std::string last, int number);
+  // ~Person();
+  // Person(Person const & p);
+  // Person& operator=(Person const & p);
+  std::string GetName() const;
+  void SetName(std::string first, std::string last) { firstname = first; lastname = last;}
+  void distributeItem();
+};
+```
+```
+// Person.cpp
+Person::Person(string first,string last, int number) : firstname(first),lastname(last), id(number){} // do not need item(nullptr)
+
+// do not need destructor, copy constructor or copy assignment constructor
+
+string Person::GetName() const {
+  return firstname + " " + lastname;
+}
+
+void Person::distributeItem() {
+  // delete item;
+  // item = new Item(GetName());
+  item.reset(); // add
+  item = std::make_shared<Item>(GetName()); // add
+}
+```
+```
+// main.cpp
+int main() {
+  Person P1("X", "L", 27385522);
+  P1.distributeItem(); // constructor(xl)
+  P1.SetName("X", "W");
+  P1.distributeItem(); // destructor(xl) -> constructor(xw)
+  Person P2 = P1; // count++
+  return 0; // P2: count-- -> P1: destructor(xw)
+}
+```
+```
+// result
+/*
+Constructor of X L's item.
+Destructor of X L's item.
+Constructor of X W's item.
+Destructor of X W's item.
+*/
+```
+> ref: 11.6 0:00
