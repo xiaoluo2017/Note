@@ -265,3 +265,20 @@ Destructor of X W's item.
 */
 ```
 > ref: 11.6 0:00
+
+### 10. virtual
+As soon as you have one virtual function, make sure you mark your destructor as virtual also
+> ref: 12.4 7:43
+
+### 11. polymorphism vs slicing
+```
+string f1(Person const & p) { return p.GetName(); }
+string f2(Person p) { return p.GetName(); }
+
+SocialPerson P2("X", "W", 0, "@Not Known");
+string name;
+name = f1(P2); // polymorphism
+// X W @Not Known
+name = f2(P2); // slicing
+// X W
+```
