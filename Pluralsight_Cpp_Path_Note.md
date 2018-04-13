@@ -282,3 +282,4 @@ name = f1(P2); // polymorphism
 name = f2(P2); // slicing
 // X W
 ```
+> ref: 12.5 4:15
