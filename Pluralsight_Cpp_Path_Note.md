@@ -283,3 +283,32 @@ name = f2(P2); // slicing
 // X W
 ```
 > ref: 12.5 4:15
+
+## C++ Fundamentals - Part 2
+
+### 1. function pointer
+```
+// function pointer
+typedef int(*HELPER)(int i);
+HELPER h;
+```
+> ref: 4.3 3:33
+
+```
+// pointer to member function
+typedef int (Person::*HELPER)() const;
+
+int useFunctionPointer(Person const & p) {
+  HELPER h;
+  h = std::rand() % 2 ? &Person::GetId : &Person::GetRandom;
+  return (p.*h)();
+}
+
+int main() {
+  Person P("Xiao", "Luo", 27385522);
+  for (int i = 0; i < 10; i++) {
+    cout << useFunctionPointer(P) << endl;
+  }
+}
+```
+> ref: 4.4 1:16
