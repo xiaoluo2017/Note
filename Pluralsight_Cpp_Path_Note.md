@@ -1,3 +1,8 @@
+## Directory
+> #### Learn How to Program with C++
+> #### C++ Fundamentals including C++ 17
+> #### C++ Fundamentals - Part 2
+
 ## Learn How to Program with C++
 
 ### 1. const of member function  
