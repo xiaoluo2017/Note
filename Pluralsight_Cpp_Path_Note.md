@@ -323,8 +323,8 @@ int main() {
 ## C++ Unit Testing Fundamentals Using Catch
 
 ### 1. catch
+Download [catch.hpp](https://github.com/philsquared/Catch)
 ```
-// [Download catch.hpp](https://github.com/philsquared/Catch)
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
