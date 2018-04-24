@@ -3,6 +3,8 @@
 > #### C++ Fundamentals including C++ 17
 > #### C++ Fundamentals - Part 2
 
+> #### C++ Unit Testing Fundamentals Using Catch
+
 ## Learn How to Program with C++
 
 ### 1. const of member function  
@@ -317,3 +319,18 @@ int main() {
 }
 ```
 > ref: 4.4 1:16
+
+## C++ Unit Testing Fundamentals Using Catch
+
+### 1. catch
+```
+// [Download catch.hpp](https://github.com/philsquared/Catch)
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+
+TEST_CASE("This is a test name") {
+  // .....
+}
+```
+> ref: 2.7 0:34
+
