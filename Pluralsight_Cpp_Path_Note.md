@@ -2,7 +2,6 @@
 > #### Learn How to Program with C++
 > #### C++ Fundamentals including C++ 17
 > #### C++ Fundamentals - Part 2
-
 > #### C++ Unit Testing Fundamentals Using Catch
 
 ## Learn How to Program with C++
