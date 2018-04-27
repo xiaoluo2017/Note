@@ -328,6 +328,7 @@ Download [catch.hpp](https://github.com/philsquared/Catch)
 #include "catch.hpp"
 
 TEST_CASE("This is a test name") {
+  REQUIRE(result == 0);
   // .....
 }
 ```
