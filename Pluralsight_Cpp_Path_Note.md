@@ -11,7 +11,7 @@
 never change value of member variables  
 > ref: 7.6 2:15
 
-<h1 id="2">C++ Fundamentals including C++ 17</h1>
+<h2 id="2">C++ Fundamentals including C++ 17</h2>
 
 ### 1. default constructor
 ```
