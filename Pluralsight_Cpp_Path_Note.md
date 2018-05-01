@@ -1,11 +1,11 @@
 ## Directory
-> [Learn How to Program with C++](#1)
-> [C++ Fundamentals including C++ 17](#2)
-> [C++ Fundamentals - Part 2](#3)
-> [C++11 Language Features](#4)
-> [C++ Unit Testing Fundamentals Using Catch](#5)
+> [Learn How to Program with C++](#1)<br>
+> [C++ Fundamentals including C++ 17](#2)<br>
+> [C++ Fundamentals - Part 2](#3)<br>
+> [C++11 Language Features](#4)<br>
+> [C++ Unit Testing Fundamentals Using Catch](#5)<br>
 
-<h1 id="1">Learn How to Program with C++</h1>
+<h2 id="1">Learn How to Program with C++</h2>
 
 ### 1. const of member function  
 never change value of member variables  
@@ -291,7 +291,7 @@ name = f2(P2); // slicing
 ```
 > ref: 12.5 4:15
 
-<h1 id="3">C++ Fundamentals - Part 2</h1>
+<h2 id="3">C++ Fundamentals - Part 2</h2>
 
 ### 1. function pointer
 ```
@@ -320,11 +320,11 @@ int main() {
 ```
 > ref: 4.4 1:16
 
-<h1 id="4">C++11 Language Features</h1>
+<h2 id="4">C++11 Language Features</h2>
 
 ### 1. ...
 
-<h1 id="5">C++ Unit Testing Fundamentals Using Catch</h1>
+<h2 id="5">C++ Unit Testing Fundamentals Using Catch</h2>
 
 ### 1. catch
 Download [catch.hpp](https://github.com/philsquared/Catch)
