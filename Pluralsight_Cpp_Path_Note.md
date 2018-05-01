@@ -322,7 +322,28 @@ int main() {
 
 <h2 id="4">C++11 Language Features</h2>
 
-### 1. ...
+### 1. decltype
+```
+vector<int> a;
+decltype(a) b;
+```
+> ref: 1.5 0:46
+
+```
+template<typename T1, typename T2>
+auto multiple(T1 x, T2 y) -> decltype(x * y) {
+  return x * y;
+}
+// return type can't be decltype(x * y), x and y aren't in scope yet
+```
+> ref: 1.6 1:00
+
+### 2. lambda
+```
+[](int i) -> double {
+  return i > 10 ? 0.0 : double(i);
+}
+```
 
 <h2 id="5">C++ Unit Testing Fundamentals Using Catch</h2>
 
