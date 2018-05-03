@@ -47,3 +47,41 @@ const int X = 42;
 // constexpr-function
 constexpr int X() { return 42; }
 ```
+> ref: p59
+
+### 5. range-based for loop
+```
+// use refenrence to change value
+string s = "hello world";
+for (auto& c : s) {
+  c += 'A' - 'a';
+}
+cout << s << endl;
+```
+> ref: p82
+
+### 6. std begin & end
+```
+// begin point to the first element, end point to after the last element
+int array[] = { 18, 7, 22, 10, 690, 2 };
+int* p = begin(array);
+while (p != end(array)) {
+  if (*p > 20) {
+    cout << *p << endl;
+  }
+  p++;
+}
+```
+> ref: p106
+
+### 7. auto for 2d array
+``
+int array[3][2] = { {18, 7}, {22, 10}, {690, 2} };
+for (auto p = array; p < array + 3; p++) { // p is int (*)[2]
+  for (auto q = *p; q < *p + 2; q++) { // q is int *
+    cout << *q << " ";  
+  }
+  cout << endl;
+}
+```
+> ref: p115
