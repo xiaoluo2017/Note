@@ -75,7 +75,7 @@ while (p != end(array)) {
 > ref: p106
 
 ### 7. auto for 2d array
-``
+```
 int array[3][2] = { {18, 7}, {22, 10}, {690, 2} };
 for (auto p = array; p < array + 3; p++) { // p is int (*)[2]
   for (auto q = *p; q < *p + 2; q++) { // q is int *
@@ -85,3 +85,23 @@ for (auto p = array; p < array + 3; p++) { // p is int (*)[2]
 }
 ```
 > ref: p115
+
+### 8. initializer_list
+
+```
+void test(string s, initializer_list<int> ist);
+
+int main()
+{
+	test("test", { 18, 7, 22, 10, 690, 2 });
+    return 0;
+}
+
+void test(string s, initializer_list<int> ist) {
+	cout << s << endl;
+	for (auto i = ist.begin(); i != ist.end(); i++) {
+		cout << *i << " ";
+	}
+} 
+```
+> ref: p197
