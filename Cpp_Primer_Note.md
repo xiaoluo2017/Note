@@ -105,3 +105,8 @@ void test(string s, initializer_list<int> ist) {
 } 
 ```
 > ref: p197
+
+
+### 9. cbegin, cend
+If not use write operation, use cbegin & cend instead if beign & end
+> ref: p299
