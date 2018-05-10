@@ -110,3 +110,17 @@ void test(string s, initializer_list<int> ist) {
 ### 9. cbegin, cend
 If not use write operation, use cbegin & cend instead if beign & end
 > ref: p299
+
+### 10. bind
+C++ adapter
+```
+#include <functional>
+using namespace std::placeholders;
+
+auto check6 = bind(checkSize, _1, 6); // _1 is a placeholder
+bool b = check6("orange"); // b is true
+
+bool checkSize(const string & s, int sz) {
+  return s.length() >= sz;
+} 
+```
