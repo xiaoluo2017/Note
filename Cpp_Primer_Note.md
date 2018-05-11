@@ -124,3 +124,9 @@ bool checkSize(const string & s, int sz) {
   return s.length() >= sz;
 } 
 ```
+
+### 11. shared_ptr
+// 
+```
+auto s = make_shared<string>("hello");
+```
