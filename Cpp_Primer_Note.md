@@ -138,3 +138,16 @@ NoCopy(const NoCopy&) = delete;
 NoCopy &operator = (const NoCopy&) = delete;
 ```
 > ref: p449 
+
+### 13. trailing return type
+```
+template <typename It>
+auto fcn(It begin, It end) -> decltype(*beg) {
+  // deal with sequence
+  return *beg;
+}
+```
+> ref: p605
+
+
+```
