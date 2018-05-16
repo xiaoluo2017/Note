@@ -93,15 +93,15 @@ void test(string s, initializer_list<int> ist);
 
 int main()
 {
-	test("test", { 18, 7, 22, 10, 690, 2 });
-    return 0;
+  test("test", { 18, 7, 22, 10, 690, 2 });
+  return 0;
 }
 
 void test(string s, initializer_list<int> ist) {
-	cout << s << endl;
-	for (auto i = ist.begin(); i != ist.end(); i++) {
-		cout << *i << " ";
-	}
+  cout << s << endl;
+  for (auto i = ist.begin(); i != ist.end(); i++) {
+    cout << *i << " ";
+  }
 } 
 ```
 > ref: p197
