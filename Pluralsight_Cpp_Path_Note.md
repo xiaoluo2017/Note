@@ -4,6 +4,7 @@
 > [C++ Fundamentals - Part 2](#3)<br>
 > [C++11 Language Features](#4)<br>
 > [C++ Unit Testing Fundamentals Using Catch](#5)<br>
+> [Beautiful C++: STL Algorithms](#6)<br>
 
 <h2 id="1">Learn How to Program with C++</h2>
 
@@ -359,3 +360,13 @@ TEST_CASE("This is a test name") {
 }
 ```
 > ref: 2.7 0:34
+
+<h2 id="6">Beautiful C++: STL Algorithms</h2>
+
+### 1. count & count_if
+```
+// all_of any_of none_of
+int cnt = count_if(begin(v), end(v), [](auto elem) { return elem % 2 == 0; });
+```
+> ref: 3.6 3:39
+
