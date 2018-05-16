@@ -370,3 +370,14 @@ int cnt = count_if(begin(v), end(v), [](auto elem) { return elem % 2 == 0; });
 ```
 > ref: 3.6 3:39
 
+### 2. find & find_if
+```
+// find_if_not find_end search_n adjacent_find
+vector<int> v{ 18, 7, 22, 10, 690, 2 };
+vector<int> primes{ 2, 3, 5, 7, 11, 13, 17, 19 };
+auto res = find_first_of(begin(v), end(v), begin(primes), end(primes));
+
+vector<int> subsequence{ 22, 10 };
+res = search(begin(v), end(v), begin(subsequence), end(subsequence));
+```
+> ref: 3.8 2:41
