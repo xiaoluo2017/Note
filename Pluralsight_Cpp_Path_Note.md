@@ -394,3 +394,10 @@ cout << it.first - begin(v1) << endl; // 4
 ```
 > ref: 5.3 3:32
 
+### 4. accumulate
+```
+vector<int> v{ 18, 7, 22, 10, 69, 0, 2 };
+int sum = accumulate(begin(v), end(v), 0, [](int sum, int curr) { return curr % 2 == 0 ? sum + curr : sum; }); // 52
+```
+> ref: 5.5 4:15
+
