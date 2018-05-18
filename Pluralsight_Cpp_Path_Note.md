@@ -381,3 +381,16 @@ vector<int> subsequence{ 22, 10 };
 res = search(begin(v), end(v), begin(subsequence), end(subsequence));
 ```
 > ref: 3.8 2:41
+
+### 3. equal & mismatch
+```
+vector<int> v1{ 18, 7, 22, 10, 69, 0, 2 };
+vector<int> v2{ 18, 7, 22, 10, 690, 2 };
+equal(begin(v1), end(v1), begin(v2), end(v2)); // 0
+
+auto it = mismatch(begin(v1), end(v1), begin(v2), end(v2));
+cout << *(it.first) << " " << *(it.second) << endl; // 69 690
+cout << it.first - begin(v1) << endl; // 4
+```
+> ref: 5.3 3:32
+
