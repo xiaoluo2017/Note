@@ -53,3 +53,38 @@ if return an object to an outside Value, const is not needed
 virtual AString GetProductInfoForSystemCoupling() const = 0;
 ```
 
+### 7. mfc
+```
+BEGIN_MESSAGE_MAP(CFreqDeptMatSetupOptionDlg, CDialog)
+	ON_BN_CLICKED(IDC_RADIO_PWL, OnFilterChange)
+END_MESSAGE_MAP()
+```
+
+```
+protected:
+	int m_iCheck;
+
+void CFreqDeptMatSetupOptionDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+	DDX_Radio(pDX, IDC_RADIO_PWL, m_iSelection);
+	DDX_Check(pDX, IDC_SET_SPATIAL_DEP_CHK, m_iCheck);
+}
+```
+
+```
+public:
+  CButton m_DataPoints;
+private:
+  afx_msg void OnFilterChange();
+
+void CFreqDeptMatSetupOptionDlg::OnFilterChange()
+{
+  BOOL bEnableSpatial = (BST_CHECKED == m_DataPoints.GetCheck()) ? TRUE : FALSE;
+  // m_chkPhysicsEM.EnableWindow(bEnablePhysics);
+
+  CWnd * wnd = this->GetDlgItem(IDC_SET_SPATIAL_DEP_CHK);
+  wnd->EnableWindow(bEnableSpatial);
+}
+```
+
