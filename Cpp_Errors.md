@@ -88,3 +88,9 @@ void CFreqDeptMatSetupOptionDlg::OnFilterChange()
 }
 ```
 
+### 8. errorMsg
+```
+AnsoftMessage am = AnsoftMessage(kFatalMessage, kLIBID_GLOBAL, IDS_FILE_FORMAT_NOT_SUPPORTED, -1);
+am.AddArg(fileExt, 0);
+::GetMessageManager()->AddAnsoftMessage(am);
+```
