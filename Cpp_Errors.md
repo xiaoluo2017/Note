@@ -94,3 +94,8 @@ AnsoftMessage am = AnsoftMessage(kFatalMessage, kLIBID_GLOBAL, IDS_FILE_FORMAT_N
 am.AddArg(fileExt, 0);
 ::GetMessageManager()->AddAnsoftMessage(am);
 ```
+
+### 9. No instance of overloaded function matches the specified type
+```
+#include "CoreInterfaces/IDesignInstance.h"
+```
