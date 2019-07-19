@@ -54,3 +54,22 @@
      * load balancer - web servers: TCP80, offload SSL, unencrypted
      * web server - databases: TCP3306(SQL queries)
      * Firewalls: least privilege, avoid unexpected behaviour
+     
+### Step 2: Review the scalability article
+ * Clones
+     * Every server contains exactly the same codebase and does not store any user-related data, like sessions or profile pictures, on local disc or memory
+     * Sessions store in centralized data store(an external persistent cache, like Redis), near the data center, not reside on the application servers
+     * To make sure code change sent to all your servers without one server still serving old code, use Capistrano(Ruby on Rails)
+ * Databases
+     * Path 1: Hire a database administrator(DBA), do master-slave replication (read from slaves, write to master), upgrade master server by adding RAM. -> DBA will come up with words like “sharding”, “denormalization” and “SQL tuning", every new action to keep your database running will be more expensive and time consuming than the previous one
+     * Path 2: Denormalize right from the beginning and include no more Joins in any database query, use MySQL like a NoSQL database, or switch to a NoSQL database like MongoDB or CouchDB(better and easier to scale), Joins need to be done in application code. -> slower and slower, need to introduce a cache
+ * Caches
+     * In-memory caches: Memcached or Redis, lightning-fast
+     * Redis(vs Memcached): extra database-features, persistence and the built-in data structures like lists and sets
+     * Cached Database Queries
+         * key: A hashed version of your query
+         * Downside: expiration, it is hard to delete a cached result when you cache a complex query, when one piece of data changes you need to delete all cached queries who may include that table cell
+     * Cached Objects
+ * Asynchronism
+     * Async 1: Doing the time-consuming work in advance and serving the finished work with a low request time. eg. turn dynamic content into static content
+     * Async 2: Handle tasks asynchronously. Backend have a queue of tasks or jobs that a worker can process; frontend constantly checks for new “job is done” signals
