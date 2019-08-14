@@ -99,3 +99,13 @@ am.AddArg(fileExt, 0);
 ```
 #include "CoreInterfaces/IDesignInstance.h"
 ```
+
+### 10. Unresolved external symbol in object files(Error LNK 2019 & 2021)
+```
+class AB_DLL_API CChild : public CBase
+{
+  //...
+};
+
+ref: https://stackoverflow.com/questions/31485095/linker-errors-dll-and-inheritance
+```
