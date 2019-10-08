@@ -106,6 +106,20 @@ class AB_DLL_API CChild : public CBase
 {
   //...
 };
-
-ref: https://stackoverflow.com/questions/31485095/linker-errors-dll-and-inheritance
 ```
+> ref: https://stackoverflow.com/questions/31485095/linker-errors-dll-and-inheritance
+
+
+### 11. Port to Linux 
+```
+#ifdef PC_ANSOFT
+    exePath.append("\\ansysedt.exe\" ");
+#else
+    exePath.append("/ansysedt\" ");
+#endif
+```
+### 12. Dlg not open in .dll
+```
+AFX_MANAGE_STATE(AfxGetAppModuleState());
+```
+> ref: https://stackoverflow.com/questions/9062034/what-does-afx-manage-stateafxgetstaticmodulestate-do-exactly/9443848
