@@ -21,9 +21,9 @@
 > ref: https://blog.csdn.net/mxsgoden/article/details/8821936
 
 ### 5. 加密算法
-对称密钥: DES、RC4,RC5, AES
-非对称密钥: RSA
-哈希算法: MD5, SHA-1，SHA-2(SHA-256，SHA-512)
+* 对称密钥: DES、RC4,RC5, AES
+* 非对称密钥: RSA
+* 哈希算法: MD5, SHA-1，SHA-2(SHA-256，SHA-512)
 
 ### 6. 调用约定
 * stdcall: 1) 参数从右向左压入堆栈; 2) 函数自身修改堆栈; 3) 函数名自动加前导的下划线，后面紧跟一个@符号，其后紧跟着参数的尺寸
