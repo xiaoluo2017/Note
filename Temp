@@ -31,8 +31,3 @@
 * fastcall: 1) 函数的第一个和第二个DWORD参数（或者尺寸更小的）通过ecx和edx传递，其他参数通过从右向左的顺序压栈; 2)被调用函数清理堆栈; 3)函数名修改规则同stdcall
 * thiscall: 1) 参数从右向左入栈; 2) 如果参数个数确定，this指针通过ecx传递给被调用者; 如果参数个数不确定，this指针在所有参数压栈后被压入堆栈; 3) 对参数个数不定的，调用者清理堆栈，否则函数自己清理堆栈。
 > ref: https://blog.csdn.net/u010852680/article/details/78316633
-
-数据段（data segment）: 存放程序中已初始化且不为0的全局变量的一块内存区域
-BSS段（bss segment）: 存放程序中未初始化的全局变量的一块内存区域
-
-https://www.programmerinterview.com/data-structures/difference-between-stack-and-heap/
