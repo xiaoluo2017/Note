@@ -24,6 +24,7 @@
 * 对称密钥: DES、RC4,RC5, AES
 * 非对称密钥: RSA
 * 哈希算法: MD5, SHA-1，SHA-2(SHA-256，SHA-512)
+> ref: https://www.jianshu.com/p/bf1d7eee28d0
 
 ### 6. 调用约定
 * stdcall: 1) 参数从右向左压入堆栈; 2) 函数自身修改堆栈; 3) 函数名自动加前导的下划线, 后面紧跟一个@符号, 其后紧跟着参数的尺寸
@@ -94,32 +95,14 @@ int sem_timedwait(sem_t *sem, const struct timespec *abs_timeout)
 * 信号量vs互斥锁
     * 信号量：对一个进程加锁, 可以不断加锁, 设置一个标记a == 0, a++; 解锁的时候a--, 当a == 0时可以继续进行; 应用场景：生产者-消费者模型; 使用场景: 操作系统分配多个打印任务时
     * 互斥锁：当一个进程把持资源时, 其他进程不能访问此资源, 此特性代表了此资源一次只能被一个进程利用, 使用场景: 文本的写入
-
-### 8. sizeof(struct A)
-* 每个结构体成员的起始地址为该成员大小的整数倍, 即int型成员的起始地址只能为0、4、8等
-> ref: https://blog.csdn.net/RadianceBlau/article/details/60867307
-
-### 9. TCP UDP
+    
+### 8. TCP UDP
 > ref: https://www.quora.com/What-is-the-difference-between-HTTP-protocol-and-TCP-protocol
 
-### 10. 二维数组
-```
-int a[2][2]={1, 2, 3}; // true
-int a[2][2]={{1}, {2}};
-int a[2][2]={{1}, 2, 3};
-int a[3][2]={{1}, 2, 3, {4}};
-int a[3][2]={{1}, 2, {4}}; // false
+TCP网络编程中connect()、listen()和accept()
+> ref: https://blog.csdn.net/lianghe_work/article/details/46443691
 
-int a[][2]={1, 2, 3}; // true
-int a[][2]={{1}, {2}}; 
-int a[][2]={{1}, 2, 3};
-int a[][2]={{1}, 2, 3, {4}};
-int a[][2]={{1}, 2, {4}}; // false
-
-int a[2][]={{1,2},{3,4}} // false
-```
-
-### 10. TCP的流量控制 拥塞控制
+### 9. TCP的流量控制 拥塞控制
 * 流量控制: 滑动窗口
 
 * 拥塞控制: 慢开始、拥塞避免、快重传、快恢复
@@ -147,15 +130,27 @@ int a[2][]={{1,2},{3,4}} // false
     * 重新进入慢启动过程;
 > ref: http://www.voidcn.com/article/p-vrdkquop-ms.html
 
-### 11. 悲观锁与乐观锁
-* 乐观锁: 版本号机制, CAS算法
-* 乐观锁的缺点: ABA问题; 自旋CAS(不成功就一直循环执行直到成功)
-> ref: https://zhuanlan.zhihu.com/p/40211594
+### 10. 二维数组
+```
+int a[2][2]={1, 2, 3}; // true
+int a[2][2]={{1}, {2}};
+int a[2][2]={{1}, 2, 3};
+int a[3][2]={{1}, 2, 3, {4}};
+int a[3][2]={{1}, 2, {4}}; // false
 
-### 12. KMP
+int a[][2]={1, 2, 3}; // true
+int a[][2]={{1}, {2}}; 
+int a[][2]={{1}, 2, 3};
+int a[][2]={{1}, 2, 3, {4}};
+int a[][2]={{1}, 2, {4}}; // false
+
+int a[2][]={{1,2},{3,4}} // false
+```
+
+### 11. KMP
 > ref: http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html
 
-### 13. 函数参数入栈顺序
+### 12. 函数参数入栈顺序
 * 参数入栈时顺序从右向左入栈
 * 入栈前先把参数列表里的表达式算一遍得到表达式的结果, 最后再把这些运算结果统一入栈
 * ++运算符直接从变量a所在的内存地址中取值
@@ -173,10 +168,9 @@ int main(){
     f(i++, ++i, i, i++); // 2 3 3 0
 }
 ```
-
 > ref: https://blog.csdn.net/xidiancoder/article/details/49160317
 
-### 14. 父子进程
+### 13. 父子进程
 * 子进程从父进程继承了: 
     * 当前工作目录, 根目录
     * 环境, 堆栈, 共享内存
@@ -188,10 +182,12 @@ int main(){
     * 进程号PID, 各自的父进程号
     * 子进程不继承父进程的进程正文, 数据和其它锁定内存
     * 不继承异步输入和输出
-    
 > ref: https://blog.csdn.net/carl_wu_/article/details/77976020 https://blog.csdn.net/koudaidai/article/details/8014782
 
-### 15. sizeof class
+### 14. sizeof struct/sizeof class
+* 每个结构体成员的起始地址为该成员大小的整数倍, 即int型成员的起始地址只能为0、4、8等
+> ref: https://blog.csdn.net/RadianceBlau/article/details/60867307
+
 * 遵循结构体的对齐原则
 * 类的大小与普通数据成员有关, 与成员函数和静态成员无关: 即普通成员函数, 静态成员函数, 静态数据成员, 静态常量数据成员均对类的大小无影响
 * 虚函数对类的大小有影响, 是因为虚函数表指针带来的影响
@@ -202,17 +198,85 @@ int main(){
 * 空类的大小为1
     * 当子类继承空类后, 子类如果有自己的数据成员, 则空基类的一个字节并不会加到子类中去
     * 一个类包含一个空类对象数据成员, 空类的1字节是会被计算进去(需要字节对齐)
-    
 > ref: https://blog.csdn.net/fengxinlinux/article/details/72836199
 
-### 16. 扇区 簇 块 页
+### 15. 扇区 簇 块 页
 * 扇区：扇区是磁盘最小的物理存储单元, 硬盘不是一次读写一个字节而是一次读写一个扇区（512个字节）
 * 簇：系统读读写文件的基本单位, 一般为2的n次方个扇区(由文件系统决定), 每个簇或者块可以包括2、4、8、16、32、64…2的n次方个扇区; 操作系统规定一个簇中只能放置一个文件的内容
 * 原因: 读取方便, 由于扇区的数量比较小, 数目众多在寻址时比较困难, 所以操作系统就将相邻的扇区组合在一起, 形成一个块, 再对块进行整体的操作
 * 块/页: 与内存操作，是虚拟一个页的概念来作为最小单位。与硬盘打交道，就是以块为最小单位。
-
 > ref: https://blog.csdn.net/qq_34228570/article/details/80209748
 
-### 17. 子网掩码 
+### 16. 进程状态
+> ref: https://blog.csdn.net/qicheng777/article/details/77427157
 
-> ref: https://baike.baidu.com/item/%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81
+### 17. 初始化列表
+```
+class A
+{
+public:
+    A() {cout<<"A"<<endl;}
+    ~A() {cout<<"~A"<<endl;}
+    
+    A(const A& a) // 拷贝构造函数
+    {
+        cout << "Copy constructor for A" << endl ;
+    }
+
+    A& operator = (const A& a) // 赋值运算符
+    {
+        cout << "assignment for A" << endl ;
+        return *this;
+    }
+};
+
+class C
+{
+public:
+    C() {cout<<"C"<<endl;}
+    ~C() {cout<<"~C"<<endl;}
+};
+
+class D
+{
+public:
+    D() {cout<<"D"<<endl;}
+    ~D() {cout<<"~D"<<endl;}
+    
+    D(const D& d) // 拷贝构造函数
+    {
+        cout << "Copy constructor for D" << endl ;
+    }
+
+    D& operator = (const D& d) // 赋值运算符
+    {
+        cout << "assignment for D" << endl ;
+        return *this;
+    }
+};
+
+class B : public A
+{
+public:
+    B(D& d, A& a, C& c) : _c(c),  _a(a)
+    { 
+        _d = d;
+        cout<<"B"<<endl; 
+    }
+    ~B() { cout<<"~B"<<endl; }
+private:
+    D _d;
+    A _a;
+    C _c;
+};
+
+int main()
+{
+    A a;
+    C c;
+    D d;
+    B b(d, a, c);
+    return 0;
+}
+```
+> ref: https://www.cnblogs.com/graphics/archive/2010/07/04/1770900.html
