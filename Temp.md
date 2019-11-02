@@ -15,9 +15,12 @@
 ### 4. process vs thread
 * 一个程序至少有一个进程,一个进程至少有一个线程
 * 一个进程崩溃后, 在保护模式下不会对其它进程产生影响; 一个线程死掉就等于整个进程死掉
-* 地址空间为每个进程所私有的; 线程有自己的堆栈和局部变量, 但线程之间没有单独的地址空间(共享进程的地址空间)
-* 进程切换时, 耗费资源较大
-* 总线程数 <= CPU数量: 并行运行; 总线程数 > CPU数量: 并发运行
+* 地址空间为每个进程所私有的; 线程有自己的堆栈和局部变量, 但线程共享进程的地址空间(线程之间没有单独的地址空间)
+    * 速度：线程产生的速度快, 线程间的通讯快、切换快等, 因为他们在同一个地址空间内
+    * 资源利用率：线程的资源利用率比较好也是因为他们在同一个地址空间内
+    * 同步问题：线程使用公共变量/内存时需要使用同步机制还是因为他们在同一个地址空间内
+* 线程执行开销小, 但不利于资源管理和保护；而进程正相反, 进程切换时, 耗费资源较大
+* 总线程数 <= CPU数量: 并行运行; 总线程数 > CPU数量: 并发运行 
 > ref: https://blog.csdn.net/mxsgoden/article/details/8821936
 
 ### 5. 加密算法
@@ -130,7 +133,18 @@ TCP网络编程中connect()、listen()和accept()
     * 重新进入慢启动过程;
 > ref: http://www.voidcn.com/article/p-vrdkquop-ms.html
 
-### 10. 二维数组
+### 10. 一维 二维数组
+```
+int a[] = {1, 2, 3, 4, 5, 6, 7, 8};
+int b[8];
+int* c = new int[8];
+
+cout << sizeof(a)/sizeof(a[0]) << endl; // 8
+cout << sizeof(b)/sizeof(b[0]) << endl; // 8
+cout << sizeof(c)/sizeof(c[0]) << endl; // 2
+cout << sizeof(*c)/sizeof(c[0]) << endl; // 1
+```
+
 ```
 int a[2][2]={1, 2, 3}; // true
 int a[2][2]={{1}, {2}};
@@ -145,6 +159,29 @@ int a[][2]={{1}, 2, 3, {4}};
 int a[][2]={{1}, 2, {4}}; // false
 
 int a[2][]={{1,2},{3,4}} // false
+// *(a[2] + 1) == *(*(a + 2) + 1) == a[2][1]
+```
+
+```
+int a[][2]={{1}, 2, 3, {4}};
+// 相当于int ** a
+
+cout << &a[0][0] << endl;
+cout << *a << endl; // address of a[0][0], 步长1
+cout << a << endl; // address of a[0][0], 步长2
+cout << &a << endl; // address of a[0][0], 步长6
+
+cout << *a + 1 << endl; // address of a[0][1]
+cout << &a[0][1] << endl;
+
+cout << a + 1 << endl; // address of a[0][2]
+cout << &a[0][2] << endl;
+
+cout << &a + 1 << endl; // address of after a[2][1]
+cout << &a[2][1] << endl; 
+
+int* p = (int*)(&a + 1);
+cout << *(p - 2) << endl; // 4
 ```
 
 ### 11. KMP
@@ -280,3 +317,124 @@ int main()
 }
 ```
 > ref: https://www.cnblogs.com/graphics/archive/2010/07/04/1770900.html
+
+### 18. copy constructor
+```
+class A 
+{
+public:
+    int i;
+};
+
+class B 
+{
+A *p;
+public:
+
+    /*
+    B(const B& b){
+        p = b.p;
+    }*/ 
+    // 编译器在生成default copy construction的时候使用的bitwise copy语义，也就是只是简单的浅拷贝
+    
+    B(const B& b) // 拷贝构造函数
+    {
+        p = new A;
+        p->i = b.p->i; 
+        // *p = *(b.p);
+        // memcpy(p, b.p, sizeof(A));
+        cout << "Copy constructor for B" << endl ;
+    }
+    B(){
+        cout << "B" << endl ;
+        p = new A;
+    }
+    ~B(){
+        cout << "~B" << endl ;
+        delete p;
+    }
+};
+
+void f(B b){
+}
+
+int main(){
+   B b;
+   f(b);
+}
+```
+
+### 19. Copy constructor, Move constructor, Move assignment
+* 移动构造函数和移动赋值运算符重载函数不会隐式声明, 必须自己定义
+* 如果用户自定义了拷贝构造函数或者移动构造函数, 那么默认的构造函数将不会隐式定义, 如果用户需要, 也需要显式的定义
+* 移动构造函数不会覆盖隐式的拷贝构造函数
+* 移动赋值运算符重载函数不会覆盖隐式的赋值运算符重载函数
+* A move constructor is called:
+    * when an object initializer is std::move(something)
+    * when an object initializer is a temporary 当对象初始化程序是临时的
+    * when returning a function-local class object by value 当按值返回函数局部类对象时
+```
+class A
+{ 
+public:
+    A(){
+        cout << "A" << endl ;
+    }
+    
+    virtual ~A(){
+        cout << "~A" << endl ;
+    }
+    
+    A& operator=(const A& a) // 赋值运算符
+    {
+        cout << "assignment for A" << endl ;
+        return *this;
+    }
+    
+    A(const A& a) // 拷贝构造函数
+    {
+        cout << "Copy constructor for A" << endl ;
+    }
+    
+    A(A&& a)
+    {
+        cout << "Move constructor for A" << endl;
+    }
+    
+    A& operator=(A&& a) {
+        cout << "Move assignment for A" << endl;
+        return *this;
+    }
+};
+
+/* A f(A a) // copy //
+{  
+    A a2(a); // copy // copy
+    A a3 = a2; // copy // copy 
+    return a3; // //
+    // ~A for a, a2 // ~A for a, a2
+}
+
+int main(){
+    A a; // A
+    A a2 = f(f(a)); // 
+    // ~A for a, a2
+} */
+
+A RetByValue() {
+    A a;
+    return a; // Might call move ctor, or no ctor.
+}
+
+void TakeByValue(A a){};
+
+int main() {
+    A a1;
+    A a2 = a1; // copy ctor
+    A a3 = std::move(a1); // move ctor
+    TakeByValue(std::move(a2)); // Might call move ctor, or no ctor.
+    A a4 = RetByValue(); // Might call move ctor, or no ctor.
+    a1 = RetByValue(); // Calls move assignment, a::operator=(a&&)
+}
+```
+> ref: https://stackoverflow.com/questions/13125632/when-does-move-constructor-get-called
