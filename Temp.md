@@ -455,3 +455,8 @@ cout << sizeof(c1) << endl;
 cout << sizeof(c2) << endl;
 ```
 > ref: https://stackoverflow.com/questions/3263252/is-typedef-just-a-string-replacement-in-code-or-somethings-else
+
+### 21. InterruptedException异常
+当一个方法后面声明可能会抛出InterruptedException 异常时，说明该方法是可能会花一点时间，但是可以取消的方法: wait sleep join
+
+> ref: https://blog.csdn.net/derekjiang/article/details/4845757
