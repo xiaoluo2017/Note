@@ -173,8 +173,6 @@ cout << &a << endl; // address of a[0][0], 步长6
 
 cout << *a + 1 << endl; // address of a[0][1]
 cout << &a[0][1] << endl;
-// a++;
-// a为数组名时，可以当做一维指针进行取值运算, 但是由于数组名等同于常量指针, 所以不可以对数组名进行赋值运算; 所以当a为数组时, a = 任意表达式这样的计算都是非法的; 而a++, 等效于a = a+1, 所以这种表达式一样是非法的，编译的时候会报错
 
 cout << a + 1 << endl; // address of a[0][2]
 cout << &a[0][2] << endl;
@@ -440,3 +438,20 @@ int main() {
 }
 ```
 > ref: https://stackoverflow.com/questions/13125632/when-does-move-constructor-get-called
+
+### 20. #define typedef
+```
+#define INT_PTR int*
+typedef int* int_ptr;
+INT_PTR a1, a2;
+int_ptr b1 ,b2;
+int *c1, c2;
+
+cout << sizeof(a1) << endl;
+cout << sizeof(a2) << endl;
+cout << sizeof(b1) << endl;
+cout << sizeof(b2) << endl;
+cout << sizeof(c1) << endl;
+cout << sizeof(c2) << endl;
+```
+> ref: https://stackoverflow.com/questions/3263252/is-typedef-just-a-string-replacement-in-code-or-somethings-else
