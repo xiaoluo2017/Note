@@ -184,6 +184,32 @@ int* p = (int*)(&a + 1);
 cout << *(p - 2) << endl; // 4
 ```
 
+```
+int* p[3]; // 指针数组
+
+cout << p << endl;
+cout << p + 1 << endl; // 步长: 1 size: 8
+
+cout << &p << endl;
+cout << &p + 1 << endl; // 步长: 3 size: 8
+
+cout << *p << endl;
+cout << *p + 1 << endl; // 步长: 1 size: 4
+
+cout << **p << endl;
+cout << **p + 1 << endl; // value
+
+int (*p)[3]; // 数组指针 行指针
+cout << p << endl;
+cout << p + 1 << endl; // 步长: 3 size: 4
+
+cout << *p << endl;
+cout << *p + 1 << endl; // 步长: 1 size: 4
+
+cout << **p << endl;
+cout << **p + 1 << endl; // value
+```
+
 ### 11. KMP
 > ref: http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html
 
