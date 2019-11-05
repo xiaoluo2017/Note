@@ -133,7 +133,7 @@ TCP网络编程中connect()、listen()和accept()
     * 重新进入慢启动过程;
 > ref: http://www.voidcn.com/article/p-vrdkquop-ms.html
 
-### 10. 一维 二维数组
+### 10. 一维 二维
 ```
 int a[] = {1, 2, 3, 4, 5, 6, 7, 8};
 int b[8];
@@ -209,6 +209,7 @@ cout << *p + 1 << endl; // 步长: 1 size: 4
 cout << **p << endl;
 cout << **p + 1 << endl; // value
 ```
+* 数组名作为形参传入函数时，退化为指针
 
 ### 11. KMP
 > ref: http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html
@@ -486,3 +487,54 @@ cout << sizeof(c2) << endl;
 当一个方法后面声明可能会抛出InterruptedException 异常时，说明该方法是可能会花一点时间，但是可以取消的方法: wait sleep join
 
 > ref: https://blog.csdn.net/derekjiang/article/details/4845757
+
+### 22. 
+```
+#include <iostream>
+
+using namespace std;
+
+class Animal
+{
+public:
+    virtual void f()
+    {
+        cout<<"Animal"<<endl;
+    }
+};
+  
+class Cat : public Animal
+{
+public:
+    int mNum = 1;
+    void f() override
+    {
+        cout<<"Cat"<<endl;
+    }
+};
+  
+int main()
+{
+    Animal* a = new Animal(); 
+    cout << sizeof(*a) << endl; // 8
+    a->f(); // Animal
+    
+    Cat* c = (Cat*)(a);
+    cout << sizeof(*c) << endl; // 16
+    cout << c->mNum << endl; // not 1
+    c->f(); // Animal
+    delete a;
+  
+    c = new Cat();
+    cout << sizeof(*c) << endl; // 16
+    a = c;
+    cout << sizeof(*a) << endl; // 8
+    a->f(); // Cat
+    // cout << a->mNum << endl; // error
+    cout << c->mNum << endl; // 1
+    delete c;
+    
+    return 0;
+}
+
+```
