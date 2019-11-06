@@ -102,8 +102,13 @@ int sem_timedwait(sem_t *sem, const struct timespec *abs_timeout)
 ### 8. TCP UDP
 > ref: https://www.quora.com/What-is-the-difference-between-HTTP-protocol-and-TCP-protocol
 
-TCP网络编程中connect()、listen()和accept()
+* TCP网络编程中connect()、listen()和accept()
 > ref: https://blog.csdn.net/lianghe_work/article/details/46443691
+
+* TCP建立连接／断开连接状态
+Client: CLOSED->SYN_SENT->ESTABLISHED->FIN_WAIT_1->FIN_WAIT_2->TIME_WAIT->CLOSED
+Server: CLOSED->LISTEN->SYN_RCVD->ESTABLISHED->CLOSE_WAIT->LAST_ACK->CLOSED
+> ref: https://blog.csdn.net/Mary19920410/article/details/63711522
 
 ### 9. TCP的流量控制 拥塞控制
 * 流量控制: 滑动窗口
