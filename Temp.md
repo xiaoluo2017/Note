@@ -23,6 +23,10 @@ Client: CLOSED->SYN_SENT->ESTABLISHED->FIN_WAIT_1->FIN_WAIT_2->TIME_WAIT->CLOSED
 Server: CLOSED->LISTEN->SYN_RCVD->ESTABLISHED->CLOSE_WAIT->LAST_ACK->CLOSED
 > ref: https://blog.csdn.net/Mary19920410/article/details/63711522
 
+* 基于TCP的协议: FTP(文件传输协议), Telnet(远程登陆), SMTP(简单邮件传送协议), POP3(接收邮件)
+* 基于UDP的协议: SNMP(简单网络管理协议), OICQ(聊天)
+> ref: https://blog.csdn.net/yingxunren/article/details/4726376
+
 ### 5. TCP的流量控制 拥塞控制
 * 流量控制: 滑动窗口
 
