@@ -439,8 +439,59 @@ int main()
 }
 
 ```
+### 16. Java 引用传递 值传递
+值传递: 原始类型
+引用传递: 对象
+immutable类型: 没有提供自身修改的函数, 每次操作都是新生成一个对象, 所以要特殊对待, 可以认为是传值 eg. String, Integer, Double. 
+```
+public class Main {
+    public static void f(String str, char ch[], int i1, Integer i2, Obj o1, Obj o2){
+        str="change";
+        ch[0]='c';
+        i1 = 18;
+        i2 = 18;
 
-### 16. 锁
+        Obj o = new Obj();
+        o.setA(18);
+        o1 = o;
+
+        o2.setA(18);
+    }
+    
+    public static void main(String[] args) {
+        String str = new String("str");
+        char[] ch={'a', 'b', 'c'};
+        Integer i1 = 0;
+        int i2 = 0;
+        Obj o1 = new Obj();
+        Obj o2 = new Obj();
+        f(str, ch, i1, i2, o1, o2);
+        
+        System.out.println(str); // str
+        System.out.println(String.valueOf(ch)); // cbc
+        System.out.println(i1); // 0
+        System.out.println(i2); // 0
+        System.out.println(o1.getA()); // 0
+        System.out.println(o2.getA()); // 18
+    }
+	
+
+}
+
+class Obj {
+    private int a = 0;
+
+    public void setA(int a){
+        this.a = a;
+    }
+
+    public int getA(){
+        return a;
+    }
+}
+```
+
+### 17. 锁
 * mutex（互斥锁): 
     * 同一时间, 锁只有一把, 如果线程A加锁正在访问资源, 这时B尝试加锁, 就会阻塞;
     * 不加锁也可以访问数据 eg. 线程A加锁了正在访问资源, 这时B不加锁也可以直接访问数据
