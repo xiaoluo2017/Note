@@ -491,7 +491,61 @@ class Obj {
 }
 ```
 
-### 17. 锁
+### 17. static
+* 全局变量/函数 static全局变量/函数 方法中的static变量
+    * 全局变量/函数的作用域是整个源程序(.h), 当一个源程序(.h)由多个源文件组成时, 全局变量/函数在各个源文件中都有效; 全局变量在.h中用extern声明, .cpp中定义
+    * static全局变量/函数限制了其作用域, 即只在定义该变量/函数的源文件内有效, 在同一源程序的其它源文件中不能使用; 对其它源文件(.h)隐藏, 利用这一特性可以在不同的文件中定义同名函数和同名变量
+    * 方法中的static变量, 会在程序刚开始运行时就完成初始化, 也是唯一的一次初始化; 保持变量内容的持久
+* static成员变量
+    * 不可在.h文件内, 类初始化列表进行初始化; .h类内声明,.cpp类外定义, 默认初始值为0
+    * 调用方法: A::si; a.si;
+* static成员方法
+    * 只能使用static变量
+    * 调用方法: A::sf(); a.sf();
+```
+// .h
+class A
+{
+public:
+    A();
+    static void sf_setA(int i);
+    static int sf_getA();
+private:
+    int mi;
+    static int si;
+};
+
+// .cpp
+int A::si;
+
+A::A() //: si(7) // error: static data member can only be initialized at its definition
+{
+    si = 7;
+}
+
+void A::sf_setA(int i) 
+{
+    // mi = 18; // error: 如果要改变i的值, 需传入A类型对象
+    si = i;
+}
+
+int A::sf_getA() 
+{
+    return si;
+}
+
+int main() {
+    std::cout << A::sf_getA() << endl; // 0
+    A a;
+    std::cout << A::sf_getA() << endl; // 7
+    A::sf_setA(18);
+    std::cout << A::sf_getA() << endl; // 18
+}
+```
+    
+> ref: https://www.cnblogs.com/stoneJin/archive/2011/09/21/2183313.html
+
+### 18. 锁
 * mutex（互斥锁): 
     * 同一时间, 锁只有一把, 如果线程A加锁正在访问资源, 这时B尝试加锁, 就会阻塞;
     * 不加锁也可以访问数据 eg. 线程A加锁了正在访问资源, 这时B不加锁也可以直接访问数据
