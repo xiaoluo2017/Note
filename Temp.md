@@ -6,10 +6,12 @@
 
 ### 3. stack vs heap
 * code segment
-* data segment(数据段): 存放程序中已初始化且不为0的全局/静态变量的一块内存区域
-* bss segment(BSS段): 存放程序中未初始化的全局/静态变量的一块内存区域
+* 全局区(c里面才划分为data segment/bss segment)
+    * data segment(数据段): 存放程序中已初始化且不为0的全局/静态变量的一块内存区域
+    * bss segment(BSS段): 存放程序中未初始化的全局/静态变量的一块内存区域
 * stack: local variable, method parameter
 * heap：new, malloc, calloc, realloc
+* 常量区
 > ref: https://blog.csdn.net/billcyj/article/details/78783741
     
 ### 4. TCP UDP
