@@ -41,12 +41,12 @@ Server: CLOSED->LISTEN->SYN_RCVD->ESTABLISHED->CLOSE_WAIT->LAST_ACK->CLOSED
     * 发送方维持着一个拥塞窗口cwnd(congestion window)
     * cwnd初始化为1个最大报文段(MSS)大小
     * cwnd的值就随着网络往返时间(Round trip time，RTT)呈指数级增长(cwnd *= 2)
-    * 如果宽带为W，那么经过RTT*log2W时间就可以占满带宽
+    * 如果宽带为W, 那么经过RTT*log2W时间就可以占满带宽
 * 拥塞避免: cwnd += 1
     * 慢启动门限（ssthresh）
-    * 当cwnd < ssthresh时, 使用慢开始算法。
-    * 当cwnd > ssthresh时, 改用拥塞避免算法。(cwnd += 1)
-    * 当cwnd = ssthresh时, 慢开始与拥塞避免算法任意。
+    * 当cwnd < ssthresh时, 使用慢开始算法
+    * 当cwnd > ssthresh时, 改用拥塞避免算法(cwnd += 1)
+    * 当cwnd = ssthresh时, 慢开始与拥塞避免算法任意
 * 快重传
     * 发送方只要一连收到三个重复确认就应当立即重传对方尚未收到的报文段, 而不必继续等待设置重传计时器时间到期。
 * 快恢复
@@ -136,12 +136,12 @@ cout << **p + 1 << endl; // value
 * 数组名作为形参传入函数时，退化为指针
 
 ### 7. process vs thread
-* 一个程序至少有一个进程,一个进程至少有一个线程
+* 一个程序至少有一个进程, 一个进程至少有一个线程
 * 一个进程崩溃后, 在保护模式下不会对其它进程产生影响; 一个线程死掉就等于整个进程死掉
 * 地址空间为每个进程所私有的; 线程有自己的堆栈和局部变量, 但线程共享进程的地址空间(线程之间没有单独的地址空间)
-    * 速度：线程产生的速度快, 线程间的通讯快、切换快等, 因为他们在同一个地址空间内
-    * 资源利用率：线程的资源利用率比较好也是因为他们在同一个地址空间内
-    * 同步问题：线程使用公共变量/内存时需要使用同步机制还是因为他们在同一个地址空间内
+    * 速度: 线程产生的速度快, 线程间的通讯快/切换快等, 因为他们在同一个地址空间内
+    * 资源利用率: 线程的资源利用率比较好也是因为他们在同一个地址空间内
+    * 同步问题: 线程使用公共变量/内存时需要使用同步机制还是因为他们在同一个地址空间内
 * 线程执行开销小, 但不利于资源管理和保护；而进程正相反, 进程切换时, 耗费资源较大
 * 总线程数 <= CPU数量: 并行运行; 总线程数 > CPU数量: 并发运行 
 > ref: https://blog.csdn.net/mxsgoden/article/details/8821936
@@ -547,7 +547,48 @@ int main() {
     
 > ref: https://www.cnblogs.com/stoneJin/archive/2011/09/21/2183313.html
 
-### 18. 锁
+### 18. Java GC
+* 根搜索算法
+   * 通过一系列名为"GC Roots"的对象作为起始点, 寻找对应的引用节点
+   * 找到这些引用节点后, 从这些节点开始向下继续寻找它们的引用节点
+   * 搜索所走过的路径称为引用链, 当一个对象到GC Roots没有任何引用链相连时, 就证明此对象是不可用的
+   * GC根对象包括：
+     * 虚拟机栈中引用的对象(栈帧中的本地变量表);
+     * 方法区中的常量引用的对象;
+     * 方法区中的类静态属性引用的对象;
+     * 本地方法栈中JNI（Native方法）的引用对象;
+     * 活跃线程
+* 分配区域
+   * Young Generation: 新生代内存按照8:1:1的比例分为一个Eden区和两个Survivor(Survivor0,Survivor1)区
+   * Old Generation: 内存比新生代也大很多(大概比例是1:2)
+   * Permanent Generation(永久代)/MetaSpace(元空间): 用于存放静态文件（class类、方法）和常量等; 对永久代的回收主要回收两部分内容：废弃常量和无用的类。
+* GC过程
+    * 对象优先在Eden分配
+    * 当新对象生成, Eden Space申请失败(因为空间不足等): 发起一次GC(Minor GC/Scavenge GC) eg.复制算法; 回收时将Eden区存活对象复制到Survivor0区，然后清空Eden区
+    * Survivor0区也存放满了时: 将Eden区和Survivor0区存活对象复制到另一个Survivor1区, 然后清空Eden和这个Survivor0区, 此时Survivor0区是空的, 然后将Survivor0区和Survivor1区交换, 即保持Survivor1区为空, 如此往复
+    * Survivor1区不足以存放Eden和Survivor0的存活对象时: 将存活对象直接存放到老年代
+    * 老年代满了: 触发一次Major GC/Full GC(速度一般会比Minor GC慢10倍以上) eg.标记—清除算法/标记—整理算法, 新生代、老年代都进行回收
+    * 长期存活的对象将进入老年代: 对象年龄达到15岁, 移动到老年代中(当对象在Survivor区躲过一次GC的话, 其对象年龄便会加1)
+    * 大对象直接进入老年代, 大对象是指需要大量连续存储空间的对象 eg.大数组
+* GC
+    * Serial New收集器: 针对新生代的收集器, 采用的是复制算法
+    * Parallel New(并行)收集器: 新生代采用复制算法, 老年代采用标记整理
+    * Parallel Scavenge(并行)收集器: 针对新生代, 采用复制收集算法
+    * Serial Old(串行)收集器: 新生代采用复制, 老年代采用标记整理
+    * Parallel Old(并行): 收集器, 针对老年代, 标记整理
+    * CMS收集器: 基于标记清理
+    * G1收集器: 整体上是基于标记整理, 局部采用复制
+> ref: https://www.jianshu.com/p/5261a62e4d29
+
+### 19. HTTP GET POST PUT DELETE
+* URL全称是资源描述符
+* GET和POST本质上就是TCP链接, 并无差别。但是由于HTTP的规定和浏览器/服务器的限制，导致他们在应用过程中体现出一些不同 
+* GET参数包含在URL中, POST通过request body传递参数
+* GET请求在URL中传送的参数是有长度限制的(约2k), 而POST没有
+* GET比POST更不安全, 因为参数直接暴露在URL上, 所以不能用来传递敏感信息
+https://www.oschina.net/news/77354/http-get-post-different
+
+### 20. 锁
 * mutex（互斥锁): 
     * 同一时间, 锁只有一把, 如果线程A加锁正在访问资源, 这时B尝试加锁, 就会阻塞;
     * 不加锁也可以访问数据 eg. 线程A加锁了正在访问资源, 这时B不加锁也可以直接访问数据
@@ -566,10 +607,10 @@ int pthread_mutex_unlock(pthread_mutex_t* mutex); // mutex++
     * 当读写锁是读模式加锁时, 其它线程以读模式加锁都会成功, 但是线程以写模式加锁会阻塞;
     * 当读写锁是写模式加锁时, 直到解锁前，其它线程加锁都会被阻塞;
     * 当读写锁是读模式加锁时, 其它线程既有试图以写模式加锁的线程，也有试图以读模式加锁的线程, 这时读写锁会阻塞在写模式加锁请求之后的读模式加锁请求, 优先满足写模式
-    
+
 ```
 int pthread_rwlock_init(pthread_rwlock_t* rwlock, const pthread_rwlockattr_t* attr);
-// attr：表示读写锁属性，通常使用默认属性，传NULL就行了
+// attr: 表示读写锁属性, 通常使用默认属性, 传NULL就行了
 int pthread_rwlock_destroy(pthread_rwlock_t* rwlock);
 int pthread_rwlock_rdlock(pthread_rwlock_t* rwlock);
 int pthread_rwlock_wrlock(pthread_rwlock_t* rwlock);
@@ -598,7 +639,7 @@ int pthread_cond_broadcast(pthread_cond_t *cond);
 ```
 int sem_init(sem_t *sem, int pshared, unsigned int value)
 
-int sem_init(sem_t *sem, int pshared, unsigned int value) // pshared:取0代表用于线程间，取非0代表用于进程间； value:该参数指定信号量初值
+int sem_init(sem_t *sem, int pshared, unsigned int value) // pshared:取0代表用于线程间, 取非0代表用于进程间; value: 该参数指定信号量初值
 int sem_destroy(sem_t *sem)
 int sem_wait(sem_t *sem) // == sem--
 int sem_post(sem_t *sem) // == sem++
@@ -607,5 +648,5 @@ int sem_timedwait(sem_t *sem, const struct timespec *abs_timeout)
 ```
 
 * 信号量vs互斥锁
-    * 信号量：对一个进程加锁, 可以不断加锁, 设置一个标记a == 0, a++; 解锁的时候a--, 当a == 0时可以继续进行; 应用场景：生产者-消费者模型; 使用场景: 操作系统分配多个打印任务时
-    * 互斥锁：当一个进程把持资源时, 其他进程不能访问此资源, 此特性代表了此资源一次只能被一个进程利用, 使用场景: 文本的写入
+    * 信号量: 对一个进程加锁, 可以不断加锁, 设置一个标记a == 0, a++; 解锁的时候a--, 当a == 0时可以继续进行; 应用场景: 生产者-消费者模型; 使用场景: 操作系统分配多个打印任务时
+    * 互斥锁: 当一个进程把持资源时, 其他进程不能访问此资源, 此特性代表了此资源一次只能被一个进程利用, 使用场景: 文本的写入
