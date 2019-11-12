@@ -25,8 +25,13 @@
     * Server: CLOSED->LISTEN->SYN_RCVD->ESTABLISHED->CLOSE_WAIT->LAST_ACK->CLOSED
 > ref: https://blog.csdn.net/Mary19920410/article/details/63711522
 
-* 基于TCP的协议: FTP(文件传输协议), Telnet(远程登陆), SMTP(简单邮件传送协议), POP3(接收邮件)
-* 基于UDP的协议: SNMP(简单网络管理协议), OICQ(聊天)
+* 应用层协议
+    * DNS: 主要用UDP, 但是当请求字节过长超过512字节时用TCP协议, 将其分割成多个片段传输
+    * 基于TCP的协议: FTP(文件传输协议), Telnet(远程登陆), SMTP(简单邮件传送协议), POP3(接收邮件)
+    * 基于UDP的协议: SNMP(简单网络管理协议), OICQ(聊天)
+* 传输层协议: TCP, UDP
+* 网络层协议: IP, ICMP, RIP
+* 数据链路层协议: ARP, RARP
 > ref: https://blog.csdn.net/yingxunren/article/details/4726376
 
 ### 5. TCP的流量控制 拥塞控制
