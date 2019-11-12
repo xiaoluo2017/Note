@@ -21,8 +21,8 @@
 > ref: https://blog.csdn.net/lianghe_work/article/details/46443691
 
 * TCP建立连接／断开连接状态
-Client: CLOSED->SYN_SENT->ESTABLISHED->FIN_WAIT_1->FIN_WAIT_2->TIME_WAIT->CLOSED
-Server: CLOSED->LISTEN->SYN_RCVD->ESTABLISHED->CLOSE_WAIT->LAST_ACK->CLOSED
+    * Client: CLOSED->SYN_SENT->ESTABLISHED->FIN_WAIT_1->FIN_WAIT_2->TIME_WAIT->CLOSED
+    * Server: CLOSED->LISTEN->SYN_RCVD->ESTABLISHED->CLOSE_WAIT->LAST_ACK->CLOSED
 > ref: https://blog.csdn.net/Mary19920410/article/details/63711522
 
 * 基于TCP的协议: FTP(文件传输协议), Telnet(远程登陆), SMTP(简单邮件传送协议), POP3(接收邮件)
