@@ -34,9 +34,12 @@ cout << sizeof(c2) << endl;
 * 哈希算法: MD5, SHA-1，SHA-2(SHA-256，SHA-512)
 > ref: https://www.jianshu.com/p/bf1d7eee28d0
 
-### 7. HTTP 1.0 vs HTTP 1.1
+### 7. HTTP 1.0 1.1 2.0
 HTTP 1.1支持长连接; 流水线; host字段; 100(Continue) Status; Chunked transfer-coding; cache
 > ref: https://www.jianshu.com/p/95a521b006a8
+
+HTTP 2.0采用二进制格式而非文本格式;是完全多路复用, 而非有序并阻塞, 只需一个连接即可实现并行; 使用报头压缩, 降低了开销; 服务器可以将响应主动"推送"到客户端缓存中
+> ref: https://www.cnblogs.com/frankyou/p/6145485.html
 
 ### 8. 调用约定
 * stdcall: 1) 参数从右向左压入堆栈; 2) 函数自身修改堆栈; 3) 函数名自动加前导的下划线, 后面紧跟一个@符号, 其后紧跟着参数的尺寸
