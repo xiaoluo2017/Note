@@ -17,52 +17,58 @@ for (std::unordered_map<string, int>::iterator it = m.begin(); it != m.end(); it
 ```
 
 ### 2. copy constructor, assignment, move constructor, move assignment
-// 未完成
 ```
-class B
-{
-public:
-    B() { cout << "B()" << endl; }
-    
-    B(int i) 
-    { 
-        cout << "B(int " + std::to_string(i) + ")" << endl; 
-        m_pi = new int(i);
-    }
-    
-    virtual ~B() { cout << "~B" << endl; }
-private:
-    int* m_pi;
-};
+class B {};
 
 class A
 {
 public:
-    A(int i) { 
-        cout << "A" << endl; 
-        b = new B(i);
-    }
-    
-    virtual ~A() { 
-        cout << "~A" << endl; 
-        delete b;
-    }
+    A() { b = new B(); }
+    virtual ~A() { delete b; }
     
     A(const A& a) 
     {  
-        cout << "A copy constructor" << endl; 
         b = new B;
         *b = *(a.b);
+    }
+    
+    A& operator= (const A& a)
+    {
+        if (this != &a)
+        {
+            (*b) = *(a.b);
+        }
+        return *this;
+    }
+    
+    A(A&& a)
+    {
+        b = a.b;
+        a.b = nullptr;
+    }
+    // A(A&& a) : b(std::exchange(a.b, nullptr)) {}
+    
+    A& operator= (A&& a)
+    {
+        if (b != nullptr)
+        {
+            delete b;
+        }
+        b = a.b;
+        a.b = nullptr;
+        return *this;
     }
 private:
     B* b;
 };
-
-void f(A a) {}
-
-int main() {
-    A a(18);
-    f(a);
-    cout << "Hello World" << endl;
-}
 ```
+assignment
+> ref: https://www.geeksforgeeks.org/assignment-operator-overloading-in-c/
+
+move constructor:
+> ref: https://www.quora.com/How-do-you-write-a-move-constructor-in-C
+
+move assignment
+> ref: https://www.quora.com/In-C-how-do-you-write-a-move-assignment-operator
+> ref: https://stackoverflow.com/questions/9322174/move-assignment-operator-and-if-this-rhs
+
