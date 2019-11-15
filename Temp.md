@@ -608,61 +608,37 @@ https://www.oschina.net/news/77354/http-get-post-different
 * mutex（互斥锁): 
     * 同一时间, 锁只有一把, 如果线程A加锁正在访问资源, 这时B尝试加锁, 就会阻塞;
     * 不加锁也可以访问数据 eg. 线程A加锁了正在访问资源, 这时B不加锁也可以直接访问数据
-
-```
-// pthread_mutex_t变量类型是一个结构体, 可以简单理解成整数, 只有1或者0两个取值, 初始值为0
-int pthread_mutex_init(pthread_mutex_t* mutex, const pthread_mutexattr_t* attr); 
-int pthread_mutex_destroy(pthread_mutex_t* mutex);
-int pthread_mutex_lock(pthread_mutex_t* mutex); // mutex--
-int pthread_mutex_trylock(pthread_mutex_t* mutex); 
-int pthread_mutex_unlock(pthread_mutex_t* mutex); // mutex++
-// 当解锁成功时, 该函数会把阻塞在该锁上的所有线程全部唤醒, 之后哪个线程抢到锁继续执行, 就是调度优先级的问题了, 默认是先阻塞的先唤醒
-```
-
 * 读写锁: 写独占, 读共享; 写锁优先级高; 读写锁特别适用于读的次数远大于写的情况
     * 当读写锁是读模式加锁时, 其它线程以读模式加锁都会成功, 但是线程以写模式加锁会阻塞;
     * 当读写锁是写模式加锁时, 直到解锁前，其它线程加锁都会被阻塞;
     * 当读写锁是读模式加锁时, 其它线程既有试图以写模式加锁的线程，也有试图以读模式加锁的线程, 这时读写锁会阻塞在写模式加锁请求之后的读模式加锁请求, 优先满足写模式
-
-```
-int pthread_rwlock_init(pthread_rwlock_t* rwlock, const pthread_rwlockattr_t* attr);
-// attr: 表示读写锁属性, 通常使用默认属性, 传NULL就行了
-int pthread_rwlock_destroy(pthread_rwlock_t* rwlock);
-int pthread_rwlock_rdlock(pthread_rwlock_t* rwlock);
-int pthread_rwlock_wrlock(pthread_rwlock_t* rwlock);
-int pthread_rwlock_unlock(pthread_rwlock_t* rwlock);
-int pthread_rwlock_tryrdlock(pthread_rwlock_t* rwlock);
-int pthread_rwlock_trywrlock(pthread_rwlock_t* rwlock);
-```
-
-* 死锁
 * 条件变量
-
-```
-int pthread_cond_init(pthread_cond_t *restrict cond, const pthread_condattr_t *restrict attr); 
-int pthread_cond_destroy(pthread_cond_t *restrict cond);
-int pthread_cond_wait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex);
-int pthread_cond_timewait(pthread_cond_t *restrict cond, pthread_mutex_t *restrict mutex, const struct timespec *restirct abstime);
-int pthread_cond_signal(pthread_cond_t *cond);
-int pthread_cond_broadcast(pthread_cond_t *cond);
-```
-
 * 信号量: 
     * 互斥锁在同一时刻只能有一个线程访问加锁的数据, 但是信号量可以允许多个线程来访问
     * 互斥量的加锁和解锁必须由同一线程分别对应使用, 信号量可以由一个线程释放, 另一个线程得到
     * 基于上面的特点, 互斥锁一般用于控制一段临界代码，当然信号量也可以做到; 但是如果释放和获取不在一个函数中甚至不在一个线程中时就必须使用信号量了,
-
-```
-int sem_init(sem_t *sem, int pshared, unsigned int value)
-
-int sem_init(sem_t *sem, int pshared, unsigned int value) // pshared:取0代表用于线程间, 取非0代表用于进程间; value: 该参数指定信号量初值
-int sem_destroy(sem_t *sem)
-int sem_wait(sem_t *sem) // == sem--
-int sem_post(sem_t *sem) // == sem++
-int sem_trywait(sem_t *sem)
-int sem_timedwait(sem_t *sem, const struct timespec *abs_timeout)
-```
-
 * 信号量vs互斥锁
     * 信号量: 对一个进程加锁, 可以不断加锁, 设置一个标记a == 0, a++; 解锁的时候a--, 当a == 0时可以继续进行; 应用场景: 生产者-消费者模型; 使用场景: 操作系统分配多个打印任务时
     * 互斥锁: 当一个进程把持资源时, 其他进程不能访问此资源, 此特性代表了此资源一次只能被一个进程利用, 使用场景: 文本的写入
+
+### 21. 死锁
+* 死锁的四个必要条件:
+    * 互斥条件: 一个资源每次只能被一个进程使用
+    * 请求和保持条件: 一个进程因请求资源而阻塞时, 对已获得的资源保持不放
+    * 不可剥夺条件: 进程已获得的资源, 在末使用完之前, 不能强行剥夺
+    * 循环等待条件: 若干进程之间形成一种头尾相接的循环等待资源关系
+* 死锁预防(破坏死锁的四个条件中的一个或几个):   
+    * 资源一次性分配(破坏请求和保持条件)
+    * 可剥夺资源: 即当某进程新的资源未满足时, 释放已占有的资源(破坏不可剥夺条件)
+    * 资源有序分配法: 系统给每类资源赋予一个编号, 每一个进程按编号递增的顺序请求资源, 释放则相反(破坏循环等待条件)
+* 避免死锁(银行家算法)
+    * 当进程首次申请资源时, 要测试该进程对资源的最大需求量, 如果系统现存的资源可以满足它的最大需求量则按当前的申请量分配资源, 否则就推迟分配
+    * 当进程在执行中继续申请资源时, 先测试该进程已占用的资源数与本次申请的资源数之和是否超过了该进程对资源的最大需求量, 若超过则拒绝分配资源; 若没有超过则再测试系统现存的资源能否满足该进程尚需的最大资源量, 若能满足则按当前的申请量分配资源, 否则也要推迟分配
+* 检测死锁
+    * 每个进程、每个资源制定唯一编号, 设定一张资源分配表, 记录各进程与占用资源之间的关系, 出现环路即存在死锁
+* 解除死锁
+    * 剥夺资源: 从其它进程剥夺足够数量的资源给死锁进程, 以解除死锁状态;
+    * 撤消进程: 可以直接撤消死锁进程或撤消代价最小的进程, 直至有足够的资源可用, 死锁状态消除为止; 代价是指优先级, 运行代价, 进程的重要性和价值等
+    
+> ref: https://blog.csdn.net/yyf_it/article/details/52412071
+> ref: http://c.biancheng.net/cpp/html/2606.html
