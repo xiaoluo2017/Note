@@ -287,7 +287,7 @@ int main()
 ```
 class A 
 {
-public:
+private:
     int i;
 };
 
@@ -300,13 +300,13 @@ public:
     B(const B& b){
         p = b.p;
     }*/ 
-    // 编译器在生成default copy construction的时候使用的bitwise copy语义，也就是只是简单的浅拷贝
+    // 编译器在生成default copy constructor的时候使用的bitwise copy语义，也就是只是简单的浅拷贝
     
     B(const B& b) // 拷贝构造函数
     {
         p = new A;
-        p->i = b.p->i; 
-        // *p = *(b.p);
+        *p = *(b.p);
+	// p->i = b.p->i; // error, can't access i in this scope
         // memcpy(p, b.p, sizeof(A));
         cout << "Copy constructor for B" << endl ;
     }
