@@ -22,6 +22,7 @@
 
 * TCP建立连接／断开连接状态
     * Client: CLOSED->SYN_SENT->ESTABLISHED->FIN_WAIT_1->FIN_WAIT_2->TIME_WAIT->CLOSED
+      * TIME_WAIT: 停留2MSL(Maximum Segment Lifetime, 报文最大生存时间)
     * Server: CLOSED->LISTEN->SYN_RCVD->ESTABLISHED->CLOSE_WAIT->LAST_ACK->CLOSED
 > ref: https://blog.csdn.net/Mary19920410/article/details/63711522
 
@@ -190,6 +191,12 @@ int main(){
 > ref: https://blog.csdn.net/xidiancoder/article/details/49160317
 
 ### 11. sizeof struct/sizeof class
+* 对字符串进行sizeof操作的时候, 会把字符串的结束符"\0"计算进去的; 进行strlen操作求字符串的长度的时候, 不计算\0
+```
+char str[] = "Hello";
+printf("%d\n",sizeof(str)); // 6
+printf("%d\n",strlen(str)); // 5
+```
 * 每个结构体成员的起始地址为该成员大小的整数倍, 即int型成员的起始地址只能为0、4、8等
 > ref: https://blog.csdn.net/RadianceBlau/article/details/60867307
 
@@ -589,6 +596,7 @@ int main() {
 ### 19. HTTP GET POST PUT DELETE
 * URL全称是资源描述符
 * GET和POST本质上就是TCP链接, 并无差别; 但是由于HTTP的规定和浏览器/服务器的限制, 导致他们在应用过程中体现出一些不同 
+* GET为幂等, post为非幂等
 * GET参数包含在URL中, POST通过request body传递参数
     * get传输数据是通过URL请求, 以field(字段) = value的形式, 置于URL后, 并用"?"连接, 多个请求数据间用"&"连接, eg. http://127.0.0.1/Test/login.action?name=admin&password=admin, 这个过程用户是可见的;
     * post传输数据通过Http的post机制, 将字段与对应值封存在请求实体(request body)中发送给服务器, 这个过程对用户是不可见的;
