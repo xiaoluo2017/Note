@@ -72,3 +72,68 @@ move assignment
 > ref: https://www.quora.com/In-C-how-do-you-write-a-move-assignment-operator
 > ref: https://stackoverflow.com/questions/9322174/move-assignment-operator-and-if-this-rhs
 
+### 3. Operator Overloading
+```
+class A
+{
+public:
+    A() { m_i = 0; }
+    
+    A operator+ (const A& a) 
+    { 
+        A res;
+        res.m_i = m_i + a.m_i;
+        return res;
+    }
+    
+    A& operator++() // pre-increment
+    {
+        m_i++;
+        return *this;
+    }
+    
+    A operator++(int) // post-increment
+    {
+        A tmp(*this);
+        operator++();
+        return tmp;
+    }
+    
+    friend std::ostream& operator<< (std::ostream& os, const A& a)
+    {
+        os << a.m_i;
+        return os;
+    }
+    
+    friend A operator+ (const A& a1, int i)
+    {
+        A res;
+        res.m_i = a1.m_i + i;
+        return res;
+    }
+    
+    friend A operator+ (int i, const A& a2)
+    {
+        A res;
+        res.m_i = i + a2.m_i;
+        return res;
+    }
+    
+private:
+    int m_i;
+};
+
+int main()
+{
+    A a;
+    cout << a << endl; // 0
+    
+    cout << ++a << endl; // 1
+    cout << a++ << endl; // 1
+
+    cout << (a + a) << endl; // 4
+    cout << (a + 1) << endl; // 3
+    cout << (1 + a) << endl; // 3
+}
+```
+> ref: https://en.cppreference.com/w/cpp/language/operators
