@@ -137,3 +137,63 @@ int main()
 }
 ```
 > ref: https://en.cppreference.com/w/cpp/language/operators
+
+### 4. template
+```
+template <typename T>
+T tf(T t1, T t2)
+{
+    return t1 > t2 ? t1 : t2;
+}
+
+template <typename T> 
+class A { 
+public: 
+    A(T t) { m_t = t; }
+    void print() { cout << m_t << endl; }
+private: 
+    T m_t; 
+}; 
+
+// int vip
+template<>
+class A<int> {
+public:
+    A(int i) { m_i = i * 2; }
+    void print() { cout << m_i << endl; }
+private: 
+    int m_i;     
+};
+
+int main()
+{
+    cout << tf<int>(18, 7) << endl;
+    
+    A<double> a1(22);
+    a1.print();
+    
+    A<int> a2(10);
+    a2.print();
+}
+```
+> ref: https://www.geeksforgeeks.org/templates-cpp/
+Template Specialization
+> ref: https://www.geeksforgeeks.org/template-specialization-c/
+
+### 5. ListNode TreeNode
+```
+struct ListNode
+{
+    int val;
+    ListNode* next;
+    ListNode(int v) : val(v), next(NULL) {}
+};
+
+struct TreeNode
+{
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int v) : val(v), left(NULL), right(NULL) {}
+};
+```
