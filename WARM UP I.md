@@ -155,7 +155,6 @@ private:
     T m_t; 
 }; 
 
-// int vip
 template<>
 class A<int> {
 public:
@@ -177,6 +176,7 @@ int main()
 }
 ```
 > ref: https://www.geeksforgeeks.org/templates-cpp/
+
 Template Specialization
 > ref: https://www.geeksforgeeks.org/template-specialization-c/
 
