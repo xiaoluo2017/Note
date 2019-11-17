@@ -270,3 +270,123 @@ void f(TreeNode* root)
     }
 }
 ```
+
+### 3. quick sort/heap sort/merge sort
+```
+// quick sort
+void f(vector<int>& v, int start, int end)
+{
+    if (start >= end) return;
+    
+    int pivot = start;
+    int le = start + 1;
+    int ri = end;
+    
+    while (le < ri)
+    {
+        if (v[le] <= v[pivot])
+        {
+            le++;
+        }
+        else
+        {
+            int tmp = v[le];
+            v[le] = v[ri];
+            v[ri--] = tmp;
+        }
+    }
+    
+    if (v[le] > v[pivot]) le--;
+    
+    int tmp = v[le];
+    v[le] = v[pivot];
+    v[pivot] = tmp;
+    
+    f(v, start, le - 1);
+    f(v, le + 1, end);
+}
+```
+
+```
+// merge sort
+void f(vector<int>& v, int start, int end)
+{
+    if (start == end)
+        return;
+
+    int mid = (start + end) / 2;
+    f(v, start, mid);
+    f(v, mid + 1, end);
+
+    vector<int> tmp;
+    for (int i = start; i <= end; i++)
+        tmp.push_back(v[i]);
+    
+    int le = 0, ri = mid + 1 - start, index = start;
+    
+    while (le <= mid - start && ri <= end - start)
+    {
+        if (tmp[le] <= tmp[ri])
+        {
+            v[index++] = tmp[le++];
+        }
+        else
+        {
+            v[index++] = tmp[ri++];
+        }
+    }
+    
+    while (le <= mid - start)
+    {
+        v[index++] = tmp[le++];
+    }
+    
+    while (ri <= end - start)
+    {
+        v[index++] = tmp[ri++];
+    }
+}
+```
+
+```
+// heap sort
+void swap(vector<int>& v, int le, int ri)
+{
+    int tmp = v[le];
+    v[le] = v[ri];
+    v[ri] = tmp;
+}
+
+void heapify(vector<int>& v, int i, int end)
+{
+    int le = 2 * i + 1, ri = 2 * i + 2, index = i;
+    
+    if (le <= end && v[index] < v[le])
+    {
+        index = le;
+    }
+    
+    if (ri <= end && v[index] < v[ri])
+    {
+        index = ri;
+    }
+    
+    if (index != i)
+    {
+        swap(v, i, index);
+        heapify(v, index, end);
+    }
+}
+
+void heapSort(vector<int>& v)
+{
+    for (int i = (v.size() - 2) / 2; i >= 0; i--)
+        heapify(v, i, v.size() - 1);
+    
+    for (int i = v.size() - 1; i > 0; i--)
+    {
+        swap(v, 0, i);
+        heapify(v, 0, i - 1); 
+    }
+}
+```
