@@ -1,6 +1,6 @@
 ### 1. binary search
-* binary search
 ```
+// binary search
 int f(vector<int> v, int target)
 {
     int le = 0, ri = v.size() - 1;
@@ -23,8 +23,9 @@ int f(vector<int> v, int target)
     return -1;
 }
 ```
-* closest target value && <= target
+
 ```
+// closest target value && <= target
 int f(vector<int> v, int target)
 {
     int le = 0, ri = v.size() - 1;
@@ -43,8 +44,9 @@ int f(vector<int> v, int target)
     return ri;
 }
 ```
-* closest target value >= target
+
 ```
+// closest target value >= target
 int f(vector<int> v, int target)
 {
     int le = 0, ri = v.size() - 1;
@@ -63,8 +65,9 @@ int f(vector<int> v, int target)
     return le <= v.size() - 1 ? le : -1;
 }
 ```
-* closest target value
+
 ```
+// closest target value
 int f(vector<int> v, int target)
 {
     int le = 0, ri = v.size() - 1;
@@ -103,7 +106,9 @@ void f(TreeNode* root)
     f(root->left);
     f(root->right);
 }
+```
 
+```
 // inorder
 void f(TreeNode* root)
 {
@@ -113,7 +118,9 @@ void f(TreeNode* root)
     cout << root->val << " ";
     f(root->right);
 }
+```
 
+```
 // postorder
 void f(TreeNode* root)
 {
@@ -165,7 +172,9 @@ void f(TreeNode* root)
         if (root->left) s.push(root->left);
     }
 }
+```
 
+```
 // inorder
 void f(TreeNode* root)
 {
@@ -204,7 +213,9 @@ void f(TreeNode* root)
         }
     }
 }
+```
 
+```
 // postorder
 void f(TreeNode* root)
 {
