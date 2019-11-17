@@ -93,8 +93,8 @@ int f(vector<int> v, int target)
 
 ### 2. Tree Traversals(Inorder Preorder Postorder)
 * recursive
-    * preorder
 ```
+// preorder
 void f(TreeNode* root)
 {
     if (root == NULL) return;
@@ -103,9 +103,8 @@ void f(TreeNode* root)
     f(root->left);
     f(root->right);
 }
-```
-    * inorder
-```
+
+// inorder
 void f(TreeNode* root)
 {
     if (root == NULL) return;
@@ -114,9 +113,8 @@ void f(TreeNode* root)
     cout << root->val << " ";
     f(root->right);
 }
-```
-    * postorder
-```
+
+// postorder
 void f(TreeNode* root)
 {
     if (root == NULL) return;
