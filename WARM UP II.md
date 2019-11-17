@@ -390,3 +390,173 @@ void heapSort(vector<int>& v)
     }
 }
 ```
+
+// 未完成
+```
+class BST
+{
+public:
+    BST(): root(NULL) {}
+    
+    bool search(int val)
+    {
+        TreeNode* curr = root;
+        while (curr != NULL)
+        {
+            if (val == curr->val)
+            {
+                return true;
+            }
+            else if (val < curr->val)
+            {
+                curr = curr->left;
+            }
+            else
+            {
+                curr = curr->right;
+            }
+        }
+        return false;
+    }
+    
+    void insert(int val)
+    {
+        if (root == NULL)
+        {
+            root = new TreeNode(val);
+        }
+        
+        TreeNode* curr = root;
+        while (curr != NULL)
+        {
+            if (val <= curr->val)
+            {
+                if (curr->left == NULL)
+                {
+                    curr->left = new TreeNode(val);
+                    break;
+                }
+                else
+                {
+                    curr = curr->left;
+                }
+            }
+            else
+            {    
+                if (curr->right == NULL)
+                {
+                    curr->right = new TreeNode(val);
+                    break;
+                }
+                else
+                {
+                    curr = curr->right;
+                }
+                
+            }
+        }
+    }
+    
+    bool remove(int val)
+    {
+        return remove(val, root);
+    }
+    
+    bool remove(int val, TreeNode* start)
+    {
+        TreeNode* curr = start;
+        TreeNode* prev = NULL;
+        while (curr != NULL)
+        {
+            if (val == curr->val)
+            {
+                if (curr->left == NULL)
+                {
+                    if (prev == NULL)
+                    {
+                        root = root->right;
+                    }
+                    else
+                    {
+                        prev->right = curr->right;
+                    }
+                    return true; 
+                }
+                
+                if (curr->right == NULL)
+                {
+                    if (prev == NULL)
+                    {
+                        root = root->left;
+                    }
+                    else
+                    {
+                        prev->left = curr->left;
+                    }
+                    return true; 
+                }
+                
+                TreeNode* tmp = curr->right;
+                prev = curr;
+                while (tmp->left != NULL)
+                {
+                    prev = tmp;
+                    tmp = tmp->left;
+                }                
+                curr = new TreeNode(tmp->val);
+                remove(tmp->val, prev);
+            }
+            else if (val < curr->val)
+            {
+                prev = curr;
+                curr = curr->left;
+            }
+            else
+            {
+                prev = curr;
+                curr = curr->right;
+            }
+        }
+        return false;
+    }    
+    
+    void print()
+    {
+        stack<TreeNode*> s;
+        while (root != NULL || !s.empty())
+        {
+            while (root != NULL)
+            {
+                s.push(root);
+                root = root->left;
+            }
+
+            root = s.top();
+            s.pop();
+            cout << root->val << " ";
+            root = root->right;
+        }
+    }
+    
+private:
+    TreeNode* root;
+};
+
+int main() {
+    BST b;
+    b.insert(18);
+    b.insert(7);
+    b.insert(22);
+    b.insert(10);
+    b.insert(69);
+    b.insert(0);
+    b.insert(2);
+    
+    b.print();
+    cout << endl;
+    cout << b.search(18) << endl;
+    cout << b.remove(18) << endl;
+    cout << b.search(18) << endl;
+    cout << "Hello World!" << endl;
+}
+```
