@@ -391,7 +391,8 @@ void heapSort(vector<int>& v)
 }
 ```
 
-// 未完成
+### 4. binary search tree
+* iterative
 ```
 class BST
 {
@@ -424,6 +425,7 @@ public:
         if (root == NULL)
         {
             root = new TreeNode(val);
+            return;
         }
         
         TreeNode* curr = root;
@@ -457,14 +459,9 @@ public:
         }
     }
     
-    bool remove(int val)
+    void remove(int val)
     {
-        return remove(val, root);
-    }
-    
-    bool remove(int val, TreeNode* start)
-    {
-        TreeNode* curr = start;
+        TreeNode* curr = root;
         TreeNode* prev = NULL;
         while (curr != NULL)
         {
@@ -476,11 +473,15 @@ public:
                     {
                         root = root->right;
                     }
+                    else if (curr->val <= prev->val)
+                    {
+                        prev->left = curr->right;
+                    }
                     else
                     {
                         prev->right = curr->right;
                     }
-                    return true; 
+                    return; 
                 }
                 
                 if (curr->right == NULL)
@@ -489,22 +490,38 @@ public:
                     {
                         root = root->left;
                     }
-                    else
+                    else if (curr->val <= prev->val)
                     {
                         prev->left = curr->left;
                     }
-                    return true; 
+                    else
+                    {
+                        prev->right = curr->left;  
+                    }
+                    return; 
                 }
                 
                 TreeNode* tmp = curr->right;
-                prev = curr;
+                TreeNode* tmpPrev = curr;
                 while (tmp->left != NULL)
                 {
-                    prev = tmp;
+                    tmpPrev = tmp;
                     tmp = tmp->left;
                 }                
-                curr = new TreeNode(tmp->val);
-                remove(tmp->val, prev);
+                if (tmpPrev != curr) tmpPrev->left = NULL;
+                if (curr->val <= prev->val)
+                {
+                    prev->left = tmp;
+                }
+                else
+                {
+                    prev->right = tmp;
+                }
+                tmp->left = curr->left;
+                if (curr->right != tmp) tmp->right = curr->right;
+                curr->left = NULL;
+                curr->right = NULL;
+                return;
             }
             else if (val < curr->val)
             {
@@ -517,46 +534,108 @@ public:
                 curr = curr->right;
             }
         }
-        return false;
     }    
-    
-    void print()
-    {
-        stack<TreeNode*> s;
-        while (root != NULL || !s.empty())
-        {
-            while (root != NULL)
-            {
-                s.push(root);
-                root = root->left;
-            }
-
-            root = s.top();
-            s.pop();
-            cout << root->val << " ";
-            root = root->right;
-        }
-    }
     
 private:
     TreeNode* root;
 };
+```
 
-int main() {
-    BST b;
-    b.insert(18);
-    b.insert(7);
-    b.insert(22);
-    b.insert(10);
-    b.insert(69);
-    b.insert(0);
-    b.insert(2);
+* recursive
+```
+class BST
+{
+public:
+    BST(): root(NULL) {}
     
-    b.print();
-    cout << endl;
-    cout << b.search(18) << endl;
-    cout << b.remove(18) << endl;
-    cout << b.search(18) << endl;
-    cout << "Hello World!" << endl;
-}
+    bool search(int val)
+    {
+        return search(root, val);
+    }
+    
+    bool search(TreeNode* root, int val)
+    {
+        if (root == NULL)
+            return false;
+            
+        if (val == root->val)
+            return true;
+        else if (val <= root->val)
+            return search(root->left, val); 
+        else
+            return search(root->right, val);
+    }
+    
+    TreeNode* insert(TreeNode* root, int val)
+    {
+        if (root == NULL)
+            return new TreeNode(val);
+        
+        if (val <= root->val)
+            root->left = insert(root->left, val);
+        else
+            root->right = insert(root->right, val);
+        
+        return root;
+    }
+    
+    void insert(int val)
+    {
+        if (root == NULL)
+        {
+            root = new TreeNode(val);
+            return;
+        }
+        
+        insert(root, val);
+    }
+    
+    TreeNode* remove(TreeNode* root, int val)
+    {
+        if (root == NULL)
+            return NULL;
+        
+        if (val == root->val)
+        {
+            if (root->left == NULL)
+            {
+                return root->right;
+            }
+            else if (root->right == NULL)
+            {
+                return root->left;
+            }
+            else
+            {
+                TreeNode* tmp = root->right;
+                while (tmp->left != NULL)
+                {
+                    tmp = tmp->left;
+                }
+                root->val = tmp->val;
+                tmp->val = val;
+                
+                root->right = remove(root->right, val);
+            }
+        }
+        else if (val < root->val)
+        {
+            root->left = remove(root->left, val);
+        }
+        else
+        {
+            root->right = remove(root->right, val);
+        }
+        
+        return root;
+    }
+    
+    void remove(int val)
+    {
+        root = remove(root, val);
+    }
+
+private:
+    TreeNode* root;
+};
 ```
