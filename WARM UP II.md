@@ -661,3 +661,189 @@ TreeNode* f(TreeNode* root, vector<int> preorder, vector<int> inorder, int ps, i
     return root;
 }
 ```
+
+### 6. Polish Notation, Reverse Polish Notation
+```
+// Current only support One-bit integer(0-9) & '*', '-', '+'. The use of the stack is consistent.
+// Polish Notation
+int calPolishNotation(string input)
+{
+    stack<int> s;
+    for (int i = input.size() - 1; i >= 0; i--)
+    {
+        if (input[i] >= '0' && input[i] <= '9')
+        {
+            s.push(input[i] - '0');
+        }
+        else
+        {
+            int num1 = s.top();
+            s.pop();
+            int num2 = s.top();
+            s.pop();
+            int res;
+            
+            if (input[i] == '*')
+            {
+                res = num1 * num2;
+            }
+            else if (input[i] == '+')
+            {
+                res = num1 + num2; 
+            }
+            else if (input[i] == '-')
+            {
+                res = num1 - num2; 
+            }
+            
+            s.push(res);
+        }
+    }
+    return s.top();
+}
+
+string toPolishNotation(string input)
+{
+    stack<char> s;
+    stack<char> tmp;
+    for (int i = input.size() - 1; i >= 0; i--)
+    {
+        if (input[i] >= '0' && input[i] <= '9')
+        {
+            s.push(input[i]);
+        }
+        else if (input[i] == '(')
+        {
+            while (tmp.top() != ')')
+            {
+                s.push(tmp.top());
+                tmp.pop();
+            }
+            tmp.pop();
+        }
+        else if (input[i] == ')' 
+                 || input[i] == '*' 
+                 || (input[i] == '+' || input[i] == '-') && (tmp.empty() || tmp.top() != '*'))
+        {
+            tmp.push(input[i]);
+        }
+        else
+        {
+            while (tmp.top() == '*')
+            {
+                s.push(tmp.top());
+                tmp.pop();  
+            }
+            tmp.push(input[i]);
+        }
+    }
+    
+    while (!tmp.empty())
+    {
+        s.push(tmp.top());
+        tmp.pop();
+    }
+    
+    string res;
+    
+    while (!s.empty())
+    {
+        res += s.top();
+        s.pop();
+    }
+    
+    return res;
+}
+```
+
+```
+// Reverse Polish Notation
+int calReversePolishNotation(string input)
+{
+    stack<int> s;
+    for (int i = 0; i < input.size(); i++)
+    {
+        if (input[i] >= '0' && input[i] <= '9')
+        {
+            s.push(input[i] - '0');
+        }
+        else
+        {
+            int num2 = s.top();
+            s.pop();
+            int num1 = s.top();
+            s.pop();
+            int res;
+            
+            if (input[i] == '*')
+            {
+                res = num1 * num2;
+            }
+            else if (input[i] == '+')
+            {
+                res = num1 + num2; 
+            }
+            else if (input[i] == '-')
+            {
+                res = num1 - num2; 
+            }
+            
+            s.push(res);
+        }
+    }
+    return s.top();
+}
+
+string toReversePolishNotation(string input)
+{
+    stack<char> s;
+    stack<char> tmp;
+    
+    for (int i = 0; i < input.size(); i++)
+    {
+        if (input[i] >= '0' && input[i] <= '9')
+        {
+            s.push(input[i]);
+        }
+        else if (input[i] == ')')
+        {
+            while (tmp.top() != '(')
+            {
+                s.push(tmp.top());
+                tmp.pop();
+            }
+            tmp.pop();
+        }
+        else if (input[i] == '(' 
+                 || tmp.empty()
+                 || tmp.top() == '('
+                 || (input[i] == '*' && tmp.top() != '*'))
+        {
+            tmp.push(input[i]);
+        }
+        else
+        {
+            s.push(tmp.top());
+            tmp.pop();
+            i--;
+        }
+    }
+    
+    while (!tmp.empty())
+    {
+        s.push(tmp.top());
+        tmp.pop();
+    }
+    
+    string res;
+    
+    while (!s.empty())
+    {
+        res += s.top();
+        s.pop();
+    }
+    
+    reverse(res.begin(), res.end()); 
+    return res;
+}
+```
