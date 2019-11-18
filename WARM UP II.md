@@ -639,3 +639,25 @@ private:
     TreeNode* root;
 };
 ```
+
+### 5. Construct Binary Tree from Preorder and Inorder Traversal
+```
+TreeNode* f(TreeNode* root, vector<int> preorder, vector<int> inorder, int ps, int pe, int is, int ie)
+{
+    if (ps > pe)
+        return NULL;
+    
+    if (ps == pe)
+        return new TreeNode(preorder[ps]);
+    
+    int val = preorder[ps];
+    
+    std::vector<int>::iterator it = std::find(inorder.begin(), inorder.end(), val);
+    int mid = std::distance(inorder.begin(), it);
+    
+    root = new TreeNode(val);
+    root->left = f(root, preorder, inorder, ps + 1, ps + mid - is, is, mid - 1);
+    root->right = f(root, preorder, inorder, ps + mid - is + 1, pe, mid + 1, ie);
+    return root;
+}
+```
