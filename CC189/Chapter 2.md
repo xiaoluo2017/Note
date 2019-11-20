@@ -224,3 +224,101 @@ ListNode* f(ListNode* node1, ListNode* node2)
     }
 }
 ```
+
+### 2.6
+```
+ListNode* helper(ListNode* node1, ListNode* node2)
+{
+    if (node2 == NULL)
+        return node1;
+    
+    node1 = helper(node1, node2->next);
+    
+    if (node1 == NULL || node1->val != node2->val)
+        return NULL;
+    
+    if (node1->next != NULL) 
+        node1 = node1->next;
+    
+    return node1;
+}
+
+bool f(ListNode* node)
+{
+    if (node == NULL) 
+        return true;
+    
+    return helper(node, node) != NULL ? true : false;
+}
+```
+
+### 2.7
+```
+bool f(ListNode* node1, ListNode* node2)
+{
+    ListNode* p1 = node1;
+    ListNode* p2 = node2;
+    
+    bool bP1MetTail = false, bP2MetTail = false;
+    
+    while (1)
+    {
+        if (p1 == NULL)
+        {
+            if (!bP1MetTail)
+            {
+                p1 = node2;
+                bP1MetTail = true;
+            }
+            else
+                break;
+            
+        }
+        
+        if (p2 == NULL)
+        {
+            if (!bP2MetTail)
+            {
+                p2 = node1;
+                bP2MetTail = true;
+            }
+            else
+                break;
+        }
+        
+        cout << p1->val << " " << p2->val << endl;
+        
+        if (p1 == p2)
+            return true;
+        
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+    
+    return false;
+}
+```
+
+### 2.8
+```
+ListNode* f(ListNode* head)
+{
+    ListNode* fast = head->next->next;
+    ListNode* slow = head->next;
+    
+    while (fast != slow)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    
+    ListNode* res = head;
+    while (res != slow)
+    {
+        res = res->next;
+        slow = slow->next;
+    }
+    
+    return res;
+}
+```
