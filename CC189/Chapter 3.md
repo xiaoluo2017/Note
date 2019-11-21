@@ -146,3 +146,162 @@ private:
     stack<int> tmp;
 };
 ```
+
+### 3.5
+```
+void f(stack<int>& s)
+{
+    stack<int> tmp1;
+    stack<int> tmp2;
+    while (!s.empty())
+    {
+        int i = s.top();
+        s.pop();
+        
+        while (!tmp1.empty() && i < tmp1.top())
+        {
+            tmp2.push(tmp1.top());
+            tmp1.pop();
+        }
+        
+        while (!tmp2.empty() && i > tmp2.top())
+        {
+            tmp1.push(tmp2.top());
+            tmp2.pop();
+        }
+        
+        tmp1.push(i);
+    }
+    
+    while (!tmp2.empty())
+    {
+        tmp1.push(tmp2.top());
+        tmp2.pop();
+    }
+    
+    while (!tmp1.empty())
+    {
+        s.push(tmp1.top());
+        tmp1.pop();
+    }
+}
+```
+
+```
+void f(stack<int>& s)
+{
+    stack<int> tmp;
+    while (!s.empty())
+    {
+        int i = s.top();
+        s.pop();
+        
+        int count = 0;
+        while (!tmp.empty() && i < tmp.top())
+        {
+            s.push(tmp.top());
+            tmp.pop();
+            count++;
+        }
+        
+        tmp.push(i);
+        
+        while (count-- > 0)
+        {
+            tmp.push(s.top());
+            s.pop();
+        }
+    }
+    
+    while (!tmp.empty())
+    {
+        s.push(tmp.top());
+        tmp.pop();
+    }
+}
+```
+
+### 3.6
+```
+class Animal {
+public:
+    virtual void setOrder(int order)
+    {
+        m_Order = order;     
+    }
+    
+    virtual int getOrder()
+    {
+        return m_Order;
+    }
+private:
+    int m_Order;
+};
+
+class Dog: public Animal { };
+
+class Cat: public Animal { };
+
+class Shelter{
+public:
+    void enqueue(Animal* a)
+    {
+        if (Dog* d = dynamic_cast<Dog*>(a))
+        {
+            d->setOrder(order++);
+            dog_list.push_back(d);
+        }
+        else if (Cat* c = dynamic_cast<Cat*>(a))
+        {
+            c->setOrder(order++);
+            cat_list.push_back(c);
+        }
+    }
+    
+    Animal* dequeueAny()
+    {
+        if (dog_list.empty() && cat_list.empty())
+            return NULL;
+        
+        Animal* a;
+        if (cat_list.empty() || (!dog_list.empty() && dog_list.front()->getOrder() < cat_list.front()->getOrder()))
+        {
+            a = dynamic_cast<Animal*>(dog_list.front());
+            dog_list.pop_front();
+        }
+        else
+        {
+            a = dynamic_cast<Animal*>(cat_list.front());
+            cat_list.pop_front();
+        }
+        
+        return a;
+    }
+    
+    Dog* dequeueDog()
+    {
+        if (dog_list.empty())
+            return NULL;
+        
+        Dog* d = dog_list.front();
+        dog_list.pop_front();
+        return d;
+    }
+    
+    Cat* dequeueCat()
+    {
+        if (cat_list.empty())
+            return NULL;
+        
+        Cat* c = cat_list.front();
+        cat_list.pop_front();
+        return c; 
+    }
+private:
+    static int order;
+    list<Dog*> dog_list;
+    list<Cat*> cat_list;
+};
+
+int Shelter::order = 0;
+```
