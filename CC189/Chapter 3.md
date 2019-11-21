@@ -264,7 +264,8 @@ public:
             return NULL;
         
         Animal* a;
-        if (cat_list.empty() || (!dog_list.empty() && dog_list.front()->getOrder() < cat_list.front()->getOrder()))
+        if (cat_list.empty() 
+            || (!dog_list.empty() && dog_list.front()->getOrder() < cat_list.front()->getOrder()))
         {
             a = dynamic_cast<Animal*>(dog_list.front());
             dog_list.pop_front();
