@@ -252,6 +252,39 @@ bool f(ListNode* node)
 }
 ```
 
+```
+bool helper(ListNode** node1, ListNode* node2)
+{
+    if (node2 == NULL)
+        return true;
+    
+    bool res = helper(node1, node2->next);
+
+    if ((*node1)->val != node2->val)
+        return false;
+    
+    *node1 = (*node1)->next;
+
+    return res;
+}
+
+bool f(ListNode* head)
+{
+    if (head == NULL) 
+        return true;
+    
+    ListNode* slow = head;
+    ListNode* fast = head;
+    while (fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    
+    return helper(&head, slow);
+}
+```
+
 ### 2.7
 ```
 bool f(ListNode* node1, ListNode* node2)
