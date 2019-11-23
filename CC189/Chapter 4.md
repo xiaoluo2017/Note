@@ -316,7 +316,6 @@ bool f(TreeNode* T1, TreeNode* T2)
 
 ### 4.11
 ```
-// 未完成
 class BST
 {
 public:
@@ -402,6 +401,7 @@ public:
                 
                 root->right = remove(root->right, val);
             }
+            
         }
         else if (val < root->val)
         {
@@ -419,15 +419,16 @@ public:
     {
         int index = f(val);
         
-        cout << "index: " << index << endl;
-        cout << v[index]->val << " == " << val << endl;
-        
-        if (index != -1 && v[index]->val == val) 
-        {
-            v.erase(v.begin() + index);
-        }
-        
         root = remove(root, val);  
+        
+        for (int i = 0; i < v.size(); i++)
+        {
+            if (v[i]->val == val)
+            {
+                v.erase(v.begin() + i);
+                break;
+            }
+        }
     }
     
     TreeNode* getRandomNode()
@@ -468,28 +469,4 @@ private:
     TreeNode* root;
     vector<TreeNode*> v;
 };
-
-int main() {
-    /* TreeNode* root = new TreeNode(2);
-    root->left = new TreeNode(1);
-    root->right = new TreeNode(3);
-    root->left->left = new TreeNode(0);
-    root->left->right = new TreeNode(4);
-    root->left->right->right = new TreeNode(4);
-    root->right = new TreeNode(5);
-    root->right->right = new TreeNode(6); */
-    
-    BST b;
-    b.insert(1);
-    b.insert(8);
-    b.insert(7);
-    b.insert(2);
-    b.insert(6);
-    b.insert(9);
-    b.insert(0);
-    // cout << b.getRandomNode()->val << endl;
-    b.show();
-    b.remove(8);
-    b.show();
-}
 ```
