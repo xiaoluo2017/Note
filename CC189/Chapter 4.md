@@ -316,6 +316,15 @@ bool f(TreeNode* T1, TreeNode* T2)
 
 ### 4.11
 ```
+struct TreeNode
+{
+    int val;
+    int count;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int v) : val(v), count(1), left(NULL), right(NULL) {}
+};
+
 class BST
 {
 public:
@@ -342,23 +351,14 @@ public:
     TreeNode* insert(TreeNode* root, int val)
     {
         if (root == NULL)
-        {
-            
-            TreeNode* tmp = new TreeNode(val);
-            int index = f(val);
-            if (index == -1) 
-                v.push_back(tmp);
-            else
-                v.insert(v.begin() + index, tmp);
-            return tmp;
-        }
-            
+            return new TreeNode(val);
         
         if (val <= root->val)
             root->left = insert(root->left, val);
         else
             root->right = insert(root->right, val);
         
+        root->count++; 
         return root;
     }
     
@@ -367,7 +367,6 @@ public:
         if (root == NULL)
         {
             root = new TreeNode(val);
-            v.push_back(root);
             return;
         }
         
@@ -401,7 +400,6 @@ public:
                 
                 root->right = remove(root->right, val);
             }
-            
         }
         else if (val < root->val)
         {
@@ -412,61 +410,83 @@ public:
             root->right = remove(root->right, val);
         }
         
+        root->count--;
+        
         return root;
     }
     
     void remove(int val)
     {
-        int index = f(val);
+        if (search(val))
+            root = remove(root, val);
+    }
+    
+    TreeNode* getRandomNode(TreeNode* root)
+    {
+        int residue = rand() % root->count;
         
-        root = remove(root, val);  
+        if (residue == 0)
+            return root;
+            
+        if (root->left == NULL || residue > root->left->count)
+            return getRandomNode(root->right);
         
-        for (int i = 0; i < v.size(); i++)
-        {
-            if (v[i]->val == val)
-            {
-                v.erase(v.begin() + i);
-                break;
-            }
-        }
+        return getRandomNode(root->left);
     }
     
     TreeNode* getRandomNode()
     {
-        if (v.size() == 0)
+        if (root == NULL)
             return NULL;
         
-        return v[rand() % v.size()];
+        return getRandomNode(root);
     }
-    
-    void show()
-    {
-        for (TreeNode* t : v)
-            cout << t->val << " ";
-        
-        cout << endl;
-    }
+
 private:
-    // closest target value >= target
-    int f(int target)
-    {
-        int le = 0, ri = v.size() - 1;
-        while (le <= ri)
-        {
-            int mid = (le + ri) / 2;
-            if (v[mid]->val < target)
-            {
-                le = mid + 1;
-            }
-            else
-            {
-                ri = mid - 1;
-            }
-        }
-        return le <= v.size() - 1 ? le : -1;
-    }
-    
     TreeNode* root;
-    vector<TreeNode*> v;
 };
+```
+
+### 4.12
+```
+unordered_map<int, int> helper(TreeNode* root, int target, int* count)
+{
+    if (root == NULL)
+    {
+        unordered_map<int, int> tmp;
+        return tmp;
+    }
+        
+    int val = root->val;
+    unordered_map<int, int> le = helper(root->left, target, count);
+    unordered_map<int, int> ri = helper(root->right, target, count);
+
+    unordered_map<int, int> m;
+    for (std::unordered_map<int, int>::iterator it = le.begin(); it != le.end(); it++)
+        m[it->first + val] = it->second;
+        
+    for (std::unordered_map<int, int>::iterator it = ri.begin(); it != ri.end(); it++)
+    {
+        if (m.find(it->first + val) == m.end())
+            m[it->first + val] = it->second;
+        else
+            m[it->first + val] += it->second;
+    }
+        
+    if (m.find(val) == m.end())
+        m[val] = 1;
+    else
+        m[val]++;
+    
+    if (m.find(target) != m.end()) *count += m[target];
+    
+    return m;
+}
+
+int f(TreeNode* root, int target)
+{
+    int count = 0;
+    helper(root, target, &count);
+    return count;
+}
 ```
