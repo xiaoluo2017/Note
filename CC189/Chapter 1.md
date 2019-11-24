@@ -168,7 +168,7 @@ string f(string s)
 }
 ```
 
-### 1.7
+### *1.7
 ```
 void f(int matrix[][4], int N)
 {
@@ -223,7 +223,7 @@ void f(vector<vector<int>>& matrix)
 }
 ```
 
-### 1.9
+### *1.9
 ```
 bool isSubstring(string s1, string s2) 
 { 
