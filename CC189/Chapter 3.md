@@ -147,7 +147,7 @@ private:
 };
 ```
 
-### 3.5
+### *3.5
 ```
 void f(stack<int>& s)
 {
@@ -221,7 +221,7 @@ void f(stack<int>& s)
 }
 ```
 
-### 3.6
+### *3.6
 ```
 class Animal {
 public:
