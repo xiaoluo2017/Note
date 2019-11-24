@@ -235,7 +235,7 @@ TreeNode* f(TreeNode* root, TreeNode* node1, TreeNode* node2)
 }
 ```
 
-### 4.9*
+### *4.9
 ```
 void helper(vector<TreeNode*> res, vector<TreeNode*> v, vector<bool> isVisited)
 {   
@@ -314,7 +314,7 @@ bool f(TreeNode* T1, TreeNode* T2)
 }
 ```
 
-### 4.11*
+### *4.11
 ```
 struct TreeNode
 {
@@ -447,7 +447,7 @@ private:
 };
 ```
 
-### 4.12*
+### *4.12
 ```
 unordered_map<int, int> helper(TreeNode* root, int target, int* count)
 {
