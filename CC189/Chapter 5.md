@@ -122,3 +122,34 @@ int f(int i1, int i2)
     return count;
 }
 ```
+
+### 5.7
+```
+int f(int input)
+{
+    int even = 0xaaaaaaaa, odd = 0x55555555;
+    return ((input & even) >> 1 )| ((input & odd) << 1);
+}
+```
+
+### 5.8
+```
+void f(vector<signed char>& v, int width, int x1, int x2, int y)
+{
+    int le = (y - 1) * width / 8 + x1 / 8;
+    int start = x1 % 8;
+    
+    int ri = (y - 1) * width / 8 + x2 / 8;
+    int end = x2 % 8;
+    
+    signed char mask;
+    mask = (1 << (8 - start)) - 1;
+    v[le] |= mask;
+    
+    mask = ~0 << (8 - end);
+    v[ri] |= mask;
+    
+    for (int i = le + 1; i < ri; i++)
+        v[i] |= (~0);
+}
+```
