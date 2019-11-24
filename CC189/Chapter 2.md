@@ -112,7 +112,7 @@ ListNode* f(ListNode* head, int val)
 }
 ```
 
-### 2.5
+### *2.5
 ```
 ListNode* f(ListNode* node1, ListNode* node2)
 {
@@ -225,7 +225,7 @@ ListNode* f(ListNode* node1, ListNode* node2)
 }
 ```
 
-### 2.6
+### *2.6
 ```
 ListNode* helper(ListNode* node1, ListNode* node2)
 {
