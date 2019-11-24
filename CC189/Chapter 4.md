@@ -490,3 +490,85 @@ int f(TreeNode* root, int target)
     return count;
 }
 ```
+
+```
+int helper(TreeNode* root, int target, unordered_map<int, int>& m)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+        
+    int val = root->val;
+    unordered_map<int, int> le;
+    unordered_map<int, int> ri;
+    
+    int count = helper(root->left, target, le) + helper(root->right, target, ri);
+
+    for (std::unordered_map<int, int>::iterator it = le.begin(); it != le.end(); it++)
+        m[it->first + val] = it->second;
+        
+    for (std::unordered_map<int, int>::iterator it = ri.begin(); it != ri.end(); it++)
+    {
+        if (m.find(it->first + val) == m.end())
+            m[it->first + val] = it->second;
+        else
+            m[it->first + val] += it->second;
+    }
+        
+    if (m.find(val) == m.end())
+        m[val] = 1;
+    else
+        m[val]++;
+    
+    if (m.find(target) != m.end()) count += m[target];
+    
+    for (std::unordered_map<int, int>::iterator it = m.begin(); it != m.end(); it++)
+    {
+        cout << "val: " << val << "; " << it->first << ": " << it->second << "; ";
+    }
+    cout << endl;
+    
+    return count;
+}
+
+int f(TreeNode* root, int target)
+{
+    unordered_map<int, int> m;
+    return helper(root, target, m);
+}
+```
+
+```
+int helper(TreeNode* root, int target, int num, unordered_map<int, int>& m)
+{
+    if (root == NULL)
+    {
+        return 0;
+    }
+    
+    num += root->val;
+    
+    if (m.find(num) == m.end())
+        m[num] = 1;
+    else
+        m[num]++;
+    
+    int count = helper(root->left, target, num, m) + helper(root->right, target, num, m);
+    
+    if (--m[num] == 0)
+        m.erase(num);
+    
+    if (m.find(num - target) != m.end())
+        count += m[num - target];
+    
+    return count;
+}
+
+int f(TreeNode* root, int target)
+{
+    unordered_map<int, int> m;
+    m[0] = 1;
+    return helper(root, target, 0, m);
+}
+```
