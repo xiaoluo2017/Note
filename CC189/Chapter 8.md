@@ -257,3 +257,96 @@ vector<string> f(int i)
     return v;
 }
 ```
+
+### 8.10
+```
+void helper(vector<vector<int>>& matrix, int x, int y, int color, int orgColor)
+{
+    if (x < 0 || x >= matrix.size() || y < 0 || y >= matrix[0].size())
+        return;
+    
+    if (matrix[x][y] == orgColor)
+    {
+        matrix[x][y] = color;
+        helper(matrix, x + 1, y, color, orgColor);
+        helper(matrix, x - 1, y, color, orgColor);
+        helper(matrix, x, y + 1, color, orgColor);
+        helper(matrix, x, y - 1, color, orgColor);
+    }
+}
+
+void f(vector<vector<int>>& matrix, int x, int y, int color)
+{
+    if (matrix.size() == 0 || matrix[0].size() == 0) 
+        return;
+    
+    helper(matrix, x, y, color, matrix[x][y]);
+}
+```
+
+### 8.11
+```
+int helper(int i, int pre)
+{
+    if (i == 0) return 1;
+    if (i < 0) return 0;
+    int count = 0;
+    
+    if (pre != 10 && pre != 5 && pre != 1) count += helper(i - 25, 25);
+    if (pre != 5 && pre != 1) count += helper(i - 10, 10);
+    if (pre != 1) count += helper(i - 5, 5);
+    count += helper(i - 1, 1);
+    
+    return count;
+}
+
+int f(int i)
+{
+    return helper(i, 0);
+}
+```
+
+```
+int helper(int cents, int currency[], vector<int>& tmp) // , map<vector<int>, int>& m)
+{ 
+    if (cents < 0) return 0;
+    if (cents == 0 || tmp[3] != 0) return 1;
+
+    // if (m.find(tmp) != m.end())
+    //    return m[tmp];
+    
+    int count = 0;
+    
+    for (int i = 0; i < 4; i++)
+    {
+        bool bCurrCurrency = true;
+        for (int j = i + 1; j < 4; j++)
+        {
+            if (tmp[j] != 0){
+                bCurrCurrency = false;
+                break;
+            }
+                
+        }
+        
+        if (bCurrCurrency)
+        {
+            tmp[i]++;
+            count += helper(cents - currency[i], currency, tmp); // , m);
+            tmp[i]--;
+        }
+            
+    }
+    
+    // m[tmp] = count;
+    return count;
+}
+
+int f(int cents)
+{
+    // map<vector<int>, int> m;
+    vector<int> tmp(4, 0);
+    int currency[] = {25, 10, 5, 1};
+    return helper(cents, currency, tmp); // , m);
+}
+```
