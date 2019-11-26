@@ -129,6 +129,36 @@ vector<vector<int>> f(vector<int>& v)
 }
 ```
 
+```
+// subset II
+void helper(vector<int>& v, vector<vector<int>>& res, vector<int>& tmp, vector<bool>& isVisited, int start)
+{
+    for (int i = start; i < v.size(); i++)
+    {
+        if (i > 0 && v[i] == v[i - 1] && !isVisited[i - 1])
+        {
+            continue;
+        }
+        
+        tmp.push_back(v[i]);
+        res.push_back(tmp);
+        isVisited[i] = true;
+        helper(v, res, tmp, isVisited, i + 1);
+        isVisited[i] = false;
+        tmp.pop_back();
+    } 
+}
+
+vector<vector<int>> f(vector<int>& v)
+{
+    sort(v.begin(), v.end());
+    vector<vector<int>> res;
+    vector<int> tmp;
+    vector<bool> isVisited(v.size(), false);
+    helper(v, res, tmp, isVisited, 0);
+    return res;
+}
+```
 ### 8.5
 ```
 int helper(int i1, int i2, int num)
