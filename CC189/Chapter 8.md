@@ -25,7 +25,7 @@ void helper(vector<vector<int>>& matrix, vector<pair<int, int>>& res, vector<vec
         return;
     
     res.push_back(make_pair(m, n));
-    isVisited[m][n] = true;
+    isVisited[m][n] = true; // For acceleration
     helper(matrix, res, isVisited, m + 1, n, r, c);
     helper(matrix, res, isVisited, m, n + 1, r, c);
     if (res.size() < r + c - 1) res.erase(res.end() - 1);
@@ -37,7 +37,7 @@ void f(vector<vector<int>>& matrix, vector<pair<int, int>>& res)
         return;
     
     vector<bool> v(matrix[0].size(), 0);
-    vector<vector<bool>> isVisited(matrix.size(), v);
+    vector<vector<bool>> isVisited(matrix.size(), v); // initialization of vector<vector<>>
     helper(matrix, res, isVisited, 0, 0, matrix.size(), matrix[0].size());
 }
 ```
@@ -159,6 +159,7 @@ vector<vector<int>> f(vector<int>& v)
     return res;
 }
 ```
+
 ### 8.5
 ```
 int helper(int i1, int i2, int num)
@@ -407,7 +408,15 @@ int f(int cents)
 int helper(int cents, int currency[])
 {
     int dp[cents + 1] = {1};
-    for (int i = 0; i < 4; i++)
+    
+    /* 
+    i = 0: 25
+    i = 1: 25, 10; 10
+    i = 2: 25, 10, 5; 25, 5; 10, 5; 5
+    i = 3: ... 8 types
+    */
+    
+    for (int i = 0; i < 4; i++) 
     {
         for (int j = 0; j <= cents; j++)
         {
@@ -508,6 +517,26 @@ int f(vector<vector<int>> v)
 {
     vector<bool> isVisited(v.size(), false);
     return helper(v, isVisited, -1, 0, 0);
+}
+```
+
+```
+int f(vector<vector<int>> v)
+{
+    int dp[v.size()] = {0};
+    for (int i = 0; i < v.size(); i++)
+    {
+        int res = 0;
+        for (int j = 0; j < i; j++)
+        {
+            if (v[j][0] <= v[i][0] && v[j][1] <= v[i][1] && v[j][2] <= v[i][2])
+            {
+                res = res > dp[j] ? res : dp[j];
+            }
+        }
+        dp[i] = res + v[i][1];
+    }
+    return dp[v.size() - 1];
 }
 ```
 
