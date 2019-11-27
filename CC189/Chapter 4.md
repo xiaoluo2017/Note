@@ -237,7 +237,7 @@ TreeNode* f(TreeNode* root, TreeNode* node1, TreeNode* node2)
 
 ### *4.9
 ```
-void helper(vector<TreeNode*> res, vector<TreeNode*> v, vector<bool> isVisited)
+void helper(vector<TreeNode*>& res, vector<TreeNode*>& v, vector<bool>& isVisited)
 {   
     if (res.size() == v.size())
     {
