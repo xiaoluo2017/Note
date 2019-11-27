@@ -187,6 +187,28 @@ int f(int i1, int i2)
 }
 ```
 
+### *8.6
+```
+void helper(stack<int>& A, stack<int>& B, stack<int>& C, int i) // A -> B , C buffer
+{
+    if (i == 1)
+    {
+        B.push(A.top());
+        A.pop();
+        return;
+    }
+    
+    helper(A, C, B, i - 1); // A -> C, B buffer
+    helper(A, B, C, 1);
+    helper(C, B, A, i - 1); // C -> B, A buffer
+}
+
+void f(stack<int>& s1, stack<int>& s2, stack<int>& s3)
+{
+    helper(s1, s3, s2, s1.size());
+}
+```
+
 ### 8.7
 ```
 void helper(string& input, string& tmp, vector<string>& v, vector<bool>& isVisited)
@@ -402,5 +424,137 @@ int f(int cents)
 {
     int currency[] = {25, 10, 5, 1};
     return helper(cents, currency);
+}
+```
+
+### 8.12
+```
+bool isAllowed(int x, int y, vector<string>& tmp, int xOffset, int yOffset)
+{
+    x = x + xOffset;
+    y = y + yOffset;
+    
+    if (tmp.size() == 0 || x < 0 || x >= tmp.size() || y < 0 || y >= tmp[0].size())
+        return true;
+    
+    if (tmp[x][y] == 'Q') return false;
+
+    return isAllowed(x, y, tmp, xOffset, yOffset);
+}
+
+void helper(int n, int i, vector<vector<string>>& res, vector<string>& tmp)
+{
+    if (tmp.size() == n)
+    {
+        res.push_back(tmp);
+        return;
+    }
+    
+    for (int j = 0; j < n; j++)
+    {
+        bool bIsAllowed = true;
+        if (!bIsAllowed || !isAllowed(i, j, tmp, -1, 0)) bIsAllowed = false;
+        if (!bIsAllowed || !isAllowed(i, j, tmp, 1, 0)) bIsAllowed = false;
+        if (!bIsAllowed || !isAllowed(i, j, tmp, 0, -1)) bIsAllowed = false;
+        if (!bIsAllowed || !isAllowed(i, j, tmp, 0, 1)) bIsAllowed = false;
+        if (!bIsAllowed || !isAllowed(i, j, tmp, -1, -1)) bIsAllowed = false;
+        if (!bIsAllowed || !isAllowed(i, j, tmp, 1, 1)) bIsAllowed = false;
+        if (!bIsAllowed || !isAllowed(i, j, tmp, -1, 1)) bIsAllowed = false;
+        if (!bIsAllowed || !isAllowed(i, j, tmp, 1, -1)) bIsAllowed = false;
+        
+        if (bIsAllowed)
+        {
+            string s(n, '.');
+            s[j] = 'Q';
+            tmp.push_back(s);
+            helper(n, i + 1, res, tmp);
+            tmp.pop_back();
+        }
+    }
+}
+
+vector<vector<string>> f(int n)
+{
+    vector<vector<string>> res;
+    vector<string> tmp;
+    helper(n, 0, res, tmp);
+    return res;
+}
+```
+
+### 8.13
+```
+int helper(vector<vector<int>>& v, vector<bool>& isVisited, int width, int height, int depth)
+{
+    int res = 0;
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (!isVisited[i])
+        {
+            if (width == -1 || (v[i][0] <= width && v[i][1] <= height && v[i][2] <= depth))
+            {
+                isVisited[i] = true;
+                int tmp = helper(v, isVisited, v[i][0], v[i][1], v[i][2]);
+                res = res > tmp ? res : tmp;
+                isVisited[i] = false;
+            }
+        }
+    }
+    
+    return res + height;
+}
+
+int f(vector<vector<int>> v)
+{
+    vector<bool> isVisited(v.size(), false);
+    return helper(v, isVisited, -1, 0, 0);
+}
+```
+
+### *8.14
+```
+pair<int, int> helper(string input)
+{
+    if (input.size() == 1)
+    {
+        if (stoi(input) == 1) return make_pair(1, 0);
+        if (stoi(input) == 0) return make_pair(0, 1);
+    }
+    
+    int t_count = 0, f_count = 0;
+    for (int i = 0; i < input.size(); i++)
+    {
+        if (input[i] == '|')
+        {
+            pair<int, int> p1 = helper(input.substr(0, i));
+            pair<int, int> p2 = helper(input.substr(i + 1, input.size() - i - 1));
+            t_count += p1.first * p2.first + p1.first * p2.second + p1.second * p2.first;
+            f_count += p1.second * p2.second;
+            
+        }
+        else if (input[i] == '&')
+        {
+            pair<int, int> p1 = helper(input.substr(0, i));
+            pair<int, int> p2 = helper(input.substr(i + 1, input.size() - i - 1));
+            t_count += p1.first * p2.first;
+            f_count += p1.first * p2.second + p1.second * p2.first + p1.second * p2.second;
+        }
+        else if (input[i] == '^')
+        {
+            pair<int, int> p1 = helper(input.substr(0, i));
+            pair<int, int> p2 = helper(input.substr(i + 1, input.size() - i - 1));
+            t_count += p1.first * p2.second + p1.second * p2.first;
+            f_count += p1.first * p2.first + p1.second * p2.second;
+        }
+    }
+    
+    return make_pair(t_count, f_count);
+}
+
+int f(string input, bool res)
+{
+    int count = 0;
+    pair<int, int> p = helper(input);
+    return res ? p.first : p.second;
 }
 ```
