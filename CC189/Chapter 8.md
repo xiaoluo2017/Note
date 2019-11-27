@@ -315,7 +315,6 @@ void f(vector<vector<int>>& matrix, int x, int y, int color)
 ```
 
 ### *8.11
-~~
 ```
 int helper(int i, int pre)
 {
@@ -381,4 +380,27 @@ int f(int cents)
     return helper(cents, currency, tmp); // , m);
 }
 ```
-~~
+
+```
+int helper(int cents, int currency[])
+{
+    int dp[cents + 1] = {1};
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j <= cents; j++)
+        {
+            if (j - currency[i] >= 0)
+            {
+                dp[j] += dp[j - currency[i]];
+            }
+        }
+    }
+    return dp[cents];
+}
+
+int f(int cents)
+{
+    int currency[] = {25, 10, 5, 1};
+    return helper(cents, currency);
+}
+```
