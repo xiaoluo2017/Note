@@ -312,6 +312,10 @@ int f(vector<string>& v, string target)
 }
 ```
 
+### *10.7
+* Multiple passes: Try using 1 pass to get it down to a range of values, and then a second pass to find a specific value
+* Bit vector
+
 ### 10.8
 ```
 vector<int> f(vector<int>& v)
