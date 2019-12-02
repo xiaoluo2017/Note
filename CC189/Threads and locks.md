@@ -1,11 +1,6 @@
-### 1.
-Thread in java: java.lang.Thread
-* main thread
-* 
-
-
-* implement java.lang.Runnable interface
+### 15.0
 ```
+// implement java.lang.Runnable interface
 class C implements Runnable
 {
     public int count = 0;
@@ -52,8 +47,8 @@ public class Main {
 }
 ```
 
-* extending java.lang.Thread class
 ```
+// extending java.lang.Thread class
 class C extends Thread
 {
     public int count = 0;
@@ -390,5 +385,88 @@ class Foo
     
     private Semaphore s1;
     private Semaphore s2;
+}
+```
+
+### 15.7
+```
+class Globals {
+   public static int count = 1;
+}
+
+class A extends Thread
+{
+    public void run()
+    {
+        while (true)
+        {
+            synchronized(this) {
+                if (Globals.count > 100) return;
+            
+                if (Globals.count % 3 != 0 && Globals.count % 5 != 0)
+                {
+                    System.out.println(Globals.count);
+                    Globals.count++;
+                }
+            }
+        }
+    }
+}
+
+class B extends Thread
+{
+    public void run()
+    {
+        while (true)
+        {
+            synchronized(this) {
+                if (Globals.count > 100) return;
+                
+                if (Globals.count % 3 == 0 && Globals.count % 5 != 0)
+                {
+                    System.out.println("Fizz");
+                    Globals.count++;
+                }
+            }
+        }
+    }
+}
+
+class C extends Thread
+{
+    public void run()
+    {
+        while (true)
+        {
+            synchronized(this) {
+                if (Globals.count > 100) return;
+            
+                if (Globals.count % 3 != 0 && Globals.count % 5 == 0)
+                {
+                    System.out.println("Buzz");
+                    Globals.count++;
+                }
+            }
+        }
+    }
+}
+
+class D extends Thread
+{
+    public void run()
+    {
+        while (true)
+        {
+            synchronized(this) {
+                if (Globals.count > 100) return;
+            
+                if (Globals.count % 3 == 0 && Globals.count % 5 == 0)
+                {
+                    System.out.println("FizzBuzz");
+                    Globals.count++;
+                }
+            }
+        }
+    }
 }
 ```
