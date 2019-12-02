@@ -143,12 +143,13 @@ cout << **p + 1 << endl; // value
 * 数组名做参数会退化为指针，除了sizeof
 
 ### 7. process vs thread
-* 一个程序至少有一个进程, 一个进程至少有一个线程
-* 一个进程崩溃后, 在保护模式下不会对其它进程产生影响; 一个线程死掉就等于整个进程死掉
+* A process can be thought of as an instance of a program in execution, a thread is a paticular execution path of a process
 * 地址空间为每个进程所私有的; 线程有自己的堆栈和局部变量, 但线程共享进程的地址空间(线程之间没有单独的地址空间)
-    * 速度: 线程产生的速度快, 线程间的通讯快/切换快等, 因为他们在同一个地址空间内
+    * 速度: 线程产生的速度快, 线程间的通讯快/切换快等, 因为他们在同一个地址空间内; process need to use inter-process communications(eg. pipes, files, socket, etc.)
     * 资源利用率: 线程的资源利用率比较好也是因为他们在同一个地址空间内
     * 同步问题: 线程使用公共变量/内存时需要使用同步机制还是因为他们在同一个地址空间内
+* 一个程序至少有一个进程, 一个进程至少有一个线程
+* 一个进程崩溃后, 在保护模式下不会对其它进程产生影响; 一个线程死掉就等于整个进程死掉
 * 线程执行开销小, 但不利于资源管理和保护；而进程正相反, 进程切换时, 耗费资源较大
 * 总线程数 <= CPU数量: 并行运行; 总线程数 > CPU数量: 并发运行 
 > ref: https://blog.csdn.net/mxsgoden/article/details/8821936
