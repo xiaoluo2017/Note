@@ -56,3 +56,27 @@ Animal* Animal::createAnimal(AnimalType type)
     return NULL;
 }
 ```
+
+### 7.11
+* class Entry
+   * private: Entry parent; long createdTime; long lastUpdateTime; long lastAccessTime; string name
+   * public:
+     * Entry(Entry p, string n);
+     * bool delete();
+     * int getSize() = 0;
+     * string getFullPath();
+     * name, createdTime, lastUpdateTime, lastAccessTime getter
+     * name setter
+* class File : public Entry
+   * private: string content; int size
+   * public:
+     * File(Entry p, string n, string c);
+     * int getSize();
+     * content getter, setter
+* class Directory : public Entry
+   * private: vector<Entry> _v
+   * public:
+     * Directory(Entry p, string n);
+     * void addEntry(Entry e);
+     * void deleteEntry(Entry e);
+     * int getSize();
