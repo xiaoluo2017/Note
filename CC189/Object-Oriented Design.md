@@ -57,6 +57,8 @@ Animal* Animal::createAnimal(AnimalType type)
 }
 ```
 
+### 7.5
+
 ### 7.7
 * class UserManager
    * private: 
