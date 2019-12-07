@@ -597,6 +597,7 @@ int main() {
 ### 19. HTTP GET POST PUT DELETE
 * URL全称是资源描述符
 * GET和POST本质上就是TCP链接, 并无差别; 但是由于HTTP的规定和浏览器/服务器的限制, 导致他们在应用过程中体现出一些不同 
+* GET从服务器上获取资源，POST向服务器发送数据;
 * GET为幂等, post为非幂等
 * GET参数包含在URL中, POST通过request body传递参数
     * get传输数据是通过URL请求, 以field(字段) = value的形式, 置于URL后, 并用"?"连接, 多个请求数据间用"&"连接, eg. http://127.0.0.1/Test/login.action?name=admin&password=admin, 这个过程用户是可见的;
