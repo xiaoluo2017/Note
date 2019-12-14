@@ -123,3 +123,12 @@ class AB_DLL_API CChild : public CBase
 AFX_MANAGE_STATE(AfxGetAppModuleState());
 ```
 > ref: https://stackoverflow.com/questions/9062034/what-does-afx-manage-stateafxgetstaticmodulestate-do-exactly/9443848
+
+### 13. std::transform
+```
+std::transform(vars.begin(), vars.end(), varNames.begin(), [](const Variable& var)
+{
+    return var.GetName();
+});
+```
+> ref: https://stackoverflow.com/questions/31064749/what-is-the-difference-between-stdtransform-and-stdfor-each
