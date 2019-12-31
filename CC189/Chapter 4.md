@@ -237,57 +237,38 @@ TreeNode* f(TreeNode* root, TreeNode* node1, TreeNode* node2)
 
 ### *4.9
 ```
-void helper(vector<TreeNode*>& res, vector<TreeNode*>& v, vector<bool>& isVisited)
-{   
-    if (res.size() == v.size())
+void helper(vector<vector<int>>& res, vector<int>& tmp, vector<TreeNode*>& v)
+{
+    if (v.size() == 0)
     {
-        for (TreeNode* node : res)
-        {
-           cout << node->val << " "; 
-        }
-        cout << endl;
+        res.push_back(tmp);
         return;
     }
     
     for (int i = 0; i < v.size(); i++)
     {
-        if (isVisited.size() == i)
-            isVisited.push_back(false);
-        
-        if (!isVisited[i])
-        {
-            TreeNode* curr = v[i];
-            res.push_back(curr);
-            
-            if (curr->left != NULL)
-                v.push_back(curr->left);
-        
-            if (curr->right != NULL)
-                v.push_back(curr->right);
-
-            isVisited[i] = true;
-            helper(res, v, isVisited);
-            isVisited[i] = false;
-            
-            if (curr->left != NULL)
-                v.erase(v.end() - 1);
-        
-            if (curr->right != NULL)
-                v.erase(v.end() - 1);
-            
-            res.erase(res.end() - 1);
-        }
+        TreeNode* curr = v[i];
+        tmp.push_back(v[i]->val);
+        v.erase(v.begin() + i);
+        if (curr->left != NULL) v.push_back(curr->left);
+        if (curr->left != NULL) v.push_back(curr->right);
+        helper(res, tmp, v);
+        tmp.pop_back();
+        v.insert(v.begin() + i, curr);
+        if (curr->left != NULL) v.pop_back();
+        if (curr->left != NULL) v.pop_back();
     }
 }
 
-void f(TreeNode* root)
+vector<vector<int>> f(TreeNode* root)
 {
     if (root == NULL) return;
     
     vector<TreeNode*> res;
+    vector<int> tmp;
     vector<TreeNode*> v{root};
-    vector<bool> isVisited;
-    helper(res, v, isVisited);
+    helper(res, tmp, v);
+    return res;
 }
 ```
 
