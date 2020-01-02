@@ -52,3 +52,19 @@
    
 ### 7.
 * 创建高级设计(重看)
+
+### 8. Design Amazon's sales rank by category feature
+* Sales Rank Service
+   * store the raw Sales API server log files on a managed Object Store such as Amazon S3
+   * The Sales Rank Service could use MapReduce, using the Sales API server log files as input and writing the results to an aggregate table sales_rank in a SQL Database
+   
+### 9. Design a key-value cache to save the results of the most recent web server queries
+* Query API server
+   * Parses the query
+   * Removes markup
+   * Breaks up the text into terms
+   * Fixes typos
+   * Normalizes capitalization
+   * Converts the query to use boolean operations
+* The page contents change
+   * Set a max time that a cached entry can stay in the cache before it is updated, usually referred to as time to live (TTL).
