@@ -651,10 +651,38 @@ https://www.oschina.net/news/77354/http-get-post-different
 * 每次HTTP请求的时候, 客户端都会发送相应的Cookie信息(Session Id)/使用URL重写(如果客户端的浏览器禁用了Cookie)到服务端, cookie来实现Session跟踪
     * Cookie是客户端保存用户信息的一种机制, 用来记录用户的一些信息, 也是实现Session的一种方式
     
-### 23. https加密
+### 23. https加密 SSL/TLS协议
 * 客户端向服务端发送请求, 服务端返回数字证书
     * 数字证书: CA(在浏览器中)用它的私钥对消息摘要(RSA公钥和个人信息通过Hash算法生成)加密, 形成签名, 并把原始信息和数据签名进行合并, 即所谓的'数字证书', 用于解决中间人问题;
 * 客户端用自己的CA公钥去解密证书, 如果证书有问题会提示风险
 * 如果证书没问题, 客户端会生成一个对称加密的秘钥, 用刚刚解密的服务器端的RSA公钥进行加密, 发送给服务器端
 * 服务器端收到以后会用自己的RSA私钥对客户端发来的对称秘钥进行解密
-* 之后双方就拿着这个对称加密秘钥来进行正常的通信
+* 之后双方就拿着这个对称加密秘钥(RSA太慢)来进行正常的通信
+
+### 24. typeid decltype
+* dynamic_cast(C++ equivalent of instanceof)
+```
+if (NewType* v = dynamic_cast<NewType*>(old)) 
+{
+   // old was safely casted to NewType
+   v->doSomething();
+}
+```
+> ref: https://stackoverflow.com/questions/500493/c-equivalent-of-instanceof
+
+* decltype(C++ equivalent of typeof)
+```
+auto i = 1; 
+decltype(i) i2;
+cout << typeid(i2).name() << endl; // i
+```
+> ref: https://www.geeksforgeeks.org/type-inference-in-c-auto-and-decltype/
+
+* typeid: returns a type_info object, which is equality-comparable with other type_info objects
+```
+char c1;
+char c2;
+cout << typeid(c1).name() << endl; // c
+cout << (typeid(c1) == typeid(c2)) << endl; // true
+```
+> ref: https://stackoverflow.com/questions/1986418/typeid-versus-typeof-in-c
