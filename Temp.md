@@ -686,3 +686,76 @@ cout << typeid(c1).name() << endl; // c
 cout << (typeid(c1) == typeid(c2)) << endl; // true
 ```
 > ref: https://stackoverflow.com/questions/1986418/typeid-versus-typeof-in-c
+
+### 25. C++ equivalent of reflection
+```
+class Animal {};
+
+class Factory
+{
+public:
+    Animal* getAnimalByName(std::string name)
+    {
+        std::map<std::string, Animal*>::iterator it = m.find(name);
+        if (it == m.end()) { return NULL; }
+
+        return it->second;
+    }   
+
+    void registClass(std::string name, Animal* a)
+    {
+        m[name] = a;
+    }   
+
+    static Factory& getInstance()
+    {
+        static Factory factory;
+        return factory;
+    }   
+
+private:
+    Factory() {};
+    ~Factory() {};
+    std::map<std::string, Animal*> m;
+}; 
+
+class Dog : public Animal
+{
+public:
+    Dog(){ std::cout << "Dog()" << std::endl; }
+    ~Dog(){ std::cout << "~Dog()" << std::endl; }
+};
+
+class Cat : public Animal
+{
+public:
+    Cat(){ std::cout << "Cat()" << std::endl; }
+    ~Cat(){ std::cout << "~Cat()" << std::endl; }
+};
+
+int main() 
+{
+    Factory::getInstance().registClass("Dog", new Dog());
+    Factory::getInstance().registClass("Cat", new Cat());
+    
+    Dog* d = static_cast<Dog*>(Factory::getInstance().getAnimalByName("Dog"));
+    Cat* c = static_cast<Cat*>(Factory::getInstance().getAnimalByName("Cat"));
+    
+    delete d;
+    delete c;
+}
+```
+> ref: https://www.cnblogs.com/xudong-bupt/p/6643721.html
+
+### 26. 用户态 vs 内核态
+* 最重要的差别就在于特权级的不同, 运行在用户态下的程序不能直接访问操作系统内核数据结构和程序
+    * 用户态: 最低特权级
+    * 内核态: 最高特权级
+* 执行一个程序, 大部分时间是运行在用户态下的, 在其需要操作系统帮助完成某些它没有权力和能力完成的工作时就会切换到内核态. 最关键性的权力必须由高特权级的程序来执行，这样才可以做到集中管理，减少有限资源的访问和使用冲突, 限制不同的程序之间的访问能力, 防止他们获取别的程序的内存数据, 或者获取外围设备的数据, 并发送到网络
+
+* 用户态切换到内核态
+    * 系统调用: 主动方式 eg. fork(): 执行创建新进程的系统调用
+    * 异常: CPU在执行运行在用户态下的程序时，发生异常, 则进程会切换到处理此异常的内核相关程序中
+    * 外围设备的中断: 向CPU发出相应的中断信号, 执行与中断信号对应的处理程序 eg. 硬盘读写操作完成，系统会切换到硬盘读写的中断处理程序中执行后续操作
+
+> ref: https://blog.csdn.net/youngyoungla/article/details/53106671
