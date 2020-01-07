@@ -798,6 +798,7 @@ int main()
     * String.hashCode() = str.charAt(0) * 31 ^ (n - 1) + str.charAt(1) * 31 ^ (n - 2) + ... + str.charAt(n - 1)
 
 > ref: https://stackoverflow.com/questions/7520432/what-is-the-difference-between-and-equals-in-java
+> ref: https://www.cnblogs.com/duanxz/p/3724275.html
 
 ### 29. Abstract class vs interface in Java
 * abstract function(in Java) == pure virtual function(in C++)
