@@ -793,6 +793,9 @@ int main()
 * .equals(): override to compare if "value" is the same(functional equality)
     * If a class does not override the equals method, then it defaults to the equals(Object o) method of the closest parent class that has overridden this method
     * If no parent classes have provided an override, then it defaults to the method from the ultimate parent class: Object. In the Object API this is the same as ==
+* hashcode
+    * 对象相等则hashCode一定相等, hashCode相等对象未必相等
+    * String.hashCode() = str.charAt(0) * 31 ^ (n - 1) + str.charAt(1) * 31 ^ (n - 2) + ... + str.charAt(n - 1)
 
 > ref: https://stackoverflow.com/questions/7520432/what-is-the-difference-between-and-equals-in-java
 
