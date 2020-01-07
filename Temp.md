@@ -782,7 +782,7 @@ int main()
 
 * Both have but different aspects:
     * Java is less efficient than C++
-    * Java interface vs C++ virtual class(include at least one pure virtual function)
+    * Java abstract class/interface vs C++ virtual class(include at least one pure virtual function)
     * Templates vs Generics
     * C++ class need both declaration & definition; Java no class declaration, only class definition
 
@@ -795,3 +795,14 @@ int main()
     * If no parent classes have provided an override, then it defaults to the method from the ultimate parent class: Object. In the Object API this is the same as ==
 
 > ref: https://stackoverflow.com/questions/7520432/what-is-the-difference-between-and-equals-in-java
+
+### 29. Abstract class vs interface in Java
+* abstract function(in Java) == pure virtual function(in C++)
+* abstract class: has abstract function(in Java)
+* virtual class: has pure virtual function(in C++)
+* interface(in Java)
+    * Functions can only be of type public abstract, member variables can only be of type public static final
+    * Cannot contain static code blocks and static methods(abstract classes can have static code blocks and static methods)
+    * A class can inherit only one abstract class, but a class can implement multiple interfaces(in Java)
+
+> ref: https://www.cnblogs.com/dolphin0520/p/3811437.html
