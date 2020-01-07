@@ -778,7 +778,7 @@ int main()
 * Only in Java:
     * Multithreading(a concurrency mechanism supported at the language level)
     * Garbage collection
-    * >>> (unsigned right shift)
+    * '>>>' (unsigned right shift)
 
 * Both have but different aspects:
     * Java is less efficient than C++
@@ -787,3 +787,11 @@ int main()
     * C++ class need both declaration & definition; Java no class declaration, only class definition
 
 > ref: https://www.zhihu.com/question/22928284
+
+### 28. == vs .equals() in Java
+* ==: It returns true only if both variables refer to the same object(object equality)
+* .equals(): override to compare if "value" is the same(functional equality)
+    * If a class does not override the equals method, then it defaults to the equals(Object o) method of the closest parent class that has overridden this method
+    * If no parent classes have provided an override, then it defaults to the method from the ultimate parent class: Object. In the Object API this is the same as ==
+
+> ref: https://stackoverflow.com/questions/7520432/what-is-the-difference-between-and-equals-in-java
