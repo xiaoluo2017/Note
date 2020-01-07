@@ -759,3 +759,31 @@ int main()
     * 外围设备的中断: 向CPU发出相应的中断信号, 执行与中断信号对应的处理程序 eg. 硬盘读写操作完成，系统会切换到硬盘读写的中断处理程序中执行后续操作
 
 > ref: https://blog.csdn.net/youngyoungla/article/details/53106671
+
+### 27. C++ vs Java
+* Only in C++:
+    * pointer
+    * reference(In Java, objects can only be passed by reference. In C ++ objects can be passed by value or by reference)
+    * Memory management(In Java, no destructor, no delete, ~A() -> finalize())
+    * operator overloading
+    * struct, union & typedef(Compatible with C)
+    * Preprocessing
+    * default parameter
+    * Multiple inheritance
+    * inline
+    * unsigned int
+    * Scope operator::
+    * virtual keyword(in Java, programmers don't have to decide for themselves whether to use dynamic binding, all non-static methods will definitely use dynamic binding)
+
+* Only in Java:
+    * Multithreading(a concurrency mechanism supported at the language level)
+    * Garbage collection
+    * >>> (unsigned right shift)
+
+* Both have but different aspects:
+    * Java is less efficient than C++
+    * Java interface vs C++ virtual class(include at least one pure virtual function)
+    * Templates vs Generics
+    * C++ class need both declaration & definition; Java no class declaration, only class definition
+
+> ref: https://www.zhihu.com/question/22928284
