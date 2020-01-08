@@ -57,6 +57,92 @@ Animal* Animal::createAnimal(AnimalType type)
 }
 ```
 
+```
+// Adapter
+// 适配的类的API转换成为目标类的API, 使原本接口不匹配而无法一起工作的两个类能够在一起工作
+class Shape 
+{
+public:
+    virtual int calculateArea(int r) = 0;
+};
+
+class Square : public Shape 
+{
+public:
+    int calculateArea(int r) override
+    {
+        return r * r;
+    }
+};
+
+class Circle 
+{
+public:
+    double calculateCircularArea (int r)
+    {
+        return 3.14 * r * r;
+    }
+};
+
+class CirCleAdaptor : public Circle, public Shape 
+{
+public:
+    int calculateArea(int r) override
+    {
+        return (int)calculateCircularArea(r);
+    }
+};
+
+int main() {
+    Shape* circle = new CirCleAdaptor();
+    circle->calculateArea(5);
+    
+    Shape* square = new Square();
+    square->calculateArea(5);
+}
+```
+> ref: https://stackoverflow.com/questions/3478225/when-do-we-need-adapter-pattern
+
+```
+// observer pattern
+import java.util.*; 
+
+class Cow extends java.util.Observable
+{
+    public void speak() {
+        System.out.println("Cow maaaauuu");
+        setChanged(); 
+        notifyObservers();
+    }
+}
+
+class Farmer implements java.util.Observer
+{
+    public void update(Observable o, Object arg) {
+        System.out.println("Farmer heard");
+    }
+}
+
+public class Main
+{
+    public static void main(String args[]) {
+        Cow c = new Cow();
+        Farmer f = new Farmer();
+        c.addObserver(f);
+        c.speak();
+    }
+}
+```
+> ref: https://stackoverflow.com/questions/10069299/observer-design-pattern
+
+* Template Method: 
+   * In virtual base classes, define the methods that need to provide implementation in subclasses as pure virtual functions
+> ref: https://stackoverflow.com/questions/22015933/understanding-template-method-pattern
+
+* Strategy Pattern:
+   * It delegates the behavior of the function to another class(pass in object of another class):
+> ref: https://stackoverflow.com/questions/91932/how-does-the-strategy-pattern-work
+
 ### 7.5
 
 ### 7.7
