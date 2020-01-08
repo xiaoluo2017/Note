@@ -825,6 +825,7 @@ int main()
     * eg. Triangles, circles & rectangles, the language takes care of evaluating the right implementation of the common method
     
 > ref: https://stackoverflow.com/questions/23130282/best-way-to-explain-oop-principles
+
 > ref: https://www.freecodecamp.org/news/object-oriented-programming-concepts-21bb035f7260/
 
 * requirements for language to be object-oriented
