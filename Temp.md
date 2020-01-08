@@ -646,6 +646,9 @@ https://www.oschina.net/news/77354/http-get-post-different
 > ref: http://c.biancheng.net/cpp/html/2606.html
 
 ### 22. Cookie vs Session
+* cookie: 浏览器访问服务器后, 服务器传给浏览器的一段数据, 浏览器需要保存这段数据, 此后每次浏览器访问该服务器, 都必须带上这段数据
+   * 识别用户身份(Session ID)
+   * 记录历史(eg. 购物车)
 * HTTP协议是无状态的协议, 服务端需要记录用户的状态时, 需要用某种机制来识具体的用户(Session)
     * Session是在服务端保存的一个数据结构, 用来跟踪用户的状态, 这个数据可以保存在数据库/Cache中;
 * 每次HTTP请求的时候, 客户端都会发送相应的Cookie信息(Session Id)/使用URL重写(如果客户端的浏览器禁用了Cookie)到服务端, cookie来实现Session跟踪
