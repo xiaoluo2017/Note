@@ -813,3 +813,16 @@ int main()
     * A class can inherit only one abstract class, but a class can implement multiple interfaces(in Java)
 
 > ref: https://www.cnblogs.com/dolphin0520/p/3811437.html
+
+### 30. Main concepts in OOP
+* encapsulation: hide data
+* abstraction: hide implementation
+* inheritance: inherit to re-use, extend and modify the behaviour
+* Polymorphism: an object exhibits different behavior in different situation
+> ref: https://stackoverflow.com/questions/23130282/best-way-to-explain-oop-principles
+
+* requirements for language to be object-oriented
+    * a language that supports only encapsulation(objects) is not object-oriented, but it is modular
+    * a language that supports just encapsulation(objects) & message-passing(polymorphism) is not object-oriented, but it is object-based
+    * a language that supports encapsulation(objects), message-passing(polymorphism), and inheritance(abstraction), is object-oriented
+> ref: https://stackoverflow.com/questions/402984/main-concepts-in-oop
