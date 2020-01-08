@@ -816,13 +816,20 @@ int main()
 
 ### 30. Main concepts in OOP
 * encapsulation: hide data
+    * eg. You can feed the cat, but you can’t directly change how hungry the cat is
 * abstraction: hide implementation
+    * eg. A coffee machine. It does a lot of stuff, but all you have to do is put in coffee and press a button.
 * inheritance: inherit to re-use, extend and modify the behaviour
+    * eg. Child class reuses all fields and methods of the parent class(common part) and can implement its own(unique part).
 * Polymorphism: an object exhibits different behavior in different situation
+    * eg. Triangles, circles & rectangles, the language takes care of evaluating the right implementation of the common method
+    
 > ref: https://stackoverflow.com/questions/23130282/best-way-to-explain-oop-principles
+> ref: https://www.freecodecamp.org/news/object-oriented-programming-concepts-21bb035f7260/
 
 * requirements for language to be object-oriented
     * a language that supports only encapsulation(objects) is not object-oriented, but it is modular
     * a language that supports just encapsulation(objects) & message-passing(polymorphism) is not object-oriented, but it is object-based
     * a language that supports encapsulation(objects), message-passing(polymorphism), and inheritance(abstraction), is object-oriented
+    
 > ref: https://stackoverflow.com/questions/402984/main-concepts-in-oop
