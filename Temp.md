@@ -834,3 +834,26 @@ int main()
     * a language that supports encapsulation(objects), message-passing(polymorphism), and inheritance(abstraction), is object-oriented
     
 > ref: https://stackoverflow.com/questions/402984/main-concepts-in-oop
+
+### 30. Object class in Java
+* toString(): print class name, then @, then unsigned hexadecimal representation of the hash code of the object
+    * getClass().getName() + "@" + Integer.toHexString(hashCode());
+* hashCode(): JVM generates a unique number, by converting the internal address of object to an integer using an algorithm
+* equals(Object obj): It is necessary to override the hashCode() method whenever this method is overridden
+* getClass(): widely used in Reflection
+```
+Object o = new String("str"); 
+Class c = o.getClass();
+System.out.println(c.getName()); // java.lang.String
+```
+* finalize(): called by the Garbage Collector on an object
+* clone(): returns a new object that is exactly the same as this object
+
+> ref: https://www.geeksforgeeks.org/object-class-in-java/
+
+* wait(), notify() & notifyAll() must be used within a synchronized block only
+* wait(): The calling thread give up the lock and go to sleep, until some other thread(on the same object) calls notify()
+* notify()：Wake up one single thread that called wait() on the same object, not give up a lock on a resource
+* notifyAll(): Wake up all threads that called wait() on the same object
+
+> ref: https://www.geeksforgeeks.org/inter-thread-communication-java/
