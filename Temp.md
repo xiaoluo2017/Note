@@ -835,7 +835,7 @@ int main()
     
 > ref: https://stackoverflow.com/questions/402984/main-concepts-in-oop
 
-### 30. Object class in Java
+### 31. Object class in Java
 * toString(): print class name, then @, then unsigned hexadecimal representation of the hash code of the object
     * getClass().getName() + "@" + Integer.toHexString(hashCode());
 * hashCode(): JVM generates a unique number, by converting the internal address of object to an integer using an algorithm
@@ -858,7 +858,7 @@ System.out.println(c.getName()); // java.lang.String
 
 > ref: https://www.geeksforgeeks.org/inter-thread-communication-java/
 
-### 31. 虚拟地址 分段 分页
+### 32. 虚拟地址 分段 分页
 * 程序运行是需要从内存中分配出足够多的连续的内存, 然后把整个程序装载进去
     * 地址空间不隔离
     * 程序运行时候的地址不确定
@@ -873,3 +873,18 @@ System.out.println(c.getName()); // java.lang.String
     * 程序的换入换出就可以以页为单位了, 可以换出CPU还用不到的那些程序代码、数据
     
 > ref: https://www.zhihu.com/question/50796850
+
+### 33. 静态链接 动态链接
+* 静态链接和动态链接两者最大的区别就在于链接的时机不一样
+    * 静态链接在形成可执行程序(.exe)前
+    * 动态链接在程序执行时
+* 静态链接: 每个源文件(.cpp)独立编译形成目标文件(.obj), 需要将这些源文件产生的目标文件进行链接, 从而形成可执行文件(.exe)
+    * 浪费空间, 每个可执行程序中对所有需要的目标文件都要有一份副本, 同一个目标文件都在内存存在多个副本
+    * 更新困难, 每当库函数的代码修改了, 这个时候就需要重新进行编译链接形成可执行程序
+    * 在可执行程序中已经具备了所有执行程序所需要的任何东西, 在执行的时候运行速度快
+* 动态链接: 把程序按照模块拆分成各个相对独立部分, 在程序运行时才将它们链接在一起形成一个完整的程序
+    * 每个程序都依赖同一个库, 多个程序在执行时共享同一份副本(将内存中已经存在的.obj映射到虚拟地址空间中)
+    * 更新方便, 只需要替换原来的目标文件, 而无需将所有的程序再重新链接一遍
+    * 每次执行程序都需要进行链接, 性能会有一定损失(大约在5%以下)
+
+> ref: https://blog.csdn.net/kang___xi/article/details/80210717
