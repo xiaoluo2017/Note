@@ -912,3 +912,13 @@ System.out.println(c.getName()); // java.lang.String
     
 > ref: https://blog.csdn.net/lynn_Kun/article/details/73850223
 
+```
+// synchronized in c++
+mutex _mutex;
+void f()
+{
+     unique_lock<mutex> lock(_mutex);
+     // access your resource here.
+}
+```
+> ref: https://stackoverflow.com/questions/5429653/what-is-correspoding-feature-for-synchronized-in-java
