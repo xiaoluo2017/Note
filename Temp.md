@@ -888,3 +888,27 @@ System.out.println(c.getName()); // java.lang.String
     * 每次执行程序都需要进行链接, 性能会有一定损失(大约在5%以下)
 
 > ref: https://blog.csdn.net/kang___xi/article/details/80210717
+
+### 34. synchronized in Java
+* 修饰代码块
+    * synchronized(this|object) {}: 对象锁
+    * synchronized(类.class) {}: 类锁
+* 修饰方法
+    * 修饰非静态方法: 对象锁
+    * 修饰静态方法: 类锁
+* synchronized关键字不能继承, 对于父类中的synchronized修饰方法, 子类在覆盖该方法时, 默认情况下不是同步的, 必须显式使用synchronized关键字修饰才行
+* 接口方法时不能使用synchronized关键字
+* 构造方法不能使用synchronized关键字, 但可以使用synchronized代码块来进行同步
+
+> ref: https://juejin.im/post/594a24defe88c2006aa01f1c
+
+* 在java中每个类对应一把锁, 每个对象对应一把锁
+    * 类锁实际上是通过对象锁实现的, 即类的Class对象锁, 每个类只有一个 Class 对象, 所以每个类只有一个类锁
+    * 每个对象都会有一个monitor对象, 称为内置锁/对象锁
+* 一个线程在访问一个对象的同步方法(对象锁)时, 另一个线程可以同时访问这个对象的非同步方法
+* 一个线程在访问一个对象的同步方法(对象锁)时, 另一个线程不能同时访问这个同步方法/这个对象的另一个同步方法
+* 如果其他方法是static, 它用的同步锁是当前类的字节码, 与非静态的方法不能同步, 因为非静态的方法用的是this
+    * eg.线程1调用非静态的synchronized方法, 线程2调用静态的synchronized方法, 两者互不影响
+    
+> ref: https://blog.csdn.net/lynn_Kun/article/details/73850223
+
