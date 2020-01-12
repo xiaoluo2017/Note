@@ -94,6 +94,25 @@ public class Main {
 }
 ```
 
+* In C++, have your class overload operator()() instead of defining a run function, and then simply pass that to a new std::thread. Simpler, cleaner and more efficient
+```
+// A callable object 
+class thread_obj { 
+public: 
+    void operator()(int x) 
+    {
+        // similar to interface Runnable from Java
+    } 
+}; 
+  
+int main() 
+{ 
+    thread th(thread_obj(), 3); 
+    th.join(); 
+    return 0; 
+} 
+```
+
 ### 15.3
 ```
 // simple simulation of the dining philosophers problem
