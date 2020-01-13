@@ -12,6 +12,9 @@
 * stack: local variable, method parameter
 * heap：new, malloc, calloc, realloc
 * 常量区
+   * 有个简单的方法判断是常量还是常变量, 就是判断常量的使用者是否可以合法的取地址
+      * 0.01是个常量而不是常变量, &0.01非法;
+      * const int a = 0;是个常变量, &a合法;
 > ref: https://blog.csdn.net/billcyj/article/details/78783741
     
 ### 4. TCP UDP
@@ -607,6 +610,8 @@ int main() {
 https://www.oschina.net/news/77354/http-get-post-different
 
 ### 20. 锁
+*
+
 * mutex（互斥锁): 
     * 同一时间, 锁只有一把, 如果线程A加锁正在访问资源, 这时B尝试加锁, 就会阻塞;
     * 不加锁也可以访问数据 eg. 线程A加锁了正在访问资源, 这时B不加锁也可以直接访问数据
@@ -661,6 +666,12 @@ https://www.oschina.net/news/77354/http-get-post-different
 * 如果证书没问题, 客户端会生成一个对称加密的秘钥, 用刚刚解密的服务器端的RSA公钥进行加密, 发送给服务器端
 * 服务器端收到以后会用自己的RSA私钥对客户端发来的对称秘钥进行解密
 * 之后双方就拿着这个对称加密秘钥(RSA太慢)来进行正常的通信
+
+* A向B发送信息的整个签名和加密的过程如下：
+    * A先用自己的私钥(PRI_A)对信息(一般是信息的摘要)进行签名
+    * A接着使用B的公钥(PUB_B)对信息内容和签名信息进行加密
+    * A对信息签名的作用是确认这个信息是A发出的，不是别人发出的
+> ref: https://www.zhihu.com/question/27669212
 
 ### 24. typeid decltype
 * dynamic_cast(C++ equivalent of instanceof)
@@ -935,3 +946,44 @@ void f()
 * 死亡状态: 线程正常执行完，或者遇到异常终止后，进入死亡状态
 
 > ref: https://blog.csdn.net/huakai_sun/article/details/78287931
+
+### 36. 线程通信
+* linux进程间通信方式:
+    * 管道(pipe), 有名管道(named pipe), 信号量(semophore), 消息队列(message queue), 信号(signal), 共享内存(shared memory), 套接字(socket) 
+* C++ windows进程间通信方式:
+    * 全局变量, Message消息机制, CEvent对象
+    
+> ref: https://www.cnblogs.com/langqi250/archive/2012/11/06/2756329.html
+全局变量(volatile), 消息(message)
+* 线程间的同步方式
+* 直接制约关系: 一个线程的处理结果, 为另一个线程的输入, 因此线程之间直接制约着, 这种关系可以称之为同步关系
+* 间接制约关系: 两个线程需要访问同一资源, 该资源在同一时刻只能被一个线程访问, 这种关系称之为线程间对资源的互斥访问
+
+### 36. 线程同步
+* Java: synchronized, volatile, Lock(eg. ReentrantLock)
+* C++:
+    * std::thread: callable; eg. std::thread thread_object(callable) 
+    * mutex: lock() unlock() try_lock()
+      * lock_guard: lock_guard在构造时会自动锁定互斥量, 而在退出作用域后进行析构时就会自动解锁
+      * unique_lock: 提供lock, unlock, try_lock; 对象是可以进行交换的
+    * condition_variable: wait() notify_one() notify_all()
+    * atomic: 不需要再定义互斥量了, 使用更简便 eg. std::atomic<int> value;
+    * call_once/once_flag eg. std::once_flag flag;
+	
+```
+// lock_guard
+std::mutex g_lock;
+lock_guard<std::mutex> locker(g_lock);
+```
+
+```
+// call_once/once_flag
+void do_once()
+{
+    std::call_once(flag,[]{
+        // do sth.
+    });
+}
+```
+> ref: https://blog.csdn.net/qq_37233607/article/details/80159873
+
