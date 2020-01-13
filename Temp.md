@@ -14,8 +14,9 @@
 * 常量区
    * 有个简单的方法判断是常量还是常变量, 就是判断常量的使用者是否可以合法的取地址
       * 0.01是个常量而不是常变量, &0.01非法;
-      * const int a = 0;是个常变量, &a合法;
+      * const int a = 0; 是个常变量, &a合法;
 > ref: https://blog.csdn.net/billcyj/article/details/78783741
+> ref: https://bbs.csdn.net/topics/390510503
     
 ### 4. TCP UDP
 > ref: https://www.quora.com/What-is-the-difference-between-HTTP-protocol-and-TCP-protocol
@@ -655,6 +656,7 @@ https://www.oschina.net/news/77354/http-get-post-different
    * 识别用户身份(Session ID)
    * 记录历史(eg. 购物车)
 * HTTP协议是无状态的协议, 服务端需要记录用户的状态时, 需要用某种机制来识具体的用户(Session)
+    * Requests are separate and must contain enough information on their own to fulfill the request. Request is executed independently, without any knowledge of the requests that were executed before it, which means once the transaction ends, the connection between the browser and the server is also lost.
     * Session是在服务端保存的一个数据结构, 用来跟踪用户的状态, 这个数据可以保存在数据库/Cache中;
 * 每次HTTP请求的时候, 客户端都会发送相应的Cookie信息(Session Id)/使用URL重写(如果客户端的浏览器禁用了Cookie)到服务端, cookie来实现Session跟踪
     * Cookie是客户端保存用户信息的一种机制, 用来记录用户的一些信息, 也是实现Session的一种方式
@@ -986,4 +988,3 @@ void do_once()
 }
 ```
 > ref: https://blog.csdn.net/qq_37233607/article/details/80159873
-
