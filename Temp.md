@@ -922,3 +922,16 @@ void f()
 }
 ```
 > ref: https://stackoverflow.com/questions/5429653/what-is-correspoding-feature-for-synchronized-in-java
+
+### 35. 线程状态
+* 新生状态: new关键字创建后，进入到新生状态
+* 就绪状态
+    * 调用start后进入就绪状态
+* 运行状态(调用该线程对象的run()方法) 
+    * CPU调度到本线程后, 本线程开始执行, 进入到运行状态
+* 阻塞状态(sleep()/wait()/join()/yield())
+    * 运行中遇到join, yield, sleep造成阻塞, 进入阻塞状态, 阻塞完成后, 又回到就绪状态(不是运行状态
+    * sleep()/yield()不会释放锁资源
+* 死亡状态: 线程正常执行完，或者遇到异常终止后，进入死亡状态
+
+> ref: https://blog.csdn.net/huakai_sun/article/details/78287931
