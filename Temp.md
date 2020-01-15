@@ -19,8 +19,6 @@
 > ref: https://bbs.csdn.net/topics/390510503
     
 ### 4. TCP UDP
-> ref: https://www.quora.com/What-is-the-difference-between-HTTP-protocol-and-TCP-protocol
-
 * TCP网络编程中connect()、listen()和accept()
 > ref: https://blog.csdn.net/lianghe_work/article/details/46443691
 
@@ -38,6 +36,38 @@
 * 网络层协议: IP, ICMP, RIP
 * 数据链路层协议: ARP, RARP
 > ref: https://blog.csdn.net/yingxunren/article/details/4726376
+
+### 5. HTTP
+* TCP vs HTTP
+> ref: https://www.quora.com/What-is-the-difference-between-HTTP-protocol-and-TCP-protocol
+
+* HTTP请求报文
+    * 开始行
+      * 方法: eg. get, post
+      * URL: <协议>://<主机>:<端口>/<路径>
+        * <协议> eg. http https
+        * <主机> eg. www.google.com
+        * <端口> http默认端口号为80, 通常可省略
+        * <路径> 可省略, 省略后即为主页(home page)
+      * 版本: http 1.0 1.1 2.0
+    * 首部行: 请求的属性, 冒号分隔的键值对 
+      * Content-Length: 标记着body的长度
+      * Cookie: 用于在客户端存储少量信息，通常用于实现会话（session）功能
+    * 实体主行(body)
+
+* HTTP响应报文
+    * 开始行(状态行)
+      * 版本: http 1.0 1.1 2.0
+      * 状态码: 1xx, 2xx, 3xx, 4xx, 5xx
+      * 短语: 解释状态码 
+        * eg. 200: OK, 404: Not Found
+    * 首部行: 请求的属性, 冒号分隔的键值对 
+      * Content-Length: 标记着body的长度
+      * Date: 表示报文发送的时间, 即生成响应的日期和时间
+      * Last-Modified: 表示报文的最后修改时间
+    * 实体主行(body)
+
+> ref: https://blog.csdn.net/dangzhangjing97/article/details/80957898
 
 ### 5. TCP的流量控制 拥塞控制
 * 流量控制: 滑动窗口
