@@ -382,14 +382,14 @@ class Foo
         try
         {
             s1.acquire();
+            s1.release();
+            System.out.println("second");
+            s2.release();
         }
         catch (InterruptedException e)
         {
             e.printStackTrace();
         }
-        System.out.println("second");
-        s1.release();
-        s2.release();
     }
     
     public void third()
@@ -397,13 +397,14 @@ class Foo
         try
         {
             s2.acquire();
+            s2.release();
+            System.out.println("third");
         }
         catch (InterruptedException e)
         {
             e.printStackTrace();
         }
-        System.out.println("third");
-        s2.release();
+
     }
     
     private Semaphore s1;
