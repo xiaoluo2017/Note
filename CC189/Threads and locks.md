@@ -350,6 +350,9 @@ class philosopher extends Thread
 ```
 
 ### 15.5
+* Because we need to be very careful about thread safety, simple boolean flags won't do the job
+* 1 thread is actually performing the lock, but different threads attempt to unlock the locks. This is not allowed(will raise an exception). A lock in Java is owned by the same thread which locked it.
+
 ```
 class Foo
 {
