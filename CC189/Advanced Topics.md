@@ -2,6 +2,10 @@
 * Open Addressing with Linear Probing: cause an issue called clustering
 
 ### 5. Rabin-Karp Substring Search
+* If 2 strings are the same, they must have the same hash value
+* Precompute a hash value for each sequence of s1 characters withs s2, then validate that those locations really do match
+* Rolling hash function: Rabin fingerprint
+   * eg. hash('doe') = code('d') * 31 ^ 2 + code('o') * 31 + code('e');
 
 ### 6. AVL Trees
 * Inserts
