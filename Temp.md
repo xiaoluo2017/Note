@@ -69,7 +69,7 @@
 
 > ref: https://blog.csdn.net/dangzhangjing97/article/details/80957898
 
-### 5. TCP的流量控制 拥塞控制
+### 6. TCP的流量控制 拥塞控制
 * 流量控制: 滑动窗口
 
 * 拥塞控制: 慢开始、拥塞避免、快重传、快恢复
@@ -97,7 +97,7 @@
     * 重新进入慢启动过程;
 > ref: http://www.voidcn.com/article/p-vrdkquop-ms.html
 
-### 6. 一维 二维
+### 7. 一维 二维
 ```
 int a[] = {1, 2, 3, 4, 5, 6, 7, 8}; // 一个一维int数组的数组名实际上是一个int* const类型
 int b[8];
@@ -176,7 +176,7 @@ cout << **p + 1 << endl; // value
 ```
 * 数组名做参数会退化为指针，除了sizeof
 
-### 7. process vs thread
+### 8. process vs thread
 * A process can be thought of as an instance of a program in execution, a thread is a paticular execution path of a process
 * 地址空间为每个进程所私有的; 线程有自己的堆栈和局部变量, 但线程共享进程的地址空间(线程之间没有单独的地址空间)
     * 速度: 线程产生的速度快, 线程间的通讯快/切换快等, 因为他们在同一个地址空间内; process need to use inter-process communications(eg. pipes, files, socket, etc.)
@@ -188,10 +188,10 @@ cout << **p + 1 << endl; // value
 * 总线程数 <= CPU数量: 并行运行; 总线程数 > CPU数量: 并发运行 
 > ref: https://blog.csdn.net/mxsgoden/article/details/8821936
 
-### 8. 进程状态
+### 9. 进程状态
 > ref: https://blog.csdn.net/qicheng777/article/details/77427157
 
-### 9. 父子进程
+### 10. 父子进程
 * 子进程从父进程继承了: 
     * 当前工作目录, 根目录
     * 环境, 堆栈, 共享内存
@@ -205,7 +205,7 @@ cout << **p + 1 << endl; // value
     * 不继承异步输入和输出
 > ref: https://blog.csdn.net/carl_wu_/article/details/77976020 https://blog.csdn.net/koudaidai/article/details/8014782
 
-### 10. 函数参数入栈顺序
+### 11. 函数参数入栈顺序
 * 参数入栈时顺序从右向左入栈
 * 入栈前先把参数列表里的表达式算一遍得到表达式的结果, 最后再把这些运算结果统一入栈
 * ++运算符直接从变量a所在的内存地址中取值
@@ -225,7 +225,7 @@ int main(){
 ```
 > ref: https://blog.csdn.net/xidiancoder/article/details/49160317
 
-### 11. sizeof struct/sizeof class
+### 12. sizeof struct/sizeof class
 * 对字符串进行sizeof操作的时候, 会把字符串的结束符"\0"计算进去的; 进行strlen操作求字符串的长度的时候, 不计算\0
 ```
 char str[] = "Hello";
