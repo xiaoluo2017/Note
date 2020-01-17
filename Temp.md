@@ -981,11 +981,19 @@ void f()
 
 ### 36. 线程通信
 * linux进程间通信方式:
-    * 管道(pipe), 有名管道(named pipe), 信号量(semophore), 消息队列(message queue), 信号(signal), 共享内存(shared memory), 套接字(socket) 
+    * 管道(pipe): 父子进程间使用
+    * 有名管道(named pipe)
+    * 信号量(semophore): 一种锁机制, 控制多个线程对共享资源的访问, 主要作为进程间以及同一个进程内不同线程之间的同步手段
+    * 消息队列(message queue): 由系统调用函数来实现消息发送和接收之间的同步, 不需要考虑同步问题; 信息的复制需要额外消耗CPU的时间, 不适宜于信息量大或操作频繁的场合
+    * 信号(signal)
+    * 共享内存(shared memory): 最快的进程间通信方式, 信息量大; 必须由各进程利用其他同步工具解决
+    * 套接字(socket)
+> ref: https://www.cnblogs.com/lincappu/p/8536431.html    
+
 * C++ windows进程间通信方式:
     * 全局变量, Message消息机制, CEvent对象
-    
 > ref: https://www.cnblogs.com/langqi250/archive/2012/11/06/2756329.html
+
 全局变量(volatile), 消息(message)
 * 线程间的同步方式
 * 直接制约关系: 一个线程的处理结果, 为另一个线程的输入, 因此线程之间直接制约着, 这种关系可以称之为同步关系
