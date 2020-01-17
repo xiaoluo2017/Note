@@ -188,8 +188,69 @@ cout << **p + 1 << endl; // value
 * 总线程数 <= CPU数量: 并行运行; 总线程数 > CPU数量: 并发运行 
 > ref: https://blog.csdn.net/mxsgoden/article/details/8821936
 
-### 9. 进程状态
+### 9. 进程/线程状态
+* 新生状态: new关键字创建后，进入到新生状态
+* 就绪状态
+    * 调用start后进入就绪状态
+* 运行状态(调用该线程对象的run()方法) 
+    * CPU调度到本线程后, 本线程开始执行, 进入到运行状态
+* 阻塞状态(sleep()/wait()/join()/yield())
+    * 运行中遇到join, yield, sleep造成阻塞, 进入阻塞状态, 阻塞完成后, 又回到就绪状态(不是运行状态
+    * sleep()/yield()不会释放锁资源
+* 死亡状态: 线程正常执行完，或者遇到异常终止后，进入死亡状态
+
+> ref: https://blog.csdn.net/huakai_sun/article/details/78287931
 > ref: https://blog.csdn.net/qicheng777/article/details/77427157
+
+### 10. 线程通信
+* linux进程间通信方式:
+    * 管道(pipe): 父子进程间使用
+    * 有名管道(named pipe)
+    * 信号量(semophore): 一种锁机制, 控制多个线程对共享资源的访问, 主要作为进程间以及同一个进程内不同线程之间的同步手段
+    * 消息队列(message queue): 由系统调用函数来实现消息发送和接收之间的同步, 不需要考虑同步问题; 信息的复制需要额外消耗CPU的时间, 不适宜于信息量大或操作频繁的场合
+    * 信号(signal)
+    * 共享内存(shared memory): 最快的进程间通信方式, 信息量大; 必须由各进程利用其他同步工具解决
+    * 套接字(socket)
+> ref: https://www.cnblogs.com/lincappu/p/8536431.html    
+
+* C++ windows进程间通信方式:
+    * 全局变量, Message消息机制, CEvent对象
+> ref: https://www.cnblogs.com/langqi250/archive/2012/11/06/2756329.html
+
+全局变量(volatile), 消息(message)
+* 线程间的同步方式
+* 直接制约关系: 一个线程的处理结果, 为另一个线程的输入, 因此线程之间直接制约着, 这种关系可以称之为同步关系
+* 间接制约关系: 两个线程需要访问同一资源, 该资源在同一时刻只能被一个线程访问, 这种关系称之为线程间对资源的互斥访问
+
+### 11. 线程同步
+* Java: synchronized, volatile, Lock(eg. ReentrantLock)
+* C++:
+    * std::thread: callable; eg. std::thread thread_object(callable) 
+    * mutex: lock() unlock() try_lock()
+      * lock_guard: lock_guard在构造时会自动锁定互斥量, 而在退出作用域后进行析构时就会自动解锁
+      * unique_lock: 提供lock, unlock, try_lock; 对象是可以进行交换的
+    * condition_variable: wait() notify_one() notify_all()
+    * atomic: 不需要再定义互斥量了, 使用更简便 eg. std::atomic<int> value;
+    * call_once/once_flag eg. std::once_flag flag;
+	
+```
+// lock_guard
+std::mutex g_lock;
+lock_guard<std::mutex> locker(g_lock);
+```
+
+```
+// call_once/once_flag
+void do_once()
+{
+    std::call_once(flag,[]{
+        // do sth.
+    });
+}
+```
+> ref: https://blog.csdn.net/qq_37233607/article/details/80159873
+
+
 
 ### 10. 父子进程
 * 子进程从父进程继承了: 
@@ -977,64 +1038,3 @@ void f()
 }
 ```
 > ref: https://stackoverflow.com/questions/5429653/what-is-correspoding-feature-for-synchronized-in-java
-
-### 35. 线程状态
-* 新生状态: new关键字创建后，进入到新生状态
-* 就绪状态
-    * 调用start后进入就绪状态
-* 运行状态(调用该线程对象的run()方法) 
-    * CPU调度到本线程后, 本线程开始执行, 进入到运行状态
-* 阻塞状态(sleep()/wait()/join()/yield())
-    * 运行中遇到join, yield, sleep造成阻塞, 进入阻塞状态, 阻塞完成后, 又回到就绪状态(不是运行状态
-    * sleep()/yield()不会释放锁资源
-* 死亡状态: 线程正常执行完，或者遇到异常终止后，进入死亡状态
-
-> ref: https://blog.csdn.net/huakai_sun/article/details/78287931
-
-### 36. 线程通信
-* linux进程间通信方式:
-    * 管道(pipe): 父子进程间使用
-    * 有名管道(named pipe)
-    * 信号量(semophore): 一种锁机制, 控制多个线程对共享资源的访问, 主要作为进程间以及同一个进程内不同线程之间的同步手段
-    * 消息队列(message queue): 由系统调用函数来实现消息发送和接收之间的同步, 不需要考虑同步问题; 信息的复制需要额外消耗CPU的时间, 不适宜于信息量大或操作频繁的场合
-    * 信号(signal)
-    * 共享内存(shared memory): 最快的进程间通信方式, 信息量大; 必须由各进程利用其他同步工具解决
-    * 套接字(socket)
-> ref: https://www.cnblogs.com/lincappu/p/8536431.html    
-
-* C++ windows进程间通信方式:
-    * 全局变量, Message消息机制, CEvent对象
-> ref: https://www.cnblogs.com/langqi250/archive/2012/11/06/2756329.html
-
-全局变量(volatile), 消息(message)
-* 线程间的同步方式
-* 直接制约关系: 一个线程的处理结果, 为另一个线程的输入, 因此线程之间直接制约着, 这种关系可以称之为同步关系
-* 间接制约关系: 两个线程需要访问同一资源, 该资源在同一时刻只能被一个线程访问, 这种关系称之为线程间对资源的互斥访问
-
-### 36. 线程同步
-* Java: synchronized, volatile, Lock(eg. ReentrantLock)
-* C++:
-    * std::thread: callable; eg. std::thread thread_object(callable) 
-    * mutex: lock() unlock() try_lock()
-      * lock_guard: lock_guard在构造时会自动锁定互斥量, 而在退出作用域后进行析构时就会自动解锁
-      * unique_lock: 提供lock, unlock, try_lock; 对象是可以进行交换的
-    * condition_variable: wait() notify_one() notify_all()
-    * atomic: 不需要再定义互斥量了, 使用更简便 eg. std::atomic<int> value;
-    * call_once/once_flag eg. std::once_flag flag;
-	
-```
-// lock_guard
-std::mutex g_lock;
-lock_guard<std::mutex> locker(g_lock);
-```
-
-```
-// call_once/once_flag
-void do_once()
-{
-    std::call_once(flag,[]{
-        // do sth.
-    });
-}
-```
-> ref: https://blog.csdn.net/qq_37233607/article/details/80159873
