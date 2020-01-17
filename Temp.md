@@ -195,14 +195,14 @@ cout << **p + 1 << endl; // value
 * 运行状态(调用该线程对象的run()方法) 
     * CPU调度到本线程后, 本线程开始执行, 进入到运行状态
 * 阻塞状态(sleep()/wait()/join()/yield())
-    * 运行中遇到join, yield, sleep造成阻塞, 进入阻塞状态, 阻塞完成后, 又回到就绪状态(不是运行状态
+    * 运行中遇到join, yield, sleep造成阻塞, 进入阻塞状态, 阻塞完成后, 又回到就绪状态(不是运行状态)
     * sleep()/yield()不会释放锁资源
 * 死亡状态: 线程正常执行完，或者遇到异常终止后，进入死亡状态
 
 > ref: https://blog.csdn.net/huakai_sun/article/details/78287931
 > ref: https://blog.csdn.net/qicheng777/article/details/77427157
 
-### 10. 线程通信
+### 10. 进程通信
 * linux进程间通信方式:
     * 管道(pipe): 父子进程间使用
     * 有名管道(named pipe)
