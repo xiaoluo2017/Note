@@ -806,6 +806,18 @@ int main()
 
 > ref: https://blog.csdn.net/youngyoungla/article/details/53106671
 
+### 27. 左值 右值
+* 左值: 可以取地址的, 有名字的
+    * eg. int a = b + c; 
+      * a是左值, 其有变量名为a, 通过&a可以获取该变量的地址
+      * 表达式b + c, 函数int func()的返回值是右值, 在其被赋值给某一变量前, 我们不能通过变量名找到它, &(b+c)这样的操作则不会通过编译
+* 右值: 不能取地址的, 没有名字的
+    * 纯右值(prvalue，Pure Rvalue): 临时变量值, 不跟对象关联的字面量值
+      * 临时变量: 非引用返回的函数返回值/表达式, eg. int func()的返回值, 表达式a + b
+      * 不跟对象关联的字面量值: eg. true, 2, "C"
+    * 将亡值(xvalue，eXpiring Value): 通常是将要被移动的对象
+      * eg. T&&的函数返回值, std::move的返回值, 或者转换为T&&的类型转换函数的返回值
+
 ### 27. C++ vs Java
 * Only in C++:
     * pointer
