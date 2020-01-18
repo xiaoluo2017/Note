@@ -1,13 +1,63 @@
 # Basics
 
-* [C](#c)
-* [General](#general)
-* [TCP UDP HTTP](#tcp-udp-http)
-* [Thread Process Lock](#thread-process-lock)
-* [C++](#c++)
-* [Java](#java)
-* [Database](#database)
-* [Algorithm](#algorithm)
+- [C](#c)
+  * [1. const int*, const int * const, int const](#1-const-int---const-int---const--int-const)
+  * [2. 函数参数入栈顺序](#2---------)
+  * [3. sizeof struct/sizeof class](#3-sizeof-struct-sizeof-class)
+  * [4. 一维 二维](#4------)
+- [General](#general)
+  * [1. regular expression](#1-regular-expression)
+  * [2. 虚拟地址 分段 分页](#2-----------)
+  * [3. 用户态 vs 内核态](#3-----vs----)
+- [TCP UDP HTTP](#tcp-udp-http)
+  * [1. OSI](#1-osi)
+  * [2. TCP UDP](#2-tcp-udp)
+  * [3. TCP的流量控制 拥塞控制](#3-tcp----------)
+  * [4. HTTP](#4-http)
+  * [5. HTTP GET POST PUT DELETE](#5-http-get-post-put-delete)
+  * [6. Cookie vs Session](#6-cookie-vs-session)
+  * [7. https加密 SSL/TLS协议](#7-https---ssl-tls--)
+- [Thread Process Lock](#thread-process-lock)
+  * [1. process vs thread](#1-process-vs-thread)
+  * [2. 进程/线程状态](#2--------)
+  * [3. 进程通信](#3-----)
+  * [4. 线程同步](#4-----)
+  * [5. 父子进程](#5-----)
+  * [6. 锁](#6--)
+  * [7. 死锁](#7---)
+- [C++](#c--)
+  * [1. Main concepts in OOP](#1-main-concepts-in-oop)
+  * [2. C++ 编译过程](#2-c-------)
+  * [3. 静态链接 动态链接](#3----------)
+  * [4. stack vs heap](#4-stack-vs-heap)
+  * [5. Forward declaration](#5-forward-declaration)
+  * [6. new vs malloc](#6-new-vs-malloc)
+  * [7. constructor/destructor throw exception](#7-constructor-destructor-throw-exception)
+  * [8. constructor/destructor call virtual function](#8-constructor-destructor-call-virtual-function)
+  * [9. polymorphism vtable](#9-polymorphism-vtable)
+  * [10. volatile](#10-volatile)
+  * [11. static](#11-static)
+  * [12. 初始化列表](#12------)
+  * [13. copy constructor](#13-copy-constructor)
+  * [14. Copy constructor, Move constructor, Move assignment](#14-copy-constructor--move-constructor--move-assignment)
+  * [15. Type conversion](#15-type-conversion)
+  * [16. STL](#16-stl)
+  * [17. 左值 右值](#17------)
+  * [18. typeid decltype](#18-typeid-decltype)
+  * [19. C++ equivalent of reflection](#19-c---equivalent-of-reflection)
+  * [20. C++ vs Java](#20-c---vs-java)
+- [Java](#java)
+  * [1. Java GC](#1-java-gc)
+  * [2. Abstract class vs interface in Java](#2-abstract-class-vs-interface-in-java)
+  * [3. Java 引用传递 值传递](#3-java---------)
+  * [4. Object class in Java](#4-object-class-in-java)
+  * [5. == vs .equals() in Java](#5----vs-equals---in-java)
+  * [6. synchronized in Java](#6-synchronized-in-java)
+- [Database](#database)
+  * [1. B vs B+](#1-b-vs-b-)
+  * [2. ACID](#2-acid)
+- [Algorithm](#algorithm)
+  * [1. 位运算](#1----)
 
 ## C
 ### 1. const int*, const int * const, int const
@@ -511,9 +561,16 @@ B* A::gf()
 * new返回的是指定对象的指针, 而malloc返回的是void*, 因此malloc的返回值一般都需要进行类型转化;
 * new分配内存按照数据类型进行分配, malloc分配内存按照大小分配;
 * new是一个操作符可以重载, malloc是一个库函数;
-    * 
+    * 预编译指令(带#): eg. #pragma #define; 
+    * 操作符: eg. new, delete, sizeof, +, -, *
+    * 函数: eg. malloc, 参数为字节数, 返回一个void*指针; 
 * new和new[]的区别, new[]一次分配所有内存, 多次调用构造函数, 分别搭配使用delete和delete[], 同理, delete[]多次调用析构函数, 销毁数组中的每个对象; 而malloc则只能sizeof(int) * n;
 * new如果分配失败了会抛出bad_alloc的异常, 而malloc失败了会返回NULL; 因此对于new, 正确的姿势是采用try...catch语法, 而malloc则应该判断指针的返回值, 为了兼容很多c程序员的习惯, C++也可以采用new nothrow的方法禁止抛出异常而返回NULL;
+
+```
+int *p;
+p = (int*)malloc(sizeof(int) * 128);
+```
 
 ### 7. constructor/destructor throw exception
 * 如果对象在运行期间出现了异常, C++异常处理模型有责任调用这些对象的析构函数来完成释放资源的任务(destructor are used to clean up memory and resources), 此时若析构函数本身也抛出异常, 则前一个异常尚未处理, 又有新的异常, 会造成程序崩溃
