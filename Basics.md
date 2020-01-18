@@ -525,7 +525,7 @@ void do_once()
 > ref: https://bbs.csdn.net/topics/390510503
 
 ### 5. Forward declaration
-* A forward declaration tells the compiler about the existence of an entity before actually defining the entity
+* 声明一个类而不定义它
 * 在声明之后, 定义之前, 被声明类类是一个不完全类型(incompete type), 即已知该类是一个类型, 但不知道包含哪些成员
 * incompete type: 不能定义该类型的对象(eg. A a; return new A();), 只能用于定义指向该类型的指针及引用, 或者用于声明(而不是定义)使用该类型作为形参类型或返回类型的函数
 
