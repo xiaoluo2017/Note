@@ -535,8 +535,8 @@ class B;
 class A 
 { 
 public:
-    void sf(B* b); // ok
-    B* gf(); // ok
+    void sf(B* b); // ok, 'B b' is also ok
+    B* gf(); // ok, 'B' is also ok
 private: 
     B* _pb; // ok
     // B _b // invalid use of incomplete type
