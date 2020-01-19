@@ -572,38 +572,7 @@ int *p;
 p = (int*)malloc(sizeof(int) * 128);
 ```
 
-### 7. constructor/destructor throw exception
-* 如果对象在运行期间出现了异常, C++异常处理模型有责任调用这些对象的析构函数来完成释放资源的任务(destructor are used to clean up memory and resources), 此时若析构函数本身也抛出异常, 则前一个异常尚未处理, 又有新的异常, 会造成程序崩溃
-
-### 8. constructor/destructor call virtual function
-```
-class A
-{
-public:
-    A() { f(); }
-    virtual ~A() { f(); }
-    
-    virtual void f() { cout << "A::f()" << endl; }
-};
-
-class B : public A
-{
-public:
-    B() { f(); }
-    virtual ~B() { f(); }
-
-    void f() override { cout << "B::f()" << endl; }
-};
-
-int main()
-{
-    A* a = new B();
-    delete a;
-    return 0;
-}
-```
-
-### 9. polymorphism vtable
+### 7. polymorphism vtable
 * polymorphism: 静态多态和动态多态
     * 静态多态通过overload & template实现, 在compile的时候确定;
     * 动态多态通过virtual function & inheritance实现, 执行dynamic binding, 在runtime确定
@@ -614,17 +583,49 @@ int main()
     * 父类指针在调用虚函数时, 会去查找该对象的vtable, 每个对象的首地址存放vptr, 指向该类的vtable, vtable直接从父类继承, 如果覆盖了其中的某个virtual function, 那么vtable的指针就会被替换
     * C++ non-virtual functions calls resolved at compile time with static binding, while virtual function calls are resolved at runtime with dynamic binding
 
-### 10. volatile
+### 8. header/source file
+* C++源文件具有.cpp后缀
+* C++源文件可以包含带有#include伪指令的其他文件, 称为头文件, 头文件具有.h后缀
+
+### 9. volatile
 * informs the complier the value of variable it is applied to can change from the outside(operating system, hardware, or another thread)
 compiler will therefore reload the value each time from memory
 * volatile variables are not optimized
 > ref: https://www.nowcoder.com/questionTerminal/3f6c5287a9fa4d0baa162e44970a343d
 
+### 10. extern static
+* 全局变量
+    * 可以从任何源文件访问它(尽管在其他源文件中, 通常需要extern声明)
+    * 将变量声明为extern int global_var, 并将相应的初始化放在单个源文件中
+* static全局变量
+    * 只能在定义它的源文件中访问它
+    * 除非需要从其他.cpp模块引用该对象, 否则请始终在文件中使用static
+* extern: 生命周期: 程序结束后释放, 作用域: 外部(整个程序)
+    * 源文件(.h)里的所有文件级变量对应的默认存储类是extern
+* static: 生命周期: 程序结束后释放, 作用域: 内部(仅翻译单元, 一般指单个源文件)
+    * 对于静态全局变量来说，针对某一源文件的以static声明的文件级变量与函数的作用域只限于文件内（只在文件内可见）
+```
+// A.cpp
+int global_var;
+static int local_var; // local_var is local to the module(.cpp) only
+
+// B.cpp
+// int global_var; // error: name conflict on 'global_var', linker doesn't know which global variable to use
+extern int global_var; // use the global_var in A.cpp
+```
+> ref: https://stackoverflow.com/questions/1856599/when-to-use-static-keyword-before-global-variables
+
+> ref: https://en.wikipedia.org/wiki/Static_variable
+
 ### 11. static
+* static Variable
+    * 在程序执行前系统就为之静态分配(也即在运行时中不再改变分配情况)存储空间的一类变量
+    * 与程序有着相同生命周期
 * 全局变量/函数 static全局变量/函数 方法中的static变量
-    * 全局变量/函数的作用域是整个源程序(.h), 当一个源程序(.h)由多个源文件组成时, 全局变量/函数在各个源文件中都有效; 全局变量在.h中用extern声明, .cpp中定义
-    * static全局变量/函数限制了其作用域, 即只在定义该变量/函数的源文件内有效, 在同一源程序的其它源文件中不能使用; 对其它源文件(.h)隐藏, 利用这一特性可以在不同的文件中定义同名函数和同名变量
+    * 全局变量/函数的作用域是整个源程序, 当一个源程序由多个源文件(.cpp)组成时, 全局变量/函数在各个源文件(.cpp)中都有效; 全局变量在.h中用extern声明, .cpp中定义
+    * static全局变量/函数限制了其作用域, 即只在定义该变量/函数的源文件(.cpp)内有效, 在同一源程序的其它源文件(.cpp)中不能使用; 对其它源文件(.cpp)隐藏, 利用这一特性可以在不同的文件中定义同名函数和同名变量
     * 方法中的static变量, 会在程序刚开始运行时就完成初始化, 也是唯一的一次初始化; 保持变量内容的持久
+    * static变量可用const标识, 其值在编译时设定, 并且无法在运行时改变
 * static成员变量
     * 不可在.h文件内, 类初始化列表进行初始化; .h类内声明,.cpp类外定义, 默认初始值为0
     * 调用方法: A::si; a.si;
@@ -1245,7 +1246,9 @@ void f()
 * Durable: Commited data is never lost
     * eg. A system crash or any other failure must not be allowed to lose the results of a transaction or the contents of the database. Durability is often achieved through separate transaction logs that can "re-create" all transactions from some picked point in time(like a backup).
 > ref: https://stackoverflow.com/questions/999394/whats-a-real-world-example-of-acid
+
 > ref: https://blog.sqlauthority.com/2007/12/09/sql-server-acid-atomicity-consistency-isolation-durability/
+
 > ref: https://www.essentialsql.com/what-is-meant-by-acid/
 
 ## Algorithm
