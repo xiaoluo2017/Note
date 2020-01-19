@@ -110,3 +110,34 @@ Prim
     * 最后将S1中剩余的运算符依次弹出并压入S2;
     * 依次弹出S2中的元素并输出, 结果的逆序即为中缀表达式对应的后缀表达式(转换为前缀表达式时不用逆序)
 > ref: https://blog.csdn.net/Antineutrino/article/details/6763722
+
+### 15. constructor/destructor throw exception
+* 如果对象在运行期间出现了异常, C++异常处理模型有责任调用这些对象的析构函数来完成释放资源的任务(destructor are used to clean up memory and resources), 此时若析构函数本身也抛出异常, 则前一个异常尚未处理, 又有新的异常, 会造成程序崩溃
+
+### 16. constructor/destructor call virtual function
+```
+class A
+{
+public:
+    A() { f(); }
+    virtual ~A() { f(); }
+    
+    virtual void f() { cout << "A::f()" << endl; }
+};
+
+class B : public A
+{
+public:
+    B() { f(); }
+    virtual ~B() { f(); }
+
+    void f() override { cout << "B::f()" << endl; }
+};
+
+int main()
+{
+    A* a = new B();
+    delete a;
+    return 0;
+}
+```
