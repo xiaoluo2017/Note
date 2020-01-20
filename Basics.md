@@ -274,7 +274,7 @@ cout << **p + 1 << endl; // value
 > ref: https://www.quora.com/What-is-the-difference-between-HTTP-protocol-and-TCP-protocol
 
 * HTTP请求报文
-    * 开始行
+    * 开始行: 要做些什么
       * 方法: eg. get, post
       * URL: <协议>://<主机>:<端口>/<路径>
         * <协议> eg. http https
@@ -285,10 +285,10 @@ cout << **p + 1 << endl; // value
     * 首部行: 请求的属性, 冒号分隔的键值对 
       * Content-Length: 标记着body的长度
       * Cookie: 用于在客户端存储少量信息，通常用于实现会话（session）功能
-    * 实体主行(body)
+    * 实体主行(body): 发送给Web服务器的数据
 
 * HTTP响应报文
-    * 开始行(状态行)
+    * 开始行(状态行): 出现了什么情况
       * 版本: http 1.0 1.1 2.0
       * 状态码: 1xx, 2xx, 3xx, 4xx, 5xx
       * 短语: 解释状态码 
@@ -297,7 +297,7 @@ cout << **p + 1 << endl; // value
       * Content-Length: 标记着body的长度
       * Date: 表示报文发送的时间, 即生成响应的日期和时间
       * Last-Modified: 表示报文的最后修改时间
-    * 实体主行(body)
+    * 实体主行(body): 返回给客户端的数据
 
 > ref: https://blog.csdn.net/dangzhangjing97/article/details/80957898
 
