@@ -797,6 +797,42 @@ int main(){
 }
 ```
 
+### 13. copy constructor, assignment
+* copy constructor
+    * 当类的对象按值返回时
+      * return value optimization(RVO): An implementation may omit a copy operation resulting from a return statement, even if the copy constructor has side effects.
+    * 当类的对象通过值作为参数传递(传递给函数)时
+```
+A f(A a)
+{
+    return a;
+}
+```
+    * 根据同一类的另一个对象构造一个对象时
+```
+Person p1("Anonymous"); // constructor
+Person p2(p1); // copy constructor
+Person p3 = p1; // copy constructor
+p3 = p1; // Assignment
+```
+    * 编译器生成临时对象时
+
+* explicit/implicit
+    * C++ default copy constructor: Make a shallow copy. If the object has no pointers to dynamically allocated memory, a shallow copy is probably sufficient
+    * Rule of three: If you need a copy constructor, you also need a destructor and operator=
+
+* const &
+    * const: Guarantee that the copy constructor doesn't change it
+    * reference: A value parameter would require making a copy, which would invoke the copy constructor, becomes a non-terminating chain of calls
+
+* assignment: 
+    * Need to test to see if it is being initialized from itself
+    * Need to clean up (eg, delete) an existing value
+    * Need to return a reference to itself
+> ref: http://www.fredosaurus.com/notes-cpp/oop-condestructors/copyconstructors.html
+
+> ref: https://www.geeksforgeeks.org/copy-constructor-in-cpp/
+
 ### 14. Copy constructor, Move constructor, Move assignment
 * 移动构造函数和移动赋值运算符重载函数不会隐式声明, 必须自己定义
 * 如果用户自定义了拷贝构造函数或者移动构造函数, 那么默认的构造函数将不会隐式定义, 如果用户需要, 也需要显式的定义
