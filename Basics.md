@@ -800,23 +800,24 @@ int main(){
 ### 13. copy constructor, assignment
 * copy constructor
     * 当类的对象按值返回时
-      * return value optimization(RVO): An implementation may omit a copy operation resulting from a return statement, even if the copy constructor has side effects.
     * 当类的对象通过值作为参数传递(传递给函数)时
+    * 根据同一类的另一个对象构造一个对象时
+    * 编译器生成临时对象时
+    * return value optimization(RVO): An implementation may omit a copy operation resulting from a return statement, even if the copy constructor has side effects.
 ```
-A f(A a)
+A f(A a) // copy constructor
 {
-    return a;
+    return a; // copy constructor
 }
 ```
-    * 根据同一类的另一个对象构造一个对象时
+
 ```
 Person p1("Anonymous"); // constructor
 Person p2(p1); // copy constructor
 Person p3 = p1; // copy constructor
 p3 = p1; // Assignment
 ```
-    * 编译器生成临时对象时
-
+   
 * explicit/implicit
     * C++ default copy constructor: Make a shallow copy. If the object has no pointers to dynamically allocated memory, a shallow copy is probably sufficient
     * Rule of three: If you need a copy constructor, you also need a destructor and operator=
