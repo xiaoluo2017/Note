@@ -244,8 +244,23 @@ cout << **p + 1 << endl; // value
 
 ### 2. TCP UDP
 * TCP vs UDP
+    * TCP面向连接, UDP是无连接的
+    * TCP提供可靠的服务, 保证数据正确性, 按序到达; UDP不可靠, 可能丢包, 不保证顺序
+    * TCP程序结构较复杂, 对系统资源的要求多; UDP程序结构较简单, 对系统资源的要求少
+    * TCP面向字节流, TCP把数据看成一连串无结构的字节流; UDP是面向报文的
+    * TCP具有流量控制, 拥塞控制; UDP没有拥塞控制, 因此网络出现拥塞不会使源主机的发送速率降低(对实时应用很有用, eg. IP电话, 实时视频会议)
+> ref: https://blog.csdn.net/Li_Ning_/article/details/52117463
 
 * TCP 三次握手 四次挥手
+    * 三次握手
+      * 需要三次握手来约定确定双方的ISN(初始Segment序列号)
+      * 二次握手, B无法知道A是否已经接收到自己的同步信号, 如果这个同步信号丢失了, A和B就B的初始序列号将无法达成一致
+      * 为了防止已失效的连接请求报文段突然又传送到了服务端, 因而产生错误
+    * 四次挥手
+      * 当收到client的FIN报文通知时, 它仅仅表示client没有数据发送了, 但未必server所有的数据都全部发送给client了, 所以ACK报文和FIN报文需要分开发送
+> ref: https://www.zhihu.com/question/24853633
+
+> ref: https://blog.csdn.net/u014805066/article/details/50586197
 
 * TCP建立连接／断开连接状态
     * Client: CLOSED->SYN_SENT->ESTABLISHED->FIN_WAIT_1->FIN_WAIT_2->TIME_WAIT->CLOSED
