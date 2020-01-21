@@ -1000,7 +1000,8 @@ int main()
       * 不跟对象关联的字面量值: eg. true, 2, "C"
     * 将亡值(xvalue，eXpiring Value): 通常是将要被移动的对象
       * eg. T&&的函数返回值, std::move的返回值, 或者转换为T&&的类型转换函数的返回值
-      
+> ref: https://blog.csdn.net/hyman_yx/article/details/52044632
+
 * lvalue
 * rvalue
     * An xvalue: an "eXpiring" value
