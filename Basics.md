@@ -803,7 +803,6 @@ int main(){
     * 当类的对象通过值作为参数传递(传递给函数)时
     * 根据同一类的另一个对象构造一个对象时
     * 编译器生成临时对象时
-    * return value optimization(RVO): An implementation may omit a copy operation resulting from a return statement, even if the copy constructor has side effects.
 ```
 A f(A a) // copy constructor
 {
@@ -817,7 +816,32 @@ Person p2(p1); // copy constructor
 Person p3 = p1; // copy constructor
 p3 = p1; // Assignment
 ```
-   
+
+* Copy elision
+    * An optimization implemented by most compilers to prevent extra (potentially expensive) copies in certain situations
+```
+// in C++ 17
+A f() 
+{
+  return A(); // definitely performs copy elision
+}
+
+A f2()
+{
+    A a;
+    return a; // maybe performs copy elision
+}
+
+void f3(A a) {}
+
+int main()
+{
+    A a = f(); // Copy constructor isn't called
+    f3(A()); // Copy constructor isn't called
+}
+```
+> ref: https://stackoverflow.com/questions/12953127/what-are-copy-elision-and-return-value-optimization
+
 * explicit/implicit
     * C++ default copy constructor: Make a shallow copy. If the object has no pointers to dynamically allocated memory, a shallow copy is probably sufficient
     * Rule of three: If you need a copy constructor, you also need a destructor and operator=
