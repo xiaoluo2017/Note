@@ -328,17 +328,49 @@ cout << **p + 1 << endl; // value
 
 > ref: https://blog.csdn.net/dangzhangjing97/article/details/80957898
 
-### 5. HTTP GET POST PUT DELETE
-* URL全称是资源描述符
-* GET和POST本质上就是TCP链接, 并无差别; 但是由于HTTP的规定和浏览器/服务器的限制, 导致他们在应用过程中体现出一些不同 
-* GET从服务器上获取资源，POST向服务器发送数据;
-* GET为幂等, post为非幂等
-* GET参数包含在URL中, POST通过request body传递参数
-    * get传输数据是通过URL请求, 以field(字段) = value的形式, 置于URL后, 并用"?"连接, 多个请求数据间用"&"连接, eg. http://127.0.0.1/Test/login.action?name=admin&password=admin, 这个过程用户是可见的;
-    * post传输数据通过Http的post机制, 将字段与对应值封存在请求实体(request body)中发送给服务器, 这个过程对用户是不可见的;
-* GET请求在URL中传送的参数是有长度限制的(约2k), 而POST没有
-* GET比POST更不安全, 因为参数直接暴露在URL上, 所以不能用来传递敏感信息
-https://www.oschina.net/news/77354/http-get-post-different
+### 5. REST API
+* Representational State Transfer(表现层状态转换), REST是设计风格而不是标准
+* 对资源的操作包括获取、创建、修改和删除，这些操作正好对应HTTP协议提供的GET、POST、PUT、PATCH和DELETE方法
+* GET, PUT, DELETE是幂等方法; GET是安全(safety)方法, 不会对服务器端有修改
+
+* GET vs POST
+    * GET和POST本质上就是TCP链接, 并无差别; 但是由于HTTP的规定和浏览器/服务器的限制, 导致他们在应用过程中体现出一些不同 
+    * GET从服务器上获取资源，POST向服务器发送数据;
+    * GET为幂等, post为非幂等
+    * GET参数包含在URL中, POST通过request body传递参数
+      * get传输数据是通过URL请求, 以field(字段) = value的形式, 置于URL后, 并用"?"连接, 多个请求数据间用"&"连接, eg. http://127.0.0.1/Test/login.action?name=admin&password=admin, 这个过程用户是可见的;
+      * post传输数据通过Http的post机制, 将字段与对应值封存在请求实体(request body)中发送给服务器, 这个过程对用户是不可见的;
+    * GET请求在URL中传送的参数是有长度限制的(约2k), 而POST没有
+    * GET比POST更不安全(security), 因为参数直接暴露在URL上, 所以不能用来传递敏感信息
+> ref: https://www.oschina.net/news/77354/http-get-post-different
+
+* PUT vs PATCH
+    * PUT包括该用户的所有参数, 但是PATCH仅包括修改的参数
+    * PUT通过替换整个实体(entity)来处理它, 而PATCH仅更新所提供的字段(fields), 而其他字段则不予处理
+```
+## /users/1
+
+{
+    "username": "skwee357",
+    "email": "skwee357@domain.com"
+}
+```
+
+```
+PUT /users/1
+{
+    "username": "skwee357",
+    "email": "skwee357@gmail.com"       // new email address
+}
+```
+
+```
+PATCH /users/1
+{
+    "email": "skwee357@gmail.com"       // new email address
+}
+```
+> ref: https://stackoverflow.com/questions/28459418/rest-api-put-vs-patch-with-real-life-examples
 
 ### 6. Cookie vs Session
 * cookie: 浏览器访问服务器后, 服务器传给浏览器的一段数据, 浏览器需要保存这段数据, 此后每次浏览器访问该服务器, 都必须带上这段数据
