@@ -217,6 +217,21 @@ cout << **p + 1 << endl; // value
 
 ## TCP UDP HTTP
 ### 1. OSI
+* Physical Layer(物理层): 将接收到信号转换为0和1; 具有电压, 频率和其他物理属性的标准
+* Data Link Layer(数据链接层): 确保在物理层上从一个节点到另一个节点的数据传输没有错误
+    * 当数据包到达网络时, Data Link Layer负责使用其MAC地址将其传输到主机(ARP协议)
+    * eg. 交换机, 桥接器
+* Network Layer(网络层): 用于将数据从一台主机传输到位于不同网络中的另一台主机, 路由(确定从源到目的地的哪条路由是合适的)
+    * eg. 路由器
+* Transport Layer(传输层): 通过端口号(port numbers), 确定将消息传递到的应用程序(computer is running lots of different programs)
+    * eg. Web应用程序向Web服务器发出请求时, 通常使用端口号80(分配给Web应用程序的默认端口)
+* Session Layer(会话层): 建立连接, 会话维护, 身份验证, 并确保安全性
+    * Presentation Layer(表示层): 加密/解密, 压缩
+* Application Layer(应用层): 
+    * eg. know what page you want(web traffic HTTP), know how to post a question or an answer
+> ref: https://www.geeksforgeeks.org/layers-of-osi-model/
+
+> ref: https://www.quora.com/What-is-the-difference-between-HTTP-protocol-and-TCP-protocol
 
 * 应用层协议
     * DNS: 主要用UDP, 但是当请求字节过长超过512字节时用TCP协议, 将其分割成多个片段传输
@@ -270,9 +285,6 @@ cout << **p + 1 << endl; // value
 > ref: http://www.voidcn.com/article/p-vrdkquop-ms.html
 
 ### 4. HTTP
-* TCP vs HTTP
-> ref: https://www.quora.com/What-is-the-difference-between-HTTP-protocol-and-TCP-protocol
-
 * HTTP请求报文
     * 开始行: 要做些什么
       * 方法: eg. get, post
