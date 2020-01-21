@@ -1000,6 +1000,18 @@ int main()
       * 不跟对象关联的字面量值: eg. true, 2, "C"
     * 将亡值(xvalue，eXpiring Value): 通常是将要被移动的对象
       * eg. T&&的函数返回值, std::move的返回值, 或者转换为T&&的类型转换函数的返回值
+      
+* lvalue
+* rvalue
+    * An xvalue: an "eXpiring" value
+    * A prvalue: "pure" rvalue
+* glvalue("generalized" lvalue): an lvalue or an xvalue.
+```
+int prvalue();
+int& lvalue();
+int&& xvalue();
+```
+> ref: https://stackoverflow.com/questions/3601602/what-are-rvalues-lvalues-xvalues-glvalues-and-prvalues
 
 ### 18. typeid decltype
 * dynamic_cast(C++ equivalent of instanceof)
