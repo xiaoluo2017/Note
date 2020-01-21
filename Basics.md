@@ -944,7 +944,7 @@ class Animal
 public:
     virtual void f()
     {
-        cout<<"Animal"<<endl;
+        cout << "Animal" << endl;
     }
 };
   
@@ -954,7 +954,7 @@ public:
     int mNum = 1;
     void f() override
     {
-        cout<<"Cat"<<endl;
+        cout << "Cat" << endl;
     }
 };
   
