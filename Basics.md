@@ -1046,20 +1046,25 @@ cout << (typeid(c1) == typeid(c2)) << endl; // true
 ```
 class Animal {};
 
+typedef Animal* (*create_animal)();
+
 class Factory
 {
 public:
     Animal* getAnimalByName(std::string name)
     {
-        std::map<std::string, Animal*>::iterator it = m.find(name);
+        std::map<std::string, create_animal>::iterator it = m.find(name);
         if (it == m.end()) { return NULL; }
 
-        return it->second;
+        create_animal ca = it->second;
+        if (!ca) { return NULL; }
+        
+        return ca();
     }   
 
-    void registClass(std::string name, Animal* a)
+    void registClass(std::string name, create_animal ca)
     {
-        m[name] = a;
+        m[name] = ca;
     }   
 
     static Factory& getInstance()
@@ -1071,7 +1076,7 @@ public:
 private:
     Factory() {};
     ~Factory() {};
-    std::map<std::string, Animal*> m;
+    std::map<std::string, create_animal> m;
 }; 
 
 class Dog : public Animal
@@ -1081,6 +1086,11 @@ public:
     ~Dog(){ std::cout << "~Dog()" << std::endl; }
 };
 
+Animal* create_Dog(){
+    Animal* d = new Dog;
+    return d;
+}
+
 class Cat : public Animal
 {
 public:
@@ -1088,10 +1098,15 @@ public:
     ~Cat(){ std::cout << "~Cat()" << std::endl; }
 };
 
+Animal* create_Cat(){
+    Animal* c = new Cat;
+    return c;
+}
+
 int main() 
 {
-    Factory::getInstance().registClass("Dog", new Dog());
-    Factory::getInstance().registClass("Cat", new Cat());
+    Factory::getInstance().registClass("Dog", create_Dog);
+    Factory::getInstance().registClass("Cat", create_Cat);
     
     Dog* d = static_cast<Dog*>(Factory::getInstance().getAnimalByName("Dog"));
     Cat* c = static_cast<Cat*>(Factory::getInstance().getAnimalByName("Cat"));
