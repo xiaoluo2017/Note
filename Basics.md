@@ -639,18 +639,14 @@ p = (int*)malloc(sizeof(int) * 128);
 * 动态多态实现过程
     * 父类指针在调用虚函数时, 会去查找该对象的vtable, 每个对象的首地址存放vptr, 指向该类的vtable, vtable直接从父类继承, 如果覆盖了其中的某个virtual function, 那么vtable的指针就会被替换
     * C++ non-virtual functions calls resolved at compile time with static binding, while virtual function calls are resolved at runtime with dynamic binding
-
-### 8. header/source file
-* C++源文件具有.cpp后缀
-* C++源文件可以包含带有#include伪指令的其他文件, 称为头文件, 头文件具有.h后缀
-
-### 9. volatile
+    
+### 8. volatile
 * informs the complier the value of variable it is applied to can change from the outside(operating system, hardware, or another thread)
 compiler will therefore reload the value each time from memory
 * volatile variables are not optimized
 > ref: https://www.nowcoder.com/questionTerminal/3f6c5287a9fa4d0baa162e44970a343d
 
-### 10. extern static
+### 9. extern static
 * 全局变量
     * 可以从任何源文件访问它(尽管在其他源文件中, 通常需要extern声明)
     * 将变量声明为extern int global_var, 并将相应的初始化放在单个源文件中
@@ -674,7 +670,10 @@ extern int global_var; // use the global_var in A.cpp
 
 > ref: https://en.wikipedia.org/wiki/Static_variable
 
-### 11. static
+### 10. static
+* header/source file
+    * C++源文件具有.cpp后缀
+    * C++源文件可以包含带有#include伪指令的其他文件, 称为头文件, 头文件具有.h后缀
 * static Variable
     * 在程序执行前系统就为之静态分配(也即在运行时中不再改变分配情况)存储空间的一类变量
     * 与程序有着相同生命周期
@@ -732,7 +731,7 @@ int main() {
     
 > ref: https://www.cnblogs.com/stoneJin/archive/2011/09/21/2183313.html
 
-### 12. 初始化列表
+### 11. 初始化列表
 * 必须在constructor initializer list里进行初始化的数据成员
     * const成员
     * 引用类型
@@ -808,7 +807,7 @@ int main()
 ```
 > ref: https://www.cnblogs.com/graphics/archive/2010/07/04/1770900.html
 
-### 13. copy constructor
+### 12. copy constructor
 ```
 class A 
 {
