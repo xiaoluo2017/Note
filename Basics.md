@@ -14,7 +14,7 @@
   * [2. TCP UDP](#2-tcp-udp)
   * [3. TCP的流量控制 拥塞控制](#3-tcp----------)
   * [4. HTTP](#4-http)
-  * [5. HTTP GET POST PUT DELETE](#5-http-get-post-put-delete)
+  * [5. REST API](#5-rest-api)
   * [6. Cookie vs Session](#6-cookie-vs-session)
   * [7. https加密 SSL/TLS协议](#7-https---ssl-tls--)
 - [Thread Process Lock](#thread-process-lock)
@@ -32,13 +32,14 @@
   * [4. stack vs heap](#4-stack-vs-heap)
   * [5. Forward declaration](#5-forward-declaration)
   * [6. new vs malloc](#6-new-vs-malloc)
-  * [7. constructor/destructor throw exception](#7-constructor-destructor-throw-exception)
-  * [8. constructor/destructor call virtual function](#8-constructor-destructor-call-virtual-function)
-  * [9. polymorphism vtable](#9-polymorphism-vtable)
-  * [10. volatile](#10-volatile)
+  * [7. polymorphism vtable](#7-polymorphism-vtable)
+  * [8. header/source file](#8-header-source-file)
+  * [9. volatile](#9-volatile)
+  * [10. extern static](#10-extern-static)
   * [11. static](#11-static)
   * [12. 初始化列表](#12------)
   * [13. copy constructor](#13-copy-constructor)
+  * [13. copy constructor, assignment](#13-copy-constructor--assignment)
   * [14. Copy constructor, Move constructor, Move assignment](#14-copy-constructor--move-constructor--move-assignment)
   * [15. Type conversion](#15-type-conversion)
   * [16. STL](#16-stl)
@@ -58,6 +59,8 @@
   * [2. ACID](#2-acid)
 - [Algorithm](#algorithm)
   * [1. 位运算](#1----)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 ## C
 ### 1. const int*, const int * const, int const
@@ -419,8 +422,8 @@ PATCH /users/1
     * 运行中遇到join, yield, sleep造成阻塞, 进入阻塞状态, 阻塞完成后, 又回到就绪状态(不是运行状态)
     * sleep()/yield()不会释放锁资源
 * 死亡状态: 线程正常执行完，或者遇到异常终止后，进入死亡状态
-
 > ref: https://blog.csdn.net/huakai_sun/article/details/78287931
+
 > ref: https://blog.csdn.net/qicheng777/article/details/77427157
 
 ### 3. 进程通信
@@ -515,8 +518,8 @@ void do_once()
 * 解除死锁
     * 剥夺资源: 从其它进程剥夺足够数量的资源给死锁进程, 以解除死锁状态;
     * 撤消进程: 可以直接撤消死锁进程或撤消代价最小的进程, 直至有足够的资源可用, 死锁状态消除为止; 代价是指优先级, 运行代价, 进程的重要性和价值等
-    
 > ref: https://blog.csdn.net/yyf_it/article/details/52412071
+
 > ref: http://c.biancheng.net/cpp/html/2606.html
 
 ## C++
@@ -528,8 +531,7 @@ void do_once()
 * inheritance: inherit to re-use, extend and modify the behaviour
     * eg. Child class reuses all fields and methods of the parent class(common part) and can implement its own(unique part).
 * Polymorphism: an object exhibits different behavior in different situation
-    * eg. Triangles, circles & rectangles, the language takes care of evaluating the right implementation of the common method
-    
+    * eg. Triangles, circles & rectangles, the language takes care of evaluating the right implementation of the common method   
 > ref: https://stackoverflow.com/questions/23130282/best-way-to-explain-oop-principles
 
 > ref: https://www.freecodecamp.org/news/object-oriented-programming-concepts-21bb035f7260/
@@ -576,6 +578,7 @@ void do_once()
       * 0.01是个常量而不是常变量, &0.01非法;
       * const int a = 0; 是个常变量, &a合法;
 > ref: https://blog.csdn.net/billcyj/article/details/78783741
+
 > ref: https://bbs.csdn.net/topics/390510503
 
 ### 5. Forward declaration
@@ -1248,7 +1251,6 @@ int main()
     * Functions can only be of type public abstract, member variables can only be of type public static final
     * Cannot contain static code blocks and static methods(abstract classes can have static code blocks and static methods)
     * A class can inherit only one abstract class, but a class can implement multiple interfaces(in Java)
-
 > ref: https://www.cnblogs.com/dolphin0520/p/3811437.html
 
 ### 3. Java 引用传递 值传递
@@ -1316,14 +1318,12 @@ System.out.println(c.getName()); // java.lang.String
 ```
 * finalize(): called by the Garbage Collector on an object
 * clone(): returns a new object that is exactly the same as this object
-
 > ref: https://www.geeksforgeeks.org/object-class-in-java/
 
 * wait(), notify() & notifyAll() must be used within a synchronized block only
 * wait(): The calling thread give up the lock and go to sleep, until some other thread(on the same object) calls notify()
 * notify()：Wake up one single thread that called wait() on the same object, not give up a lock on a resource
 * notifyAll(): Wake up all threads that called wait() on the same object
-
 > ref: https://www.geeksforgeeks.org/inter-thread-communication-java/
 
 ### 5. == vs .equals() in Java
@@ -1334,8 +1334,8 @@ System.out.println(c.getName()); // java.lang.String
 * hashcode
     * 对象相等则hashCode一定相等, hashCode相等对象未必相等
     * String.hashCode() = str.charAt(0) * 31 ^ (n - 1) + str.charAt(1) * 31 ^ (n - 2) + ... + str.charAt(n - 1)
-
 > ref: https://stackoverflow.com/questions/7520432/what-is-the-difference-between-and-equals-in-java
+
 > ref: https://www.cnblogs.com/duanxz/p/3724275.html
 
 ### 6. synchronized in Java
@@ -1348,7 +1348,6 @@ System.out.println(c.getName()); // java.lang.String
 * synchronized关键字不能继承, 对于父类中的synchronized修饰方法, 子类在覆盖该方法时, 默认情况下不是同步的, 必须显式使用synchronized关键字修饰才行
 * 接口方法时不能使用synchronized关键字
 * 构造方法不能使用synchronized关键字, 但可以使用synchronized代码块来进行同步
-
 > ref: https://juejin.im/post/594a24defe88c2006aa01f1c
 
 * 在java中每个类对应一把锁, 每个对象对应一把锁
@@ -1358,7 +1357,6 @@ System.out.println(c.getName()); // java.lang.String
 * 一个线程在访问一个对象的同步方法(对象锁)时, 另一个线程不能同时访问这个同步方法/这个对象的另一个同步方法
 * 如果其他方法是static, 它用的同步锁是当前类的字节码, 与非静态的方法不能同步, 因为非静态的方法用的是this
     * eg.线程1调用非静态的synchronized方法, 线程2调用静态的synchronized方法, 两者互不影响
-    
 > ref: https://blog.csdn.net/lynn_Kun/article/details/73850223
 
 ```
@@ -1399,4 +1397,4 @@ void f()
 * Judge: if ((num > n) & 1 == 0) {}
 * Update: num = num | (1 < n); num = num & (~(1 < n));
 * int le = (1 < n) - 1, ri = (~0) < n;
-* Remove rightmost 0: num = num & (num - 1);
+* Remove rightmost 1: num = num & (num - 1);
