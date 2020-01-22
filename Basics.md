@@ -33,12 +33,11 @@
   * [5. Forward declaration](#5-forward-declaration)
   * [6. new vs malloc](#6-new-vs-malloc)
   * [7. polymorphism vtable](#7-polymorphism-vtable)
-  * [8. header/source file](#8-header-source-file)
-  * [9. volatile](#9-volatile)
-  * [10. extern static](#10-extern-static)
-  * [11. static](#11-static)
-  * [12. 初始化列表](#12------)
-  * [13. copy constructor](#13-copy-constructor)
+  * [8. volatile](#8-volatile)
+  * [9. extern static](#9-extern-static)
+  * [10. static](#10-static)
+  * [11. 初始化列表](#11------)
+  * [12. copy constructor](#12-copy-constructor)
   * [13. copy constructor, assignment](#13-copy-constructor--assignment)
   * [14. Copy constructor, Move constructor, Move assignment](#14-copy-constructor--move-constructor--move-assignment)
   * [15. Type conversion](#15-type-conversion)
@@ -59,7 +58,6 @@
   * [2. ACID](#2-acid)
 - [Algorithm](#algorithm)
   * [1. 位运算](#1----)
-
 > ref: http://ecotrust-canada.github.io/markdown-toc/
 
 ## C
