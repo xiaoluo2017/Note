@@ -60,7 +60,7 @@
 - [Algorithm](#algorithm)
   * [1. 位运算](#1----)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+> ref: http://ecotrust-canada.github.io/markdown-toc/
 
 ## C
 ### 1. const int*, const int * const, int const
