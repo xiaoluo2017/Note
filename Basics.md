@@ -1389,6 +1389,19 @@ void f()
 
 > ref: https://www.essentialsql.com/what-is-meant-by-acid/
 
+### 3. 事务隔离级别
+* Read uncommitted(读未提交): 读取未提交事务的数据 
+    * 可能导致脏读
+* Read committed(读提交): 若有事务对数据进行更新(UPDATE)操作时, 读操作事务要等待这个更新操作事务提交后才能读取数据 
+    * 保证了读到的任何数据都是提交的数据, 避免了脏读
+    * 不保证事务重新读的时候能读到相同的数据, 因为在每次数据读完之后其他事务可以修改刚才读到的数据
+    * 可能导致不可重复读, 不可重复读对应的是修改, 即UPDATE操作
+* Repeatable read(重复读): 开始读取数据(事务开启)时, 不再允许修改操作 
+    * 解决不可重复读的读现象; 只要在事务一从开始到结束的这段时间内, 无论他读取该行数据多少次, 结果都是一样的
+    * 可能导致幻读, 幻读问题对应的是插入INSERT操作, 而不是UPDATE操作
+* Serializable(序列化): 事务串行化顺序执行
+> ref: https://www.cnblogs.com/jycboy/p/transaction.html
+
 ## Algorithm
 ### 1. 位运算
 * Judge: if ((num > n) & 1 == 0) {}
