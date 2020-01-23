@@ -304,9 +304,9 @@ cout << **p + 1 << endl; // value
 * HTTP请求报文
     * 开始行: 要做些什么
       * 方法: eg. get, post
-      * URL: <协议>://<主机>:<端口>/<路径>
+      * URL: <协议>://<域名>:<端口>/<路径>
         * <协议> eg. http https
-        * <主机> eg. www.google.com
+        * <域名> eg. www.google.com
         * <端口> http默认端口号为80, 通常可省略
         * <路径> 可省略, 省略后即为主页(home page)
       * 版本: http 1.0 1.1 2.0
@@ -396,6 +396,26 @@ PATCH /users/1
     * A接着使用B的公钥(PUB_B)对信息内容和签名信息进行加密
     * A对信息签名的作用是确认这个信息是A发出的，不是别人发出的
 > ref: https://www.zhihu.com/question/27669212
+
+### 8. What happens when you type google.com into your browser's address box and press enter
+* DNS查询: 域名到IP地址的转换过程
+    * 浏览器检查域名是否在缓存当中(Chrome当中的缓存)
+    * 调用gethostbyname库函数, 检查域名是否在本地Hosts里
+    * 向DNS服务器发送一条DNS查询请求
+      * 查询本地DNS服务器
+      * 联系DNS域名系统的根服务器(13台 全球), 根服务器会发送一个查询请求, 返回一个负责该.com域名服务器的一个ip; 本地DNS服务器会向该ip发送请求, 越高级的域名越靠后, 必须要先找后面的域名, 然后才能进一步的找到整个域名
+        * eg. .com域服务器 -> google.com域服务器 -> www.google.com域服务器
+* 根据IP地址访问服务器
+    * 建立TCP连接
+    * TLS握手
+    * 发起HTTP请求
+    * 接受响应结果
+* 浏览器解析html, 布局渲染
+> ref: https://www.cnblogs.com/crazylqy/p/7110357.html
+
+> ref: https://github.com/alex/what-happens-when/blob/master/README.rst
+
+> ref: https://www.jianshu.com/p/c1dfc6caa520
 
 ## Thread Process Lock
 ### 1. process vs thread
