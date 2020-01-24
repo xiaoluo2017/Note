@@ -266,7 +266,7 @@ cout << **p + 1 << endl; // value
 
 * TCP建立连接／断开连接状态
     * Client: CLOSED->SYN_SENT->ESTABLISHED->FIN_WAIT_1->FIN_WAIT_2->TIME_WAIT->CLOSED
-      * TIME_WAIT: 停留2MSL(Maximum Segment Lifetime, 报文最大生存时间)
+      * TIME_WAIT: 停留2MSL(Maximum Segment Lifetime, 报文最大生存时间); 无法保证最后发送的ACK报文会一定被对方收到, 因此对方处于LAST_ACK状态下的SOCKET可能会因为超时未收到ACK报文, 而重发FIN报文
     * Server: CLOSED->LISTEN->SYN_RCVD->ESTABLISHED->CLOSE_WAIT->LAST_ACK->CLOSED
 > ref: https://blog.csdn.net/Mary19920410/article/details/63711522
 
@@ -275,6 +275,7 @@ cout << **p + 1 << endl; // value
 
 ### 3. TCP的流量控制 拥塞控制
 * 流量控制: 滑动窗口
+    * 在一个窗口大小内, 不用一定要等到应答才能发送下一段数据, 窗口大小就是无需等待确认而可以继续发送数据的最大值
 
 * 拥塞控制: 慢开始、拥塞避免、快重传、快恢复
     * 增加缓存空间到一定程度时, 只会加重拥塞, 而不是减轻拥塞, 因为当数据包经过长期时间排队完成转发时, 他们可能早已经超时, 从而引起源端超时重发; 增加链路宽带及提高处理能力也不能解决拥塞问题
@@ -404,7 +405,7 @@ PATCH /users/1
     * 调用gethostbyname库函数, 检查域名是否在本地Hosts里
     * 向DNS服务器发送一条DNS查询请求
       * 查询本地DNS服务器
-      * 联系DNS域名系统的根服务器(13台 全球), 根服务器会发送一个查询请求, 返回一个负责该.com域名服务器的一个ip; 本地DNS服务器会向该ip发送请求, 越高级的域名越靠后, 必须要先找后面的域名, 然后才能进一步的找到整个域名
+      * 迭代查询, 联系DNS域名系统的根服务器(13台 全球), 向根域名服务器发送查询请求, 根域名服务器告知该域名的一级域名服务器(eg. .com域名服务器), 然后本地服务器给该一级域名服务器发送查询请求, 然后依次类推直到查询到该域名的IP地址
         * eg. .com域服务器 -> google.com域服务器 -> www.google.com域服务器
 * 根据IP地址访问服务器
     * 建立TCP连接
