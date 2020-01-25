@@ -328,8 +328,9 @@ cout << **p + 1 << endl; // value
       * Date: 表示报文发送的时间, 即生成响应的日期和时间
       * Last-Modified: 表示报文的最后修改时间
     * 实体主行(body): 返回给客户端的数据
-
 > ref: https://blog.csdn.net/dangzhangjing97/article/details/80957898
+
+> ref: https://www.runoob.com/http/http-status-codes.html
 
 ### 5. REST API
 * Representational State Transfer(表现层状态转换), REST是设计风格而不是标准
@@ -519,6 +520,7 @@ void do_once()
     * 当读写锁是读模式加锁时, 其它线程以读模式加锁都会成功, 但是线程以写模式加锁会阻塞;
     * 当读写锁是写模式加锁时, 直到解锁前，其它线程加锁都会被阻塞;
     * 当读写锁是读模式加锁时, 其它线程既有试图以写模式加锁的线程，也有试图以读模式加锁的线程, 这时读写锁会阻塞在写模式加锁请求之后的读模式加锁请求, 优先满足写模式
+* 乐观锁: 每次去获取共享数据的时候会认为别人不会修改, 所以不会上锁, 但是在更新的时候你会判断这期间有没有人去更新这个数据
 
 ### 7. 死锁
 * 死锁的四个必要条件:
