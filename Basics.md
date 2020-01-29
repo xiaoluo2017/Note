@@ -17,6 +17,7 @@
   * [5. REST API](#5-rest-api)
   * [6. Cookie vs Session](#6-cookie-vs-session)
   * [7. https加密 SSL/TLS协议](#7-https---ssl-tls--)
+  * [8. What happens when you type google.com into your browser's address box and press enter](#8-what-happens-when-you-type-googlecom-into-your-browser-s-address-box-and-press-enter)
 - [Thread Process Lock](#thread-process-lock)
   * [1. process vs thread](#1-process-vs-thread)
   * [2. 进程/线程状态](#2--------)
@@ -56,6 +57,8 @@
 - [Database](#database)
   * [1. B vs B+](#1-b-vs-b-)
   * [2. ACID](#2-acid)
+  * [3. 事务隔离级别](#3-------)
+  * [4. 范式](#4---)
 - [Algorithm](#algorithm)
   * [1. 位运算](#1----)
 > ref: http://ecotrust-canada.github.io/markdown-toc/
@@ -520,7 +523,11 @@ void do_once()
     * 当读写锁是读模式加锁时, 其它线程以读模式加锁都会成功, 但是线程以写模式加锁会阻塞;
     * 当读写锁是写模式加锁时, 直到解锁前，其它线程加锁都会被阻塞;
     * 当读写锁是读模式加锁时, 其它线程既有试图以写模式加锁的线程，也有试图以读模式加锁的线程, 这时读写锁会阻塞在写模式加锁请求之后的读模式加锁请求, 优先满足写模式
-* 乐观锁: 每次去获取共享数据的时候会认为别人不会修改, 所以不会上锁, 但是在更新的时候你会判断这期间有没有人去更新这个数据
+
+* 乐观锁: 每次去拿数据的时候都认为别人不会修改, 所以不会上锁, 但是在提交更新的时候会判断一下在此期间别人有没有去更新这个数据
+    * 乐观锁适用于读多写少的应用场景, 这样可以提高吞吐量
+    * eg. 数据版本(Version), 时间戳(timestamp): 当提交更新时, 判断数据库表对应记录的当前版本信息与第一次取出来的version值/时间戳进行比对, 如果一致则OK, 否则就是版本冲突
+> ref: https://www.jianshu.com/p/f5ff017db62a
 
 ### 7. 死锁
 * 死锁的四个必要条件:
