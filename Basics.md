@@ -228,7 +228,7 @@ cout << **p + 1 << endl; // value
 * Transport Layer(传输层): 通过端口号(port numbers), 确定将消息传递到的应用程序(computer is running lots of different programs)
     * eg. Web应用程序向Web服务器发出请求时, 通常使用端口号80(分配给Web应用程序的默认端口)
 * Session Layer(会话层): 建立连接, 会话维护, 身份验证, 并确保安全性
-    * Presentation Layer(表示层): 加密/解密, 压缩
+* Presentation Layer(表示层): 加密/解密, 压缩
 * Application Layer(应用层): 
     * eg. know what page you want(web traffic HTTP), know how to post a question or an answer
 > ref: https://www.geeksforgeeks.org/layers-of-osi-model/
