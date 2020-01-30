@@ -1206,12 +1206,13 @@ int main()
 * Only in C++:
     * pointer
     * reference(In Java, objects can only be passed by reference. In C ++ objects can be passed by value or by reference)
-    * Memory management(In Java, no destructor, no delete, ~A() -> finalize())
+    * Memory management(In Java, no destructor, no delete, no copy constructor etc. ~A() -> finalize())
     * operator overloading
     * struct, union & typedef(Compatible with C)
     * Preprocessing
     * default parameter
     * Multiple inheritance
+    * friend
     * inline
     * unsigned int
     * Scope operator::
