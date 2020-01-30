@@ -40,8 +40,6 @@ public:
     {
         if (this != &a)
         {
-            delete b;
-            b = new B;
             (*b) = *(a.b);
         }
         return *this;
