@@ -18,7 +18,11 @@ for (std::unordered_map<string, int>::iterator it = m.begin(); it != m.end(); it
 
 ### 2. copy constructor, assignment, move constructor, move assignment
 ```
-class B {};
+class B {
+public:
+    B() { cout << "B()" << endl; }
+    ~B() { cout << "~B()" << endl; }
+};
 
 class A
 {
@@ -36,6 +40,8 @@ public:
     {
         if (this != &a)
         {
+            delete b;
+            b = new B;
             (*b) = *(a.b);
         }
         return *this;
@@ -61,6 +67,15 @@ public:
 private:
     B* b;
 };
+
+int main() {
+    A a1;
+    A a2 = a1;
+    A a3;
+    a3 = a1;
+    A a4 = std::move(a1);
+    a3 = std::move(a1);
+}
 ```
 assignment
 > ref: https://www.geeksforgeeks.org/assignment-operator-overloading-in-c/
