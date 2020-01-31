@@ -669,6 +669,75 @@ p = (int*)malloc(sizeof(int) * 128);
     * 父类指针在调用虚函数时, 会去查找该对象的vtable, 每个对象的首地址存放vptr, 指向该类的vtable, vtable直接从父类继承, 如果覆盖了其中的某个virtual function, 那么vtable的指针就会被替换
     * C++ non-virtual functions calls resolved at compile time with static binding, while virtual function calls are resolved at runtime with dynamic binding
     
+### undef. private, public, and protected inheritance
+```
+class A 
+{
+public:
+    int x;
+protected:
+    int y;
+private:
+    int z;
+};
+
+class B : public A
+{
+public:
+    void f() {
+        x = 0; // x is public
+        y = 0; // y is protected
+        // z = 0; // z is not accessible from B
+    }
+};
+
+class C : protected A
+{
+public:
+    void f() {
+        x = 0; // x is protected
+        y = 0; // y is protected
+        // z = 0; // z is not accessible from C
+    }
+};
+
+class D : private A
+{
+public:
+    void f() {
+        x = 0; // x is private
+        y = 0; // y is private
+        // z = 0; // z is not accessible from D
+    }
+};
+
+class E : public C
+{
+public:
+    void f() {
+        x = 0; // x is protected
+        y = 0; // y is protected
+        // z = 0; // z is not accessible from E
+    }
+};
+
+class F : public C
+{
+public:
+    void f() {
+        // x = 0; // x is not accessible from F
+        // y = 0; // y is not accessible from F
+        // z = 0; // z is not accessible from F
+    }
+};
+
+int main() {
+    B b;
+    b.x = 0; // only x in B is public
+}
+```
+> ref: https://stackoverflow.com/questions/860339/difference-between-private-public-and-protected-inheritance
+
 ### 8. volatile
 * informs the complier the value of variable it is applied to can change from the outside(operating system, hardware, or another thread)
 compiler will therefore reload the value each time from memory
