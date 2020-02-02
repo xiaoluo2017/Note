@@ -1527,3 +1527,21 @@ void f()
 * Update: num = num | (1 < n); num = num & (~(1 < n));
 * int le = (1 < n) - 1, ri = (~0) < n;
 * Remove rightmost 1: num = num & (num - 1);
+
+### 2. Raft
+* Node states: 
+    * The Follower state, the Candidate state, or the Leader state(A node can be in 1 of 3 states)
+
+* Leader Election: 
+    * If followers don't hear from a leader(after election timeout) then they can become a candidate and starts a new election term.
+      * Election timeout: The election timeout is the amount of time a follower waits until becoming a candidate, randomized to be between 150ms and 300ms
+    * It votes for itself and sends out Request Vote messages to other nodes. If the receiving node hasn't voted yet in this term then it votes for the candidate and the node resets its election timeout.
+    * The candidate becomes the leader if it gets votes from a majority of nodes.
+
+* Log Replication: 
+    * First client send a change to the leader, the change is appended to the leader's log as an entry(This log entry is currently uncommitted so it won't update the node's value), then the change is sent to the followers on the next heartbeat.
+       * Heartbeat timeout: Append Entries message is used for heartbeats. These messages are sent in intervals specified by the heartbeat timeout. Followers then respond to each Append Entries message.
+    * An entry is committed once a majority of followers acknowledge it and a response is sent to the client, The entry is now committed on the leader node. 
+    * The leader then notifies the followers that the entry is committed.
+
+> ref: http://thesecretlivesofdata.com/raft/
