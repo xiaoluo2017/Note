@@ -9,6 +9,12 @@
 * During my work, I designed, developed, and maintained various software components in a highly collaborative team environment. I have acquired deep technical knowledge in software development methodologies and have extensive experience in project planning and implementation. I have the ability to get quality work done as planned.
 * I have extensive experience in developing and debugging code on Windows, using C++ and MFC.
 
+### 2. 3rd-person Introduction
+* I am glad to refer my friend, ..., to work at ... as a Software Engineer. He graduated from ... University with a Bachelor of Science degree, and graduated from the ... University with a Masters degree in Electrical Engineering. From April, 2018, he joined ... as a software engineer.
+* I have known ... for almost 10 years. I have always admired his diligence and commitment in what he does. He has great passion in technology, and his attention to detail makes him a good engineer. I believe he could be a good fit for our company, and would be able to contribute great value.
+* Technically, during his work, he designed, developed, and maintained various software components in a highly collaborative team environment. He has acquired deep technical knowledge in software development methodologies and has extensive experience in project planning and implementation. He has the ability to get quality work done as planned. He has extensive experience in developing and debugging code on Windows, using C++ and MFC.
+* Please consider ... for the position. Thank you.
+
 ## Project
 ### 1. Maxwell standalone system coupling
 * Establishing connection with EDT and System Coupling Engine
