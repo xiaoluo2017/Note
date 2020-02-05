@@ -103,8 +103,8 @@ If (lastCommand == "SyncProcess::AssignToken") {
 ### 2. Import/export of Project/design variable
 * Variable type
     * ProjectNonIndexedVariables, ProjectVariables, NonIndexedVariables, PostProcessVariables, LocalVariables
-* For ImportVariables, import data from file into a block, write block into clipboard, then reuse 'paste' logic to paste variables from clipboard to Project/Design
-* For ExportVariables, get project/local variables and push into a vector, then reuse 'copy' logic to copy variables into clipboard, at last write variables into file
+* For ImportVariables, import data from file into a block, read block into clipboard, then reuse 'paste' logic to paste variables from clipboard to target Project/Design
+* For ExportVariables, get project/local variables and push into a vector, then reuse 'copy' logic to copy variables into clipboard, write clipboard into block, at last write block into file
 
 ```
 $a = $arr[$b];
