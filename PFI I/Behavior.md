@@ -34,8 +34,8 @@ void SyncProcess::GetAllSyncPoints(const Ans::Rpc::Request& request, Ans::Rpc::R
     static Ans::Rpc::MessageArrayArg<std::string> syncPoints;
 
     std::vector<std::string> values;
-    values.push_back(“Initial Synchronization”);
-    values.push_back(“Analysis Initialization”);
+    values.push_back("Initial Synchronization");
+    values.push_back("Analysis Initialization");
     // ...
 
     syncPoint.Values = values;
@@ -51,7 +51,7 @@ std::string lastCommand;
 void SyncProcess::AssignToken(const Ans::Rpc::Request& request, Ans::Rpc::Response& response)
 {
     continueExecution = false; // note - this modifies the state
-    lastCommand = “SyncProcess::AssignToken”;
+    lastCommand = "SyncProcess::AssignToken";
     return;
 }
 
