@@ -366,33 +366,25 @@ int quickSort(vector<int>& nums, int k, int start, int end)
         }
     }
 
-    int mid;
-    if (nums[le] < nums[pivot])
-    {
-        int tmp = nums[le];
-        nums[le] = nums[pivot];
-        nums[pivot] = tmp;
-        mid = le;
-    }
-    else
-    {
-        int tmp = nums[le - 1];
-        nums[le - 1] = nums[pivot];
-        nums[pivot] = tmp;
-        mid = le - 1;
-    }
+    
+    if (nums[le] > nums[pivot])
+        le--;
+    
+    int tmp = nums[le];
+    nums[le] = nums[pivot];
+    nums[pivot] = tmp;
 
-    if (mid == nums.size() - k)
+    if (le == nums.size() - k)
     {
-        return nums[mid];
+        return nums[le];
     }
-    else if (mid < nums.size() - k)
+    else if (le < nums.size() - k)
     {
-        return quickSort(nums, k, mid + 1, end);
+        return quickSort(nums, k, le + 1, end);
     }
     else
     {
-        return quickSort(nums, k, start, mid - 1);
+        return quickSort(nums, k, start, le - 1);
     }
 }
 
