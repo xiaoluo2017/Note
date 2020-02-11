@@ -132,3 +132,13 @@ std::transform(vars.begin(), vars.end(), varNames.begin(), [](const Variable& va
 });
 ```
 > ref: https://stackoverflow.com/questions/31064749/what-is-the-difference-between-stdtransform-and-stdfor-each
+
+### 14. runtime error: member access within misaligned address 0xbebebebebebebebe for type 'struct Node', which requires 8 byte alignment
+* 0xbebebebebebebebe: note: pointer points here <memory cannot be printed>
+```
+Node* root; // = NULL;
+if (root == NULL)
+{
+    // it won't go into here
+}
+```
