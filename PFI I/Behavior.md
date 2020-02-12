@@ -2,15 +2,15 @@
 
 ## Behavior QA
 ### 1. Introduction
-* Hi, my name is .... I graduated from ... University with a Bachelor of Science degree, and graduated from the ... University with a Masters degree in Electrical Engineering.
-* During my graduate studies, I had a good understanding of data structures, algorithms, and object-oriented design, and completed some personal Java-based projects. From April, 2018, I joined ... as a software engineer.
-* ... is a global leader in engineering simulation, providing the best and most extensive engineering simulation software. ... is a S&P's 500 company and a component of NASDAQ-100.
-* My team(EBU R&D product team) is dedicated to developing various basic software components and providing interfaces to the product team to drive our electrical simulation products.
-* During my work, I designed, developed, and maintained various software components in a highly collaborative team environment. I have acquired deep technical knowledge in software development methodologies and have extensive experience in project planning and implementation. I have the ability to get quality work done as planned.
-* I have extensive experience in developing and debugging code on Windows, using C++ and MFC.
+* Hi, my name is .... I graduated from Tianjin University with a Bachelor of Science degree in Electrical Engineering, and graduated from the George Washington University with a Masters degree in Electrical and Computer Engineering.
+* During my graduate studies, I had a good understanding of data structures, algorithms, and object-oriented design, and completed some Java-based projects. After graduation, I implemented a presonal project, a Voting Web Application, based on React, Node.js and MongoDB. From April, 2018, I joined ... as a software engineer.
+* Let me first introduce my current company. ... is the world's largest engineering simulation software company, it is included in S&P 500 and Nasdaq 100.
+* My team, EBU R&D product team, develops a variety of basic software components and provides interfaces to our product team, for electrical simulation products.
+* For me, I mainly used C ++ and MFC to design and implement projects on Windows, or implemented features and APIs for some core functionality areas, for example, Maxwell standalone system coupling project; In "Material" part, adding Spatial Modifer; In "Dataset" part, the 3D dataset UI enhancement. In "Definition libraries" part, providing capability to export parametric table, import/export of Project/design variables. And I Implemented undo/redo and script record/playback of various operations, etc.
+* I also wrote Test Plan, regression tests and Code Change Proposal, and did Enhancements/bug fixes in these areas.
 
 ### 2. 3rd-person Introduction
-* I am glad to refer my friend, ..., to work at ... as a Software Engineer. He graduated from ... University with a Bachelor of Science degree, and graduated from the ... University with a Masters degree in Electrical Engineering. From April, 2018, he joined ... as a software engineer.
+* I am glad to refer my friend, ..., to work at ... as a Software Engineer. He graduated from ... University with a Bachelor of Science degree in Electrical Engineering, and graduated from the ... University with a Masters degree in Electrical and Computer Engineering. From April, 2018, he joined ... as a software engineer.
 * I have known ... for almost 10 years. I have always admired his diligence and commitment in what he does. He has great passion in technology, and his attention to detail makes him a good engineer. I believe he could be a good fit for our company, and would be able to contribute great value.
 * Technically, during his work, he designed, developed, and maintained various software components in a highly collaborative team environment. He has acquired deep technical knowledge in software development methodologies and has extensive experience in project planning and implementation. He has the ability to get quality work done as planned. He has extensive experience in developing and debugging code on Windows, using C++ and MFC.
 * Please consider ... for the position. Thank you.
