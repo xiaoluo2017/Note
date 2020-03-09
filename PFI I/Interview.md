@@ -71,7 +71,7 @@ public:
 * secondary language
 * Tools: Java, 大数据处理 eg. Tools on AWS(AWS EMR, S3, redshift)
 
-## MicroSof
+## MicroSoft
 ### 1. Phone interview
 ```
 struct TreeNode
