@@ -197,3 +197,19 @@ void CSystemCouplingUIHelper::ModifyMenu(CMenu& menu, HWND hWnd)
     }
 }
 ```
+
+## QA
+### 1. 技术
+* 组里做什么(大组 小组)
+* 组里技术栈
+* 组里人员组成(小组)
+* 我进去后, 我做什么
+### 2. 工作
+* 会议 eg. standup, iteration meeting
+* 与美国方面交流多吗, 平常使用英语多吗
+* 入职是否有培训
+### 3. 生活
+* 上班时间, 几点上班, 几点下班
+* 是否有食堂
+* 活动多吗
+* 是否出差
