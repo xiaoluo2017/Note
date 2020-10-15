@@ -3,8 +3,8 @@
 * A DateTime object can fall into one of three different categories, the DateTime object has a property called “Kind” that represents each one of the possible categories: UTC, Unspecified and Local
 * UTC: Every time you need to record, in a precise and unambiguous way
 ```
-// Use DateTime.UtcNow instead of DateTime.Now, DateTime.Now is also not unit-testing friendly. If some portion of your code includes a call to DateTime.Now, 
-// it means that it depends on an external data source it doesn't control.
+// Use DateTime.UtcNow instead of DateTime.Now, DateTime.Now is also not unit-testing friendly. 
+// If some portion of your code includes a call to DateTime.Now, it means that it depends on an external data source it doesn't control.
 DateTime now = DateTime.UtcNow;
 ```
 
