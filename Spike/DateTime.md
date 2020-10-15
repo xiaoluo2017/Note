@@ -3,7 +3,8 @@
 * A DateTime object can fall into one of three different categories, the DateTime object has a property called “Kind” that represents each one of the possible categories: UTC, Unspecified and Local
 * UTC: Every time you need to record, in a precise and unambiguous way
 ```
-// Use DateTime.UtcNow instead of DateTime.Now, DateTime.Now is also not unit-testing friendly. If some portion of your code includes a call to DateTime.Now, it means that it depends on an external data source it doesn't control.
+// Use DateTime.UtcNow instead of DateTime.Now, DateTime.Now is also not unit-testing friendly. If some portion of your code includes a call to DateTime.Now, 
+// it means that it depends on an external data source it doesn't control.
 DateTime now = DateTime.UtcNow;
 ```
 
@@ -120,10 +121,10 @@ public static DateTime GmtToPacific(DateTime dateTime)
     return TimeZoneInfo.ConvertTimeFromUtc(dateTime, TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"));
 		
     // Another way
-	  // return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "Central Standard Time");
+    // return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "Central Standard Time");
 	
-	  // In windows TimeZone Id List can see this answer: 
-	  // https://stackoverflow.com/questions/14149346/what-value-should-i-pass-into-timezoneinfo-findsystemtimezonebyidstring/24460750#24460750
+    // In windows TimeZone Id List can see this answer: 
+    // https://stackoverflow.com/questions/14149346/what-value-should-i-pass-into-timezoneinfo-findsystemtimezonebyidstring/24460750#24460750
 }
 ```
 
