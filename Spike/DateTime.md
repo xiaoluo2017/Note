@@ -1,14 +1,22 @@
-# DateTime
+# DateTime Programming Guideline
+* This page will describe some detailed knowledge of DateTime Programming best practice, including including using different DateTime storage methods for past, present and future events, how to create or convert datetime to a specific time zone, how to check whether the dateTime entered by the user are ambiguous or skipped times, and some corner cases involving leap years.
+
+## Basic Questions
+### What is special about DateTime objects？
+* A DateTime object can fall into one of three different categories, the DateTime object has a property called "Kind" that represents each one of the possible categories: UTC, Unspecified and Local
+### What is different between UTC, Unspecified and Local DateTime?
+* UTC: Coordinated Universal Time (or UTC) is the primary time standard by which the world regulates clocks and time. It is precise and unambiguous.
+* Local: A local DateTime value only knows that it’s local in relation to the machine where it was generated.(Remember to always convert dates to UTC before performing arithmetic with them. DateTime.Now is OK to use when you just want to display the current time on your application’s screen)
+* Undefined: 
+### What is different between DateTime.Now and DateTime.UTCNow
+* DateTime.Now return current local time, DateTime.UTCNow return current UTC time. 
+* Use DateTime.UtcNow to store dates for past events and always use them for calculations, convert to local time when displaying the current time on your application’s screen
+* DateTime.Now is also not unit-testing friendly. If some portion of your code includes a call to DateTime.Now, it means that it depends on an external data source it doesn't control.
 ## 1. Use UTC for past events
-* A DateTime object can fall into one of three different categories, the DateTime object has a property called “Kind” that represents each one of the possible categories: UTC, Unspecified and Local
-* UTC: Every time you need to record, in a precise and unambiguous way
 ```
-// Use DateTime.UtcNow instead of DateTime.Now, DateTime.Now is also not unit-testing friendly. 
-// If some portion of your code includes a call to DateTime.Now, it means that it depends on an external data source it doesn't control.
 DateTime now = DateTime.UtcNow;
 ```
 
-* Local: A local DateTime value only knows that it’s local in relation to the machine where it was generated.(Remember to always convert dates to UTC before performing arithmetic with them. DateTime.Now is OK to use when you just want to display the current time on your application’s screen)
 ```
 var start = DateTime.Now; // local time
 var end = DateTime.Now; // local time
