@@ -221,7 +221,6 @@ DateTime result = dt.AddDays(365);
 DateTime result = dt.AddDays(-365) 
 
 // Adding 365 days using a TimeSpan (which could be defined elsewhere) 
-
 TimeSpan t = TimeSpan.FromDays(365); 
 DateTime result = dt.Add(t); 
 
@@ -234,6 +233,7 @@ DateTime result = dt.Subtract(t);
 // Don't add a quantity of days. Instead, add a quantity of years 
 DateTime dt = DateTime.Now; 
 DateTime result = dt.AddYears(1);
+
 // Don't attempt to use a TimeSpan as a generic amount of time to add. A year is a unit of civil time, but a TimeSpan is a data structure that represents absolute time. See Absolute Time vs Civil Time for further explanation.
 ```
 
