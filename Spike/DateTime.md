@@ -174,3 +174,104 @@ Console.WriteLine(d.DayOfYear);
 ```
 int days = DateTime.DaysInMonth(year, month);
 ```
+
+### 5.4 Don’t add or subtract years while keeping the existing month and day
+* Adding a year to Feb 29th produces an invalid date
+* Example code, the following are examples of this anti-pattern:
+```
+// Incrementing the year in the value passed into a DateTime or DateTimeOffset constructor, such as:
+DateTime dt = DateTime.Now; 
+DateTime result = new DateTime(dt.Year + 1, dt.Month, dt.Day);
+```
+* Replacement code 
+```
+// By using the AddYears method, the effects of leap day are already taken into account. 
+DateTime dt = DateTime.Now; 
+DateTime result = dt.AddYears(1); 
+```
+
+> ref: Anti-pattern 1: https://dev.azure.com/msazure/AzureWiki/_wiki/wikis/AzureWiki.wiki/14195/Anti-pattern-1-year-%C2%B1n-month-day-
+
+### 5.5 Don’t Apply a year from one source, and a month/day combination from another
+* For example, given a representing some date in 2021, and b representing 2020-02-29, combining them with this pattern produces 2021-02-29, which does not exist because 2021 is not a leap year.
+* Example code, the following are examples of this anti-pattern:
+```
+// Applying the current year to an existing DateTime without considering the leap day: 
+DateTime dob = customer.DateOfBirth; 
+DateTime birthdayThisYear = new DateTime(DateTime.Now.Year, dob.Month, dob.Day); 
+```
+* Replacement code
+```
+// Use the AddYears method to apply the difference in years. The effects of leap day are already taken into account.
+DateTime dob = customer.DateOfBirth; 
+DateTime birthdayThisYear = dob.AddYears(DateTime.Now.Year - dob.Year);
+```
+
+> ref: https://dev.azure.com/msazure/AzureWiki/_wiki/wikis/AzureWiki.wiki/32347/Anti-pattern-1a-a.year-b.month-b.day-
+
+### 5.6 Don’t add or substrate days when intending to represent a year
+* Data loss occurs in leap years, as the 366th day is omitted. This anti-pattern occurs when a developer wants to add or subtract some number of years (typically 1) to a date, but does so using a multiple of 365 days.
+* For example, perhaps they are intending to show a report of data of the last one-year period. If they use this anti-pattern and the reporting range crosses a leap day, it will be a day short. The leap day (February 29th) does not necessarily need to be involved. Consider that subtracting 365 days from 2019-07-01 correctly gives 2018-07-01, but subtracting 365 days from 2020-07-01 gives 2019-07-02, which erroneously excludes 2019-07-01.
+* Example code, All of the following are examples of this anti-pattern:
+```
+// Adding 365 days using a positive integer 
+DateTime result = dt.AddDays(365); 
+
+// Subtracting 365 days using a negative integer 
+DateTime result = dt.AddDays(-365) 
+
+// Adding 365 days using a TimeSpan (which could be defined elsewhere) 
+
+TimeSpan t = TimeSpan.FromDays(365); 
+DateTime result = dt.Add(t); 
+
+// Subtracting 365 days using a TimeSpan (which could be defined elsewhere) 
+TimeSpan t = TimeSpan.FromDays(365);  
+DateTime result = dt.Subtract(t);  
+```
+* Replacement code
+```
+// Don't add a quantity of days. Instead, add a quantity of years 
+DateTime dt = DateTime.Now; 
+DateTime result = dt.AddYears(1);
+// Don't attempt to use a TimeSpan as a generic amount of time to add. A year is a unit of civil time, but a TimeSpan is a data structure that represents absolute time. See Absolute Time vs Civil Time for further explanation.
+```
+
+> ref: https://dev.azure.com/msazure/AzureWiki/_wiki/wikis/AzureWiki.wiki/14196/Anti-pattern-2-datetime.AddDays(%C2%B1365)
+
+### 5.7 Don’t add or substrate days when intending to represent a month
+* This anti-pattern occurs when a developer adds or subtracts some number of months (typically 1) to a date and does not consider leap years when determining how many days are in February.
+* For example, adding a month by this method to 2019-02-01 correctly gives 2019-03-01, but doing the same for 2020-02-01 incorrectly gives 2020-02-29 instead of 2020-03-01.
+* Note that not all instances of AddDays(±28) are invalid. For example, one might need to add exactly four weeks, in which case AddDays(4 * 7) or AddDays(28) is perfectly acceptable. Therefore, use your best judgement, and take context into account when scanning your code for this anti-pattern.
+* Example code, all of the following are examples of this anti-pattern:
+```
+// Determining the number of days in the year without considering leap year 
+int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; 
+int n = days[dt.Month - 1]; 
+
+// Adding 28 days using a positive integer 
+DateTime result = dt.AddDays(28); 
+
+// Subtracting 28 days using a negative integer 
+DateTime result = dt.AddDays(-28); 
+
+// Adding 28 days using a TimeSpan (which could be defined elsewhere) 
+TimeSpan t = TimeSpan.FromDays(28); 
+DateTime result = dt.Add(t); 
+
+// Subtracting 28 days using a TimeSpan (which could be defined elsewhere) 
+TimeSpan t = TimeSpan.FromDays(28); 
+DateTime result = dt.Subtract(t);
+```
+* Replacement code
+```
+// By using the AddMonths method, the effects of leap day are already taken into account. 
+DateTime dt = DateTime.Now; 
+DateTime result = dt.AddMonths(1); 
+```
+
+> ref: https://dev.azure.com/msazure/AzureWiki/_wiki/wikis/AzureWiki.wiki/14197/Anti-pattern-3-datetime.AddDays(%C2%B128)
+
+
+
+
