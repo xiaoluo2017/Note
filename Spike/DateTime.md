@@ -74,7 +74,9 @@ public void UpdateUtcStart(
 ```
 
 > ref: https://codeblog.jonskeet.uk/2019/03/27/storing-utc-is-not-a-silver-bullet/
+
 > ref: https://stackoverflow.com/questions/4331189/datetime-vs-datetimeoffset
+
 > ref: https://docs.microsoft.com/en-us/dotnet/api/system.datetimeoffset?view=netframework-4.7.2
 
 ## 3. Check whether the dateTime entered by the user are ambiguous or skipped times
